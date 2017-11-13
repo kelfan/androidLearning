@@ -83,3 +83,38 @@ String.format(R.string.did_you_mean,
 ```java
 String myIntAsString = String.format("%d", myInt);
 ```
+
+# xml/LinearLayout = 堆栈排列布局
+ http://blog.csdn.net/llping2011/article/details/9992941
+```xml
+ <LinearLayout  
+        android:orientation="horizontal" >  
+        <EditText  
+            android:layout_weight="1">  
+        </EditText>      
+    </LinearLayout>  
+```
+
+# xml/EditText
+```xml
+<EditText  
+    android:id="@+id/msg"  
+    android:inputType="number"  
+    android:layout_width="match_parent"  
+    android:layout_height="wrap_content"
+    android:gravity="top"
+    android:hint="@string/to"
+    android:inputType="textMultiLine"
+    android:minLines="5"
+    android:text="">  
+</EditText>     
+```
+
+
+# Android 在软键盘弹出时将布局上移，不掩盖控件
+http://www.jianshu.com/p/8c98df35d368
+可以在`AndroidMainfest.xml`给该`Activity`加入一个属性`windowSoftInputMode`，就可以让系统在弹起键盘时自动调整界面。如果没有`stateHidden`会自动弹出键盘。
+```xml
+<activity android:name=".ui.activity.LoginActivity"    
+android:windowSoftInputMode="adjustResize|stateHidden" />
+```
