@@ -9,6 +9,9 @@ Android 5.1.1, API 22
 - This simplest example includes about how to transfer message between two activities;
 ![app](https://developer.android.com/training/basics/firstapp/images/screenshot-activity2.png)
 
+# ReadFile = reading text file
+[Read text file from assets folder in Android Studio](https://www.youtube.com/watch?v=1CHDASXojNQ)
+
 # user interface hierarchy
 ![user interface hierarchy](https://developer.android.com/training/basics/firstapp/building-ui.html#open)
 
@@ -19,6 +22,7 @@ Android 5.1.1, API 22
 
 # Match Constraints = 横向自动延伸
 
+# file
 
 # shortcut/Alt + Enter = 错误快速修复 (or Option + Enter on Mac)
 
