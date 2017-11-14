@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
     /* write a text file in SDCard  */
     public void generateNoteOnSD(Context context, String sFileName, String sBody){
         try{
-            File root = new File(Environment.getExternalStorageDirectory(), "05fanNotes");
+            // File root = new File(Environment.getExternalStorageDirectory(), "05fanNotes");
+            File root = new File(System.getenv("SECONDARY_STORAGE"), "05fanNotes");
             if(!root.exists()){
                 root.mkdirs();
             }
