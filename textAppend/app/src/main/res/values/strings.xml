@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyLog</string>
+    <string name="themeString">Input theme</string>
+    <string name="contentString">Input Content</string>
+    <string name="saveBtnStr">Save</string>
+    <string name="openBtnStr">Open</string>
+</resources>
