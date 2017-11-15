@@ -14,7 +14,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:gravity="top"
-        android:text="四季理论"
         android:hint="@string/contentString"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"

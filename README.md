@@ -96,7 +96,12 @@ myContext.deleteFile(fileName);
 ```
 
 # shortcut/Alt + Enter = 错误快速修复 (or Option + Enter on Mac)
-
+# shortcut/Alt + insert = constructor getter setter
+# shortcut/Alt + 单击 = 竖着选多个元素
+![](assets/README-b3ac89d7.png)
+# shortcut/Alt + shift + 单击 = 多选几次
+# shortcut/Alt + j or ctrl + g = 多选相同元素
+![](assets/README-88d6706d.png)
 
 # 05/Write to SD card
 AndroidMainfest.xml -> manifest -> before application
@@ -210,27 +215,27 @@ String myIntAsString = String.format("%d", myInt);
 # xml/LinearLayout = 堆栈排列布局
  http://blog.csdn.net/llping2011/article/details/9992941
 ```xml
- <LinearLayout  
-        android:orientation="horizontal" >  
-        <EditText  
-            android:layout_weight="1">  
-        </EditText>      
-    </LinearLayout>  
+ <LinearLayout
+        android:orientation="horizontal" >
+        <EditText
+            android:layout_weight="1">
+        </EditText>
+    </LinearLayout>
 ```
 
 # xml/EditText
 ```xml
-<EditText  
-    android:id="@+id/msg"  
-    android:inputType="number"  
-    android:layout_width="match_parent"  
+<EditText
+    android:id="@+id/msg"
+    android:inputType="number"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="top"
     android:hint="@string/to"
     android:inputType="textMultiLine"
     android:minLines="5"
-    android:text="">  
-</EditText>     
+    android:text="">
+</EditText>
 ```
 
 
@@ -238,7 +243,7 @@ String myIntAsString = String.format("%d", myInt);
 http://www.jianshu.com/p/8c98df35d368
 可以在`AndroidMainfest.xml`给该`Activity`加入一个属性`windowSoftInputMode`，就可以让系统在弹起键盘时自动调整界面。如果没有`stateHidden`会自动弹出键盘。
 ```xml
-<activity android:name=".ui.activity.LoginActivity"    
+<activity android:name=".ui.activity.LoginActivity"
 android:windowSoftInputMode="adjustResize|stateHidden" />
 ```
 
@@ -339,3 +344,102 @@ File root = new File(System.getenv("SECONDARY_STORAGE"));
 // Primary emulated SD-CARD
 final String rawEmulatedStorageTarget = System.getenv("EMULATED_STORAGE_TARGET");
 ```
+
+# adapater
+adapter常用来管理数据。比如列表的数据，网格的数据。
+
+```java
+public class PersonAdapter extends BaseAdapter {
+    Activity activity;
+    List<Person> lstPersons;
+    LayoutInflater inflater;
+    EditText edtId, edtName, edtEmail;
+
+    public PersonAdapter(Activity activity, List<Person> lstPersons, LayoutInflater inflater, EditText edtId, EditText edtName, EditText edtEmail) {
+        this.activity = activity;
+        this.lstPersons = lstPersons;
+        this.inflater = inflater;
+        this.edtId = edtId;
+        this.edtName = edtName;
+        this.edtEmail = edtEmail;
+    }
+
+    @Override
+    public int getCount() {
+        return lstPersons.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return lstPersons.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return lstPersons.get(i).getId();
+    }
+
+    @Override
+    public View getView(int i, View convertView, ViewGroup parent) {
+        View rowView;
+        rowView=inflater.inflate(R.layout.row, null);
+        final TextView txtRowId,txtRowName,txtRowEmail;
+        txtRowId = (TextView) rowView.findViewById(R.id.txtRowId);
+        txtRowName = (TextView) rowView.findViewById(R.id.txtRowName);
+        txtRowEmail = (TextView) rowView.findViewById(R.id.txtRowEmail);
+
+        txtRowId.setText(""+lstPersons.get(i).getId());
+        txtRowName.setText(""+lstPersons.get(i).getName());
+        txtRowEmail.setText(""+lstPersons.get(i).getEmail());
+
+        rowView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                edtId.setText(""+txtRowId.getText());
+                edtId.setText(""+txtRowName.getText());
+                edtId.setText(""+txtRowEmail.getText());
+            }
+        });
+
+        return rowView;
+    }
+}
+```
+
+
+# inflater/layoutInflater = 获取layout下的xml文件
+https://zhidao.baidu.com/question/2205143519905210068.html
+在实际开发中LayoutInflater这个类还是非常有用的，它的作用类似于findViewById()。不同点是LayoutInflater是用来找res/layout/下的xml布局文件，并且实例化；而findViewById()是找xml布局文件下的具体widget控件(如Button、TextView等)。
+具体作用：
+1. 对于一个没有被载入或者想要动态载入的界面，都需要使用LayoutInflater.inflate()来载入；
+2. 对于一个已经载入的界面，就可以使用Activiyt.findViewById()方法来获得其中的界面元素。
+
+```java
+LayoutInflater inflater;
+
+public View getView(int i, View convertView, ViewGroup parent) {
+    View rowView;
+    rowView=inflater.inflate(R.layout.row, null);
+    final TextView txtRowId,txtRowName,txtRowEmail;
+    txtRowId = (TextView) rowView.findViewById(R.id.txtRowId);
+    txtRowName = (TextView) rowView.findViewById(R.id.txtRowName);
+    txtRowEmail = (TextView) rowView.findViewById(R.id.txtRowEmail);
+
+    txtRowId.setText(""+lstPersons.get(i).getId());
+    txtRowName.setText(""+lstPersons.get(i).getName());
+    txtRowEmail.setText(""+lstPersons.get(i).getEmail());
+
+    rowView.setOnClickListener(new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            edtId.setText(""+txtRowId.getText());
+            edtId.setText(""+txtRowName.getText());
+            edtId.setText(""+txtRowEmail.getText());
+        }
+    });
+
+    return rowView;
+}
+```
+
+# SQLiteOpenHelper/example
