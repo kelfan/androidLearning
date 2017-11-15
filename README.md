@@ -249,7 +249,15 @@ android:windowSoftInputMode="adjustResize|stateHidden" />
 
 # sources
 - Android 经典项目开发实战
-
+- [Android Studio Tutorial - Alarm Manager](https://www.youtube.com/watch?v=-Q5MFwgXIcc)
+- [Xamarin Android Tutorial - Linear Layout](https://www.youtube.com/watch?v=Wj-WT4uWlKA&list=PLaoF-xhnnrRVglZztNl99ih76fvBOLMe8)
+- [Android Studio Tutorial - Text Recognition using Google Vision](https://www.youtube.com/watch?v=7qw-zl9XGd4&list=PLaoF-xhnnrRWHtmb8ZGmu8N4Wl2Zr26V7&t=5)
+- []()
+- []()
+- []()
+- []()
+- []()
+- []()
 
 # Raturns all available SD-Cards in the system (include emulated)
 ```java
@@ -355,10 +363,10 @@ public class PersonAdapter extends BaseAdapter {
     LayoutInflater inflater;
     EditText edtId, edtName, edtEmail;
 
-    public PersonAdapter(Activity activity, List<Person> lstPersons, LayoutInflater inflater, EditText edtId, EditText edtName, EditText edtEmail) {
+    public PersonAdapter(Activity activity, List<Person> lstPersons, EditText edtId, EditText edtName, EditText edtEmail) {
         this.activity = activity;
         this.lstPersons = lstPersons;
-        this.inflater = inflater;
+        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.edtId = edtId;
         this.edtName = edtName;
         this.edtEmail = edtEmail;
@@ -396,8 +404,8 @@ public class PersonAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 edtId.setText(""+txtRowId.getText());
-                edtId.setText(""+txtRowName.getText());
-                edtId.setText(""+txtRowEmail.getText());
+                edtName.setText(""+txtRowName.getText());
+                edtEmail.setText(""+txtRowEmail.getText());
             }
         });
 
@@ -442,4 +450,122 @@ public View getView(int i, View convertView, ViewGroup parent) {
 }
 ```
 
+# add snippets/live templates
+https://stackoverflow.com/questions/16857108/code-snippets-in-android-studio
+Go to File > Settings > Editor > Live Templates. Then click on the different options to see what they do.
+![](assets/README-4874a217.png)
+Here are some interesting ones:
+
+- foreach
+```java
+for ($i$ : $data$) {
+    $cursor$
+}
+```
+- Toast
+```java
+android.widget.Toast.makeText($className$.this, "$text$", Toast.LENGTH_SHORT).show();
+```
+- todo
+```java
+// TODO: $date$ $todo$
+```
+- logi
+```java
+android.util.Log.i(TAG, "$METHOD_NAME$: $content$");
+```
+The words surrounded by `$` signs are places where things will be filled in automatically from the context or where the user can tab through to fill them in.
+
+
 # SQLiteOpenHelper/example
+```java
+public class DatabaseHelper extends SQLiteOpenHelper{
+    //database
+    private static final int DATABASE_VER=1;
+    private static final String DATABASE_NAME="EMDTDev";
+
+    //table
+    private static final String TABLE_NAME="Persons";
+    private static final String KEY_ID="Id";
+    private static final String KEY_NAME="Name";
+    private static final String KEY_EMAIL="Email";
+
+    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, DATABASE_NAME, null, DATABASE_VER);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String CREATE_TABLE = "CREATE TABLE"+TABLE_NAME+"("
+                +KEY_ID+" INTEGER PRIMARY KEY,"
+                +KEY_NAME+" TEXT"
+                +KEY_EMAIL+" TEXT"
+                +")";
+        db.execSQL(CREATE_TABLE);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
+        onCreate(db);
+    }
+
+    // CRUD Persons
+    public void addPerson(Person person){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME,person.getName());
+        values.put(KEY_EMAIL,person.getName());
+
+        db.insert(TABLE_NAME,null,values);
+        db.close();
+    }
+
+    public int updatePerson(Person person){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME,person.getName());
+        values.put(KEY_EMAIL,person.getEmail());
+
+        return db.update(TABLE_NAME,values,KEY_ID+" =?",new String[] {String.valueOf(person.getId())});
+    }
+
+    public void deletePerson(Person person){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME,KEY_ID+" =?",new String[]{String.valueOf(person.getId())});
+        db.close();
+    }
+
+    public Person getPerson(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query(
+                TABLE_NAME,
+                new String[]{KEY_ID, KEY_NAME, KEY_EMAIL},
+                KEY_ID+"=?",
+                new String[]{String.valueOf(id)},
+                null,null,null,null);
+        if(cursor != null)
+            cursor.moveToFirst();
+        return new Person(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
+    }
+
+    public List<Person> getAllPerson(){
+        List<Person> lstPersons = new ArrayList<>();
+        String selectQuery = "SELECT * FROM "+ TABLE_NAME;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,null);
+        if (cursor.moveToFirst()){
+            do{
+                Person person = new Person();
+                person.setId(cursor.getInt(0));
+                person.setName(cursor.getString(1));
+                person.setEmail(cursor.getString(2));
+
+                lstPersons.add(person);
+            }
+            while (cursor.moveToNext());
+        }
+        return lstPersons;
+    }
+}
+```

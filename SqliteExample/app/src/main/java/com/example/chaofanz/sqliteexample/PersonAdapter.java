@@ -1,6 +1,7 @@
 package com.example.chaofanz.sqliteexample;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,10 @@ public class PersonAdapter extends BaseAdapter {
     LayoutInflater inflater;
     EditText edtId, edtName, edtEmail;
 
-    public PersonAdapter(Activity activity, List<Person> lstPersons, LayoutInflater inflater, EditText edtId, EditText edtName, EditText edtEmail) {
+    public PersonAdapter(Activity activity, List<Person> lstPersons, EditText edtId, EditText edtName, EditText edtEmail) {
         this.activity = activity;
         this.lstPersons = lstPersons;
-        this.inflater = inflater;
+        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.edtId = edtId;
         this.edtName = edtName;
         this.edtEmail = edtEmail;
@@ -61,8 +62,8 @@ public class PersonAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 edtId.setText(""+txtRowId.getText());
-                edtId.setText(""+txtRowName.getText());
-                edtId.setText(""+txtRowEmail.getText());
+                edtName.setText(""+txtRowName.getText());
+                edtEmail.setText(""+txtRowEmail.getText());
             }
         });
 
