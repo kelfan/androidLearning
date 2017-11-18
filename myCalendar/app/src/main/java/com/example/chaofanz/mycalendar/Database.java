@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -124,10 +125,16 @@ public class Database extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return new Event(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2),
-                cursor.getInt(3),cursor.getString(4),cursor.getString(5),
-                cursor.getString(6),cursor.getString(7),cursor.getString(8),
-                cursor.getInt(9),cursor.getString(10),dateFormat.parse(cursor.getString(11))
-                );
+        try {
+            Event event = new Event(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2),
+                    cursor.getInt(3),cursor.getString(4),cursor.getString(5),
+                    cursor.getString(6),cursor.getString(7),dateFormat.parse(cursor.getString(8)),
+                    dateFormat.parse(cursor.getString(9)),dateFormat.parse(cursor.getString(10)),dateFormat.parse(cursor.getString(11))
+                    );
+            return event;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 }

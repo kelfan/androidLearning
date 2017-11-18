@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.sqlitequerydemo.MainActivity">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="创建数据库并插入测试数据"
+        android:onClick="createDb"
+        android:background="#ffc8cb"/>
+
+    <Button
+        android:id="@+id/btn_query"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sql语句查询"
+        android:background="#ffC8cB"
+        android:layout_marginTop="15dp"
+        android:onClick="onClick"/>
+
+    <Button
+        android:id="@+id/btn_queryApi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Api查询"
+        android:background="#ffC8cB"
+        android:layout_marginTop="15dp"
+        android:onClick="onClick"/>
+</LinearLayout>
