@@ -414,6 +414,16 @@ public class PersonAdapter extends BaseAdapter {
 }
 ```
 
+# 设置头部格式
+点击设置—>Editor–>File and code Templates –>Includes—>File Header
+```java
+/**
+ * 作者：author
+ * 时间：${DATE}:${TIME}
+ * 邮箱：
+ * 说明：
+ */
+```
 
 # inflater/layoutInflater = 获取layout下的xml文件
 https://zhidao.baidu.com/question/2205143519905210068.html
@@ -476,6 +486,75 @@ android.util.Log.i(TAG, "$METHOD_NAME$: $content$");
 ```
 The words surrounded by `$` signs are places where things will be filled in automatically from the context or where the user can tab through to fill them in.
 
+# 对象不为空null并且不等于""空字符
+```java
+sql!=null && !"".equals(sql)
+```
+
+# ConstantValues put
+```java
+ContentValues values = new ContentValues();
+values.put(Constant._ID, 3); // put(表示插入数据库的字段,表示插入该字段的具体值)
+values.put(Constant.NAME, "张山");
+values.put(Constant.AGE,30);
+```
+
+# data type 数据类型
+integer varchar(10)  float double char(10) text
+
+# debug/ android device monitor
+- 位置
+  - tools -> android -> android device monitor
+- sqlite 数据库位置
+  - data -> data -> 软件包名 -> database -> .db文件
+
+# basic SQL
+```sql
+创建表
+create table 表名(字段名称 数据类型 约束, 字段名称 ...)
+
+删除表
+drop table 表名
+
+插入数据
+insert into 表名[字段,字段] values(值1,值2..)
+
+修改数据
+update 表名 set 字段=新值 where 修改的条件 _id=1
+
+删除数据
+delete from 表名 where 删除的条件
+
+查询语句
+select 字段名 from 表名 where 查询条件 group by 字段 having 筛选条件 order by 排序字段
+
+select _id,name from person
+select * from person where _id=1
+select * from person where _id<>1
+select * from person where _id=1 and age>18
+select * from person where name like "%小%" -- 中间带"小"的数据
+select * from person where name like "_小%" -- 一个字符后是"小"然后任意字符
+select * from person where name is null
+select * from person where age between 10 and 20
+select * from person where age>18 order by _id
+```
+
+
+# id to String.valueOf()
+```java
+new String[]{String.valueOf(person.getId())};
+```
+
+# Date to String
+```java
+cmd.Parameters.AddWithValue("@endDate", String.Format("{0:yyyy/MM/dd HH:mm:ss}", this.EndDate)); // <- this.EndDate is a DateTime type
+```
+
+# SQLiteOpenHelper
+SQLiteOpenHelper  ->帮助类
+onCreate()        ->创建方法
+onUpgrade()       ->数据库升级方法
+onOpen()          ->打开数据库方法
 
 # SQLiteOpenHelper/example
 ```java
