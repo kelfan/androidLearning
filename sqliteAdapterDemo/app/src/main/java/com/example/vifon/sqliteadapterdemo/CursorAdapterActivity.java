@@ -77,11 +77,9 @@ public class CursorAdapterActivity extends AppCompatActivity {
             TextView tv_age = (TextView) view.findViewById(R.id.tv_age);
 
             // setText 如果参数是数字就是当成资源id去找资源而不是输出,所以最后+"",转为字符串
-            tv_id.setText(cursor.getString(cursor.getColumnIndex(Constant._ID)) + "");
-            tv_id.setText(cursor.getString(cursor.getColumnIndex(Constant.NAME))+"");
-            tv_id.setText(cursor.getString(cursor.getColumnIndex(Constant.AGE))+"");
-
-
+            tv_id.setText(cursor.getInt(cursor.getColumnIndex(Constant._ID)) + "");
+            tv_name.setText(cursor.getString(cursor.getColumnIndex(Constant.NAME)));
+            tv_age.setText(cursor.getInt(cursor.getColumnIndex(Constant.AGE))+"");
         }
 
 
