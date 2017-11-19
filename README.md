@@ -94,7 +94,9 @@ myFile.delete();
 // 如果文件保存在内部存储中，您还可以请求 Context 通过调用 deleteFile() 来定位和删除文件：
 myContext.deleteFile(fileName);
 ```
-
+# shortcuts
+https://jaeger.itscoder.com/android/2016/02/14/android-studio-tips.html
+https://developer.android.com/studio/intro/keyboard-shortcuts.html
 # shortcut/Alt + Enter = 错误快速修复 (or Option + Enter on Mac)
 # shortcut/Alt + insert = constructor getter setter
 # shortcut/Alt + 单击 = 竖着选多个元素
@@ -103,6 +105,11 @@ myContext.deleteFile(fileName);
 # shortcut/Alt + j or ctrl + g = 多选相同元素
 ![](assets/README-88d6706d.png)
 # shortcut/Alt + q = 快速查查function
+
+# setting/ autocomplete case insensitive
+Settings(or Preferences in mac)->Editor->Code Completion
+
+
 
 # 出错/闪退
 1. 有可能是Sql语句出错,如果有数据库的话
@@ -663,8 +670,312 @@ public void click(View view){
 # debug window =  View > Tool Windows > Debug
 
 # sqlite adapter 适配器 = 接受cursor数据
-# sqlite/simpleCursorAdapter
-# sqlite/cursorAdapter
+# sqlite/simpleCursorAdapter = 适合用于展示数据库内容 不需要把cursor转为list
+```java
+/**
+ * 演示查询sdcard中数据库中的数据适配到listView中
+ */
+
+public class MainActivity extends AppCompatActivity {
+    private ListView lv;
+    private SQLiteDatabase db;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        lv = (ListView) findViewById(R.id.lv);
+
+        // 1. 获取数据库查询的数据
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + File.separator + "info.db";
+
+        /*
+        openDatabase(
+            String path 表示要打开的数据库的路径,
+            cursorFactory 游标工厂 可以为空,
+            int flags 表示打开数据库的操作 如只读)
+         */
+        db=SQLiteDatabase.openDatabase(path,null,SQLiteDatabase.OPEN_READONLY);
+        Cursor cursor=db.rawQuery("select * from "+ Constant.TABLE_NAME,null);
+
+        // 2. 讲数据加载到适配器中
+        /*
+        SimpleCursorAdapter(
+            context context 上下文对象,
+            int layout 表示 适配器控件中每项item的布局id,
+            Cursor c 表示Cursor数据源,
+            string[] from 表示Cursor中数据表字段的数组 显示哪些字段就写哪些,
+            int[] to 表示展示字段对应值的控件资源id 表示要展示到的控件上,
+            int flags 设置适配器的标记 SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER 观察者模式=有一个观察者专门观察改变 一旦发现改变就做出应对)
+         */
+        SimpleCursorAdapter adapter=new SimpleCursorAdapter(this, R.layout.list_item, cursor,
+                new String[]{Constant._ID, Constant.NAME, Constant.AGE}, new int[] {R.id.tv_id, R.id.tv_name, R.id.tv_age},
+                SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+
+        // 3. 将适配器的数据加载到控件
+        // 使用simpleCursorAdapter, 主键名字必须是 id, 否则报异常
+        lv.setAdapter(adapter);
+
+    }
+}
+
+```
+# sqlite/cursorAdapter = 适合用于展示数据库内容 不需要把cursor转为list
+```java
+public class CursorAdapterActivity extends AppCompatActivity {
+    private ListView lv;
+    private SQLiteDatabase db;
+
+    @Override
+    protected void onCreate(@Nullable Bundle saveInsanceState){
+        super.onCreate(saveInsanceState);
+        lv = (ListView) findViewById(R.id.lv);
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + File.separator + "info.db";
+        db = SQLiteDatabase.openDatabase(path, null,SQLiteDatabase.OPEN_READONLY);
+        Cursor cursor = db.rawQuery("select * from "+ Constant.TABLE_NAME,null);
+        MyCursorAdapter adapter = new MyCursorAdapter(this,cursor,
+                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        lv.setAdapter(adapter);
+    }
+
+    // cursorAdpater 是抽象类,必须继承才可以实例化
+
+    /**
+     * 以内部类形式定义适配器
+     */
+    public class MyCursorAdapter extends CursorAdapter{
+        // 必须定义构造方法
+        public MyCursorAdapter(Context context, Cursor c, int flags) {
+            super(context, c, flags);
+        }
+
+        /**
+         * 表示创建适配器控件中每个item对应的view对象
+         * @param context 上下文
+         * @param cursor 数据源cursor对象
+         * @param viewGroup 当前item的父布局
+         * @return 每项item的view对象
+         */
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
+            View view = LayoutInflater.from(CursorAdapterActivity.this).inflate(R.layout.list_item,null);
+            return view;
+        }
+
+        /**
+         * 通过newView() 方法确定了每个item展示的view对象 在bindview()中对布局中的控件进行填充
+         * @param view 由newView() 返回每项view对象
+         * @param context 上下文
+         * @param cursor 数据源cursor对象
+         */
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            TextView tv_id = (TextView) view.findViewById(R.id.tv_id);
+            TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
+            TextView tv_age = (TextView) view.findViewById(R.id.tv_age);
+
+            // setText 如果参数是数字就是当成资源id去找资源而不是输出,所以最后+"",转为字符串
+            tv_id.setText(cursor.getString(cursor.getColumnIndex(Constant._ID)) + "");
+            tv_id.setText(cursor.getString(cursor.getColumnIndex(Constant.NAME))+"");
+            tv_id.setText(cursor.getString(cursor.getColumnIndex(Constant.AGE))+"");
+
+
+        }
+
+
+    }
+}
+```
+
+# cursor To List 游标转为数据列表
+```java
+/**
+ * 把Cursor转换为集合对象
+ * @param cursor 需要转换的游标
+ * @return 转换后的集合对象
+ */
+public static List<Person> cursorToList(Cursor cursor){
+    List<Person> list=new ArrayList<>();
+    // moveToNext(A 如果为true表示还有下一条,否则读取完毕
+    while(cursor.moveToNext()){
+        // getColumnIndex(String columnName) 根据参数中指定的字段名称获取字段下标
+        int columnIndex=cursor.getColumnIndex(Constant._ID);
+        // getInt(int ColumnIndex) 根据指定字段下标获取对应int类型的Value
+        int _id=cursor.getInt(columnIndex);
+
+        String name=cursor.getString(cursor.getColumnIndex(Constant.NAME));
+        int age=cursor.getInt(cursor.getColumnIndex(Constant.AGE));
+
+        Person person=new Person(_id,name,age);
+        list.add(person);
+    }
+    return list;
+}
+```
+
+# 执行Sql语句
+```java
+/**
+ * 根据sql语句查询获取cursor对象
+ * @param db 数据库对象
+ * @param sql 查询语句
+ * @param selectionArgs 查询条件的占位符
+ * @return 查询结果
+ */
+public static Cursor selectDataBySql(SQLiteDatabase db,String sql, String[] selectionArgs){
+    Cursor cursor=null;
+    if (cursor!=null){
+        cursor=db.rawQuery(sql,selectionArgs);
+    }
+    return cursor;
+}
+```
+
+# SqliteHelper singleton 单例
+```java
+private static MySqliteHelper helper;
+public static MySqliteHelper getInstance(Context context){
+    if (helper==null){
+        helper = new MySqliteHelper(context);
+    }
+    return helper;
+}
+```
+
+# Sql语句查询
+```java
+db=helper.getWritableDatabase();
+// select _id,name,age  from person where _id>10 group by x having x order by x
+/*
+query(boolean distinct, String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit)
+    String table = 要查询的表
+    String[] = 查询表中的字段; null=查询所有
+    String selection 表示查询条件 where 语句
+    String[] selectionArgs 表示查询占位符的取值
+    String group by 表示分组条件 group by子句
+    String having 表示筛选条件 having子句
+    String orderBy 表示排序条件 order by 子句
+ */
+cursor=db.query(Constant.TABLE_NAME,null,Constant._ID+"=?",new String[]{"10"},null,null,Constant._ID+" desc");
+list=DbManager.cursorToList(cursor);
+for (Person p:list){
+    Log.i("tag",p.toString());
+}
+db.close();
+```
+
+# 通过Api查询数据
+```java
+db=helper.getWritableDatabase();
+// select _id,name,age  from person where _id>10 group by x having x order by x
+/*
+query(boolean distinct, String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit)
+    String table = 要查询的表
+    String[] = 查询表中的字段; null=查询所有
+    String selection 表示查询条件 where 语句
+    String[] selectionArgs 表示查询占位符的取值
+    String group by 表示分组条件 group by子句
+    String having 表示筛选条件 having子句
+    String orderBy 表示排序条件 order by 子句
+ */
+cursor=db.query(Constant.TABLE_NAME,null,Constant._ID+"=?",new String[]{"10"},null,null,Constant._ID+" desc");
+list=DbManager.cursorToList(cursor);
+for (Person p:list){
+    Log.i("tag",p.toString());
+}
+db.close();
+```
+
+# sqlitehelper
+```java
+public class MySqliteHelper extends SQLiteOpenHelper {
+
+    /**
+     * 构造函数
+     * @param context 上下文对象
+     * @param name 表示创建数据库名称
+     * @param factory 游标工厂
+     * @param version 表示创建数据库的版本 >=1
+     */
+    public MySqliteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, name, factory, version);
+    }
+
+    public MySqliteHelper(Context context){
+        super(context,Constant.DATABASE_NAME,null,Constant.DATABASE_VERSION);
+    }
+
+    /**
+     * 当数据库创建时回调的函数
+     * @param sqLiteDatabase 表示数据库对象
+     */
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        Log.i("tag", "-----------onCreate--------");
+        String sql = "create table "+Constant.TABLE_NAME +"("
+                + Constant._ID+" Integer primary key,"
+                + Constant.NAME+" varchar(10), "
+                + Constant.AGE+" Integer"
+                + ")";
+        sqLiteDatabase.execSQL(sql); //执行sql语句
+    }
+
+    /**
+     * 当数据库版本更新时回调的函数
+     * @param sqLiteDatabase 表示数据库对象
+     * @param i 表示数据库旧版本
+     * @param i1 表示数据库新版本
+     */
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        Log.i("tag", "-----------onUpgrade--------");
+    }
+
+    /**
+     * 当数据库打开回调的函数
+     * @param db 数据库对象
+     */
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        Log.i("tag", "-----------onOpen--------");
+    }
+}
+```
+
+# DbManager
+```java
+/**
+ * Created by Administrator on 2017/11/18.
+ * 主要是对数据库操作的工作类
+ * 单例模式
+ */
+
+public class DbManager {
+    private static MySqliteHelper helper;
+    public static MySqliteHelper getInstance(Context context){
+        if(helper==null){
+            helper=new MySqliteHelper(context);
+        }
+        return helper;
+    }
+
+    /**
+     * 根据sql语句在数据库中执行语句
+     * @param db 数据库对象
+     * @param sql sql语句
+     */
+    public static void execSQL(SQLiteDatabase db,String sql){
+        if(db!=null){
+            if (sql!=null && !"".equals(sql)){
+                db.execSQL(sql);
+            }
+        }
+    }
+}
+
+```
 
 # SQLiteOpenHelper
 SQLiteOpenHelper  ->帮助类
