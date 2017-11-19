@@ -31,7 +31,7 @@ public class DbManager {
      */
     public static Cursor selectDataBySql(SQLiteDatabase db,String sql, String[] selectionArgs){
         Cursor cursor=null;
-        if (cursor!=null){
+        if (db!=null){
             cursor=db.rawQuery(sql,selectionArgs);
         }
         return cursor;

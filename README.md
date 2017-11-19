@@ -345,6 +345,12 @@ public static String[] getStorageDirectories()
 }
 ```
 
+# get path like external storage
+```java
+String path = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + File.separator + "info.db";
+```
+
 # acquire different SD card directory
 ```java
 // Primary physical SD-CARD (not emulated)
@@ -510,7 +516,7 @@ values.put(Constant.AGE,30);
 # data type 数据类型
 integer varchar(10)  float double char(10) text
 
-# debug/ android device monitor
+# debug/ android device monitor = .db
 - 位置
   - tools -> android -> android device monitor
 - sqlite 数据库位置
@@ -655,6 +661,10 @@ public void click(View view){
 ```
 
 # debug window =  View > Tool Windows > Debug
+
+# sqlite adapter 适配器 = 接受cursor数据
+# sqlite/simpleCursorAdapter
+# sqlite/cursorAdapter
 
 # SQLiteOpenHelper
 SQLiteOpenHelper  ->帮助类
