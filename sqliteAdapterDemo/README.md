@@ -1,4 +1,4 @@
-# Android基础-初识SQLite github codes
+# Android基础教程-SQLite高级操作 github codes
 这是根据视频编写的源码.
 - 是一个比较规范和良好编程习惯的例子;
 - simpleCursorAdapter 和 cursorAdapter: 适合只用于展示数据库内容

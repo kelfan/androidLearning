@@ -19,6 +19,10 @@ Android 5.1.1, API 22
 ![](assets/README-480d03b1.png)
 [AS #35: Create Settings and Preferences @Android Studio](https://www.youtube.com/watch?v=jzpI9vdeV1A)
 
+# sqliteQueryDemo = cursor to list to display data in sqlite database 
+# sqliteAdapter = use adapter to display data from sqlite database in external storage
+
+
 # files/app>java>com.examples.name.app>MainActivity = 主页面
 # files/app>res>layout>activity_main.xml = 主页面布局
 # files/app>res>values>strings.xml = 存储一些共用的字符串
