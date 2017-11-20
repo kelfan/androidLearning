@@ -1,9 +1,9 @@
-package com.example.chaofanz.mycalendar;
+package com.example.chaofanz.mycalendar.bean;
 
 import java.util.Date;
 
 /**
- * Created by Administrator on 2017/11/17.
+ * Created by vifon on 2017/11/17.
  */
 
 public class Event {
