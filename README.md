@@ -19,7 +19,7 @@ Android 5.1.1, API 22
 ![](assets/README-480d03b1.png)
 [AS #35: Create Settings and Preferences @Android Studio](https://www.youtube.com/watch?v=jzpI9vdeV1A)
 
-# sqliteQueryDemo = cursor to list to display data in sqlite database 
+# sqliteQueryDemo = cursor to list to display data in sqlite database
 # sqliteAdapter = use adapter to display data from sqlite database in external storage
 
 
@@ -844,6 +844,28 @@ public static MySqliteHelper getInstance(Context context){
         helper = new MySqliteHelper(context);
     }
     return helper;
+}
+```
+
+# sqlite 事务的使用 = 批量处理的时候使用增加效率和一致性
+beginTransaction() 开启事务
+setTransactionSuccessful() 设置提交事务
+endTransaction() 关闭事务
+
+```java
+public void insertData(View view){
+    SQLiteDatabase db = helper.getWritableDatabase();
+    // 1. 数据库显式开启事务
+    db.beginTransaction();
+    for (int i=1;i<=100;i++){
+        String sql="insert into "+Constant.TABLE_NAME+" values("+i+",'小慕"+i+"',18)";
+        db.execSQL(sql);
+    }
+    // 2. 提交当前事务
+    db.setTransactionSuccessful();
+    // 3. 关闭事务
+    db.endTransaction();
+    db.close();
 }
 ```
 

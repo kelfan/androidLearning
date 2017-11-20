@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\workspace\androidLearning\sqliteTransaction\app\app.iml" filepath="E:\workspace\androidLearning\sqliteTransaction\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/sqliteTransaction.iml" filepath="$PROJECT_DIR$/sqliteTransaction.iml" />
+      <module fileurl="file://E:\workspace\androidLearning\sqliteTransaction\sqliteTransaction.iml" filepath="E:\workspace\androidLearning\sqliteTransaction\sqliteTransaction.iml" />
     </modules>
   </component>
 </project>

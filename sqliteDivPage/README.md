@@ -1,195 +1,127 @@
-# Android基础-初识SQLite github codes
-这是根据视频编写的源码.
-- 是一个比较规范和良好编程习惯的例子;
-- 主要是对于Sqlite数据库的查询
+# Android基础教程-SQLite高级操作 sqlite数据库分页 github codes
 
-# cursor To List 游标转为数据列表
-```java
-/**
- * 把Cursor转换为集合对象
- * @param cursor 需要转换的游标
- * @return 转换后的集合对象
- */
-public static List<Person> cursorToList(Cursor cursor){
-    List<Person> list=new ArrayList<>();
-    // moveToNext(A 如果为true表示还有下一条,否则读取完毕
-    while(cursor.moveToNext()){
-        // getColumnIndex(String columnName) 根据参数中指定的字段名称获取字段下标
-        int columnIndex=cursor.getColumnIndex(Constant._ID);
-        // getInt(int ColumnIndex) 根据指定字段下标获取对应int类型的Value
-        int _id=cursor.getInt(columnIndex);
+# 思路
+1. 通过adapter显示第一页
+1. 通过setOnScrollListener滚动显示
+  - 每次触发在列表上增加更多的数据
+  - 通过 总条目数/每页显示 获取 页面数
+  - 通过 下标和每页显示 获取每次的显示
+  - 通过 页面数 知道总共可以翻滚的次数
 
-        String name=cursor.getString(cursor.getColumnIndex(Constant.NAME));
-        int age=cursor.getInt(cursor.getColumnIndex(Constant.AGE));
-
-        Person person=new Person(_id,name,age);
-        list.add(person);
-    }
-    return list;
-}
+# sql 语句
+```sql
+select * from Person limit ?,?; -- 当前页码的第一条数据的下标,总共多少条
 ```
 
-# 执行Sql语句
+# 通过adapter绑定数据到页码
 ```java
-/**
- * 根据sql语句查询获取cursor对象
- * @param db 数据库对象
- * @param sql 查询语句
- * @param selectionArgs 查询条件的占位符
- * @return 查询结果
- */
-public static Cursor selectDataBySql(SQLiteDatabase db,String sql, String[] selectionArgs){
-    Cursor cursor=null;
-    if (cursor!=null){
-        cursor=db.rawQuery(sql,selectionArgs);
-    }
-    return cursor;
+super.onCreate(savedInstanceState);
+setContentView(R.layout.activity_main);
+lv = (ListView)findViewById(R.id.lv);
+
+String path= Environment.getExternalStorageDirectory().getAbsolutePath()
+        + File.separator+"info.db";
+db=SQLiteDatabase.openDatabase(path,null,SQLiteDatabase.OPEN_READONLY);
+// 获取数据总条目
+totalNum = DbManager.getDataCount(db, Constant.TABLE_NAME);
+// 根据总条目与每页展示数据条目 获得总页数
+pageNum= (int) Math.ceil(totalNum/(double)pageSize);
+if (currentPage == 1) {
+    totalList = DbManager.getListByCurrentPage(db, Constant.TABLE_NAME, currentPage, pageSize);
 }
+adapter=new MyBaseAdapter(this,totalList);
+lv.setAdapter(adapter);
 ```
 
-# SqliteHelper singleton 单例
+# 滚动分页
 ```java
-private static MySqliteHelper helper;
-public static MySqliteHelper getInstance(Context context){
-    if (helper==null){
-        helper = new MySqliteHelper(context);
-    }
-    return helper;
-}
-```
+lv.setOnScrollListener(new AbsListView.OnScrollListener(){
 
-# Sql语句查询
-```java
-db=helper.getWritableDatabase();
-// select _id,name,age  from person where _id>10 group by x having x order by x
-/*
-query(boolean distinct, String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit)
-    String table = 要查询的表
-    String[] = 查询表中的字段; null=查询所有
-    String selection 表示查询条件 where 语句
-    String[] selectionArgs 表示查询占位符的取值
-    String group by 表示分组条件 group by子句
-    String having 表示筛选条件 having子句
-    String orderBy 表示排序条件 order by 子句
- */
-cursor=db.query(Constant.TABLE_NAME,null,Constant._ID+"=?",new String[]{"10"},null,null,Constant._ID+" desc");
-list=DbManager.cursorToList(cursor);
-for (Person p:list){
-    Log.i("tag",p.toString());
-}
-db.close();
-```
-
-# 通过Api查询数据
-```java
-db=helper.getWritableDatabase();
-// select _id,name,age  from person where _id>10 group by x having x order by x
-/*
-query(boolean distinct, String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit)
-    String table = 要查询的表
-    String[] = 查询表中的字段; null=查询所有
-    String selection 表示查询条件 where 语句
-    String[] selectionArgs 表示查询占位符的取值
-    String group by 表示分组条件 group by子句
-    String having 表示筛选条件 having子句
-    String orderBy 表示排序条件 order by 子句
- */
-cursor=db.query(Constant.TABLE_NAME,null,Constant._ID+"=?",new String[]{"10"},null,null,Constant._ID+" desc");
-list=DbManager.cursorToList(cursor);
-for (Person p:list){
-    Log.i("tag",p.toString());
-}
-db.close();
-```
-
-# sqlitehelper
-```java
-public class MySqliteHelper extends SQLiteOpenHelper {
-
-    /**
-     * 构造函数
-     * @param context 上下文对象
-     * @param name 表示创建数据库名称
-     * @param factory 游标工厂
-     * @param version 表示创建数据库的版本 >=1
-     */
-    public MySqliteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
-    }
-
-    public MySqliteHelper(Context context){
-        super(context,Constant.DATABASE_NAME,null,Constant.DATABASE_VERSION);
-    }
-
-    /**
-     * 当数据库创建时回调的函数
-     * @param sqLiteDatabase 表示数据库对象
-     */
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        Log.i("tag", "-----------onCreate--------");
-        String sql = "create table "+Constant.TABLE_NAME +"("
-                + Constant._ID+" Integer primary key,"
-                + Constant.NAME+" varchar(10), "
-                + Constant.AGE+" Integer"
-                + ")";
-        sqLiteDatabase.execSQL(sql); //执行sql语句
-    }
-
-    /**
-     * 当数据库版本更新时回调的函数
-     * @param sqLiteDatabase 表示数据库对象
-     * @param i 表示数据库旧版本
-     * @param i1 表示数据库新版本
-     */
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        Log.i("tag", "-----------onUpgrade--------");
-    }
-
-    /**
-     * 当数据库打开回调的函数
-     * @param db 数据库对象
-     */
-    @Override
-    public void onOpen(SQLiteDatabase db) {
-        super.onOpen(db);
-        Log.i("tag", "-----------onOpen--------");
-    }
-}
-```
-
-# DbManager
-```java
-/**
- * Created by Administrator on 2017/11/18.
- * 主要是对数据库操作的工作类
- * 单例模式
- */
-
-public class DbManager {
-    private static MySqliteHelper helper;
-    public static MySqliteHelper getInstance(Context context){
-        if(helper==null){
-            helper=new MySqliteHelper(context);
-        }
-        return helper;
-    }
-
-    /**
-     * 根据sql语句在数据库中执行语句
-     * @param db 数据库对象
-     * @param sql sql语句
-     */
-    public static void execSQL(SQLiteDatabase db,String sql){
-        if(db!=null){
-            if (sql!=null && !"".equals(sql)){
-                db.execSQL(sql);
+    public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+        // AbsListView.OnScrollListener.SCROLL_STATE_IDLE 表示滚动条停止时的状态
+        if (isDivPage && AbsListView.OnScrollListener.SCROLL_STATE_IDLE == scrollState) {
+            if (currentPage < pageNum) {
+                currentPage++;
+                // 根据最新的页码加载获取集合存储到数据源中
+                totalList.addAll(DbManager.getListByCurrentPage(db,Constant.TABLE_NAME,
+                        currentPage,pageSize));
+                adapter.notifyDataSetChanged();
             }
         }
     }
+
+    @Override
+    public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        isDivPage=((firstVisibleItem+visibleItemCount)==totalItemCount);
+    }
+});
+```
+
+# adapter 匹配数据到页面
+```java
+@Override
+public View getView(int i, View convertView, ViewGroup parent) {
+    ViewHolder holder=null;
+    if (convertView==null){
+        convertView = LayoutInflater.from(context).inflate(R.layout.list_item, null);
+        holder=new ViewHolder();
+        holder.tv_id = (TextView) convertView.findViewById(R.id.tv_id);
+        holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+        holder.tv_age = (TextView) convertView.findViewById(R.id.tv_age);
+        convertView.setTag(holder);
+    }else{
+        holder=(ViewHolder) convertView.getTag();
+    }
+    holder.tv_id.setText(list.get(i).get_id()+"");
+    holder.tv_name.setText(list.get(i).getName()+"");
+    holder.tv_age.setText(list.get(i).getAge()+"");
+    return convertView;
 }
 
+static class ViewHolder{
+    TextView tv_id,tv_name,tv_age;
+}
+```
+
+# 得到数据总条目
+```java
+/**
+ * 根据数据库以及数据表名称获取表中数据总条目
+ * @param db 数据库对象
+ * @param tablename 数据表名称
+ * @return 数据总条目
+ */
+public static int getDataCount(SQLiteDatabase db, String tablename) {
+    int count=0;
+    if (db != null) {
+        Cursor cursor=db.rawQuery("select * from "+tablename,null);
+        count=cursor.getCount(); //获取cursor中的数据总数
+    }
+    return count;
+}
+```
+
+# 根据页码得到相应的数据集合
+```java
+/**
+ * 根据当前页码查询获取该页码对应的集合数据
+ * @param db 数据库对象
+ * @param tablename 数据表名称
+ * @param CurrentPage 当前页码
+ * @param pageSize 每页展示数据条目
+ * @return 当前页对应D的集合
+
+ */
+public static List<Person> getListByCurrentPage(SQLiteDatabase db,String tablename,int CurrentPage, int pageSize){
+    int index=(CurrentPage-1)*pageSize; // 获取当前页码第一条数据的下标
+    Cursor cursor=null;
+    if (db!=null){
+        String sql = "select * from " + tablename + " limit ?,?";
+        cursor = db.rawQuery(sql,new String[]{index+"",pageSize+""});
+    }
+    return cursorToList(cursor);
+}
 ```
 
 # source
