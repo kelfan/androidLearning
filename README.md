@@ -1,5 +1,6 @@
 # Android Learning
 Codes and examples of android applications.
+2017-11-16 To 
 
 # test device = Samsung note3
 1080*1920 pixels

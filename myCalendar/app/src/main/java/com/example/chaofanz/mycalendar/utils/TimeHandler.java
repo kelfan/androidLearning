@@ -11,16 +11,15 @@ import java.util.TimeZone;
  */
 
 public class TimeHandler {
-    public static String datetimeToString(Date date){
-        DateFormat dateFormat= new SimpleDateFormat(Constant.DATETIME_FORMAT);
-        dateFormat.setTimeZone(TimeZone.getTimeZone(Constant.TIMEZONE));
+    public static String datetimeToString(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.DATETIME_FORMAT);
         String result = dateFormat.format(date);
         return result;
     }
 
     public static Date stringToDatetime(String str) throws ParseException {
         SimpleDateFormat dateFormat= new SimpleDateFormat(Constant.DATETIME_FORMAT);
-        dateFormat.setTimeZone(TimeZone.getTimeZone(Constant.TIMEZONE));
+//        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
         return dateFormat.parse(str);
     }
 }

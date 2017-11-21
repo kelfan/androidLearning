@@ -52,29 +52,36 @@
         android:layout_height="wrap_content">
     </Spinner>
 
-    <DatePicker
-        android:id="@+id/datepickerStart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </DatePicker>
+    <!--<DatePicker-->
+        <!--android:id="@+id/datepickerStart"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+    <!--</DatePicker>-->
 
-    <DatePicker
-        android:id="@+id/datepickerEnd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </DatePicker>
+    <!--<DatePicker-->
+        <!--android:id="@+id/datepickerEnd"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+    <!--</DatePicker>-->
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:text="Create Datebase"
+            android:text="Create"
             android:onClick="createDb"
             android:background="#aa0000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <Button
+            android:id="@+id/btnQuery"
+            android:text="@string/button_query"
+            android:onClick="onClick"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
         <Button
             android:id="@+id/btnAdd"
             android:text="@string/button_add"
@@ -95,12 +102,18 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/list_view"
-        android:choiceMode="singleChoice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <!--<ListView-->
+        <!--android:id="@+id/list_view"-->
+        <!--android:choiceMode="singleChoice"-->
+        <!--android:onClick="onClick"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-    </ListView>
+    <!--</ListView>-->
+
+    <ListView
+        android:id="@+id/eventLv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

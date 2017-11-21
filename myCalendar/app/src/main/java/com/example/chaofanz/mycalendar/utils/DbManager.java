@@ -75,16 +75,14 @@ public class DbManager {
                 String genre = cursor.getString(cursor.getColumnIndex(Constant.EVENT_GENRE));
                 String location = cursor.getString(cursor.getColumnIndex(Constant.EVENT_LOCATION));
 
-                SimpleDateFormat dateFormat= new SimpleDateFormat(Constant.DATETIME_FORMAT);
+                Date plan_start = TimeHandler.stringToDatetime(cursor.getString(cursor.getColumnIndex(Constant.PLAN_START)));
+                Date plan_end = TimeHandler.stringToDatetime(cursor.getString(cursor.getColumnIndex(Constant.PLAN_END)));
+                Date created = TimeHandler.stringToDatetime(cursor.getString(cursor.getColumnIndex(Constant.CREATE_DATE)));
+                Date completed = TimeHandler.stringToDatetime(cursor.getString(cursor.getColumnIndex(Constant.COMPLETED_DATE)));
 
-                    Date plan_start = dateFormat.parse(cursor.getString(cursor.getColumnIndex(Constant.PLAN_START)));
-                    Date plan_end = dateFormat.parse(cursor.getString(cursor.getColumnIndex(Constant.PLAN_END)));
-                    Date created = dateFormat.parse(cursor.getString(cursor.getColumnIndex(Constant.CREATE_DATE)));
-                    Date completed = dateFormat.parse(cursor.getString(cursor.getColumnIndex(Constant.COMPLETED_DATE)));
-
-                Event event = new Event(_id,status,repeat_type,
-                        level,content,detail,genre,location,
-                        plan_start,plan_end,created,completed);
+                Event event = new Event(_id, status, repeat_type,
+                        level, content, detail, genre, location,
+                        plan_start, plan_end, created, completed);
                 list.add(event);
             }
             return list;
@@ -92,5 +90,38 @@ public class DbManager {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * acquire the total number of records based on database and tablename
+     * @param db the database object
+     * @param tablename the tablename
+     * @return the totoal number of records
+     */
+    public static int getDataCount(SQLiteDatabase db, String tablename) {
+        int count=0;
+        if (db != null) {
+            Cursor cursor=db.rawQuery("select * from "+tablename,null);
+            count=cursor.getCount(); //acquire the total number of records in the database
+        }
+        return count;
+    }
+
+    /**
+     * aquire the required data based on the current page
+     * @param db the database object
+     * @param tablename the tablename
+     * @param CurrentPage the page number of current page
+     * @param pageSize the number of records in each page
+     * @return the dataset to display in the current page
+     */
+    public static List<Event> getListByCurrentPage(SQLiteDatabase db,String tablename,int CurrentPage, int pageSize){
+        int index=(CurrentPage-1)*pageSize; // acquire the index of first record of current page
+        Cursor cursor=null;
+        if (db!=null){
+            String sql = "select * from " + tablename + " limit ?,?";
+            cursor = db.rawQuery(sql,new String[]{index+"",pageSize+""});
+        }
+        return cursorToList(cursor);
     }
 }

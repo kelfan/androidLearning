@@ -40,8 +40,8 @@ public class MySqliteHelper extends SQLiteOpenHelper {
                 + Constant.COMPLETED_DATE + " TEXT, "
                 + Constant.EVENT_GENRE + " TEXT, "
                 + Constant.EVENT_STATUS + " INTEGER, "
-                + Constant.REPEAT_TYPE + " INTEGER, "
-                + ");";
+                + Constant.REPEAT_TYPE + " INTEGER "
+                + ")";
         sqLiteDatabase.execSQL(CREATE_TABLE);
     }
 

@@ -1,18 +1,20 @@
 <resources>
     <string name="app_name">myCalendar</string>
+    <string name="button_query">Query</string>
     <string name="button_add">add</string>
     <string name="button_update">update</string>
     <string name="button_delete">delete</string>
-    <string name="event_content">Event Content</string>
-    <string name="event_detail">Event Content</string>
-    <string name="event_genre">Event Content</string>
-    <string name="event_location">Event Content</string>
-    <string name="event_status">Event Content</string>
-    <string name="event_repeat">Event Content</string>
-    <string name="event_level">Event Content</string>
-    <string name="event_start">Event Content</string>
-    <string name="event_end">Event Content</string>
-    <string name="event_created">Event Content</string>
-    <string name="event_completed">Event Content</string>
+
+    <string name="event_content">Content</string>
+    <string name="event_detail">Detail</string>
+    <string name="event_genre">Genre</string>
+    <string name="event_location">Location</string>
+    <string name="event_status">Status</string>
+    <string name="event_repeat">Repeat</string>
+    <string name="event_level">Level</string>
+    <string name="event_start">Start</string>
+    <string name="event_end">End</string>
+    <string name="event_created">Create</string>
+    <string name="event_completed">Complete</string>
 
 </resources>

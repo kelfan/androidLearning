@@ -7,7 +7,7 @@ package com.example.chaofanz.mycalendar.utils;
 public class Constant {
     //database
     public static final int DATABASE_VER = 1;
-    public static final String DATABASE_NAME = "MYCALENDAR";
+    public static final String DATABASE_NAME = "MYCALENDAR.db";
     public static final String TABLE_NAME = "Events";            // it is the table to store information of events
 
     // table
@@ -24,6 +24,5 @@ public class Constant {
     public static final String EVENT_STATUS = "Event_Status";    // put event into different status like 0 uncategories, 1 scheduled, 2 done, 3 delete, 4 working, 5 important, 6 repeat, 7 waiting, 8 keep, 9 others, 10 lunar calendar
     public static final String REPEAT_TYPE = "Repeat_Type";      // event can be repeated by 1 yearly, 2 monthly, 3 weekly, 4 each workday, more number means repeat several days in a week like 13 means repeat each Monday & Wednesday and 234  means repeat on Mon,Tue & Wed
 
-    public static final String DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-    public static final String TIMEZONE="GMT";
+    public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss z";
 }
