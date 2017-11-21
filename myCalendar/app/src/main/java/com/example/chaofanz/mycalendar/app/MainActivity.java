@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.example.chaofanz.mycalendar.R;
@@ -43,7 +44,41 @@ public class MainActivity extends AppCompatActivity {
         attach list Of Event into ListView eventLv
          */
         eventLv = (ListView) findViewById(R.id.eventLv);
-        SQLiteDatabase db = helper.getWritableDatabase();
+        db = helper.getWritableDatabase();
+        // acquire the total number Of records in the Database
+        totalNum = DbManager.getDataCount(db, Constant.TABLE_NAME);
+        // acquire the total number Of pages based on the total number Of records & number of records in each Page
+        pageNum = (int) Math.ceil(totalNum/(double)pageSize);
+        if (currentPage == 1) {
+            totalList = DbManager.getListByCurrentPage(db,
+                    Constant.TABLE_NAME, currentPage, pageSize);
+        }
+        adapter = new EventListAdapater(this, totalList);
+        eventLv.setAdapter(adapter);
+
+        eventLv.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+                // AbsListView.OnScrollListener.SCROLL_STATE_IDLE means the status when the scroll is stoped
+                if (isDivPage && AbsListView.OnScrollListener.SCROLL_STATE_IDLE == scrollState) {
+                    if (currentPage < pageNum) {
+                        currentPage++;
+                        // add new dataset into the list based on the new Page number
+                        totalList.addAll(DbManager.getListByCurrentPage(db, Constant.TABLE_NAME,
+                                currentPage, pageSize));
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView,
+                                 int firstVisibleItem,
+                                 int visibleItemCount,
+                                 int totalItemCount) {
+                isDivPage = ((firstVisibleItem + visibleItemCount) == totalItemCount);
+            }
+        });
     }
 
     /**
