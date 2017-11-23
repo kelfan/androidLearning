@@ -13,6 +13,8 @@
     <string name="event_repeat">Repeat</string>
     <string name="event_level">Level</string>
     <string name="event_start">Start</string>
+    <string name="event_start_date">event date</string>
+    <string name="event_start_time">event time</string>
     <string name="event_end">End</string>
     <string name="event_created">Create</string>
     <string name="event_completed">Complete</string>

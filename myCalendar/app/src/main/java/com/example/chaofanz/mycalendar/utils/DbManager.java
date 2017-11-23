@@ -3,6 +3,7 @@ package com.example.chaofanz.mycalendar.utils;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.chaofanz.mycalendar.bean.Event;
 
@@ -75,10 +76,28 @@ public class DbManager {
                 String genre = cursor.getString(cursor.getColumnIndex(Constant.EVENT_GENRE));
                 String location = cursor.getString(cursor.getColumnIndex(Constant.EVENT_LOCATION));
 
-                Date plan_start = TimeHandler.stringToDatetime(cursor.getString(cursor.getColumnIndex(Constant.PLAN_START)));
-                Date plan_end = TimeHandler.stringToDatetime(cursor.getString(cursor.getColumnIndex(Constant.PLAN_END)));
-                Date created = TimeHandler.stringToDatetime(cursor.getString(cursor.getColumnIndex(Constant.CREATE_DATE)));
-                Date completed = TimeHandler.stringToDatetime(cursor.getString(cursor.getColumnIndex(Constant.COMPLETED_DATE)));
+                String start_str = cursor.getString(cursor.getColumnIndex(Constant.PLAN_START));
+                String end_str = cursor.getString(cursor.getColumnIndex(Constant.PLAN_END));
+                String create_str = cursor.getString(cursor.getColumnIndex(Constant.CREATE_DATE));
+                String complete_str = cursor.getString(cursor.getColumnIndex(Constant.COMPLETED_DATE));
+
+                Date plan_start = null;
+                Date plan_end = null;
+                Date created = null;
+                Date completed = null;
+
+                if ("".equals(start_str)) {
+                    plan_start = TimeHandler.stringToDatetime(start_str);
+                }
+                if ("".equals(end_str)) {
+                    plan_end = TimeHandler.stringToDatetime(end_str);
+                }
+                if ("".equals(create_str)) {
+                    created = TimeHandler.stringToDatetime(create_str);
+                }
+                if ("".equals(complete_str)) {
+                    completed = TimeHandler.stringToDatetime(complete_str);
+                }
 
                 Event event = new Event(_id, status, repeat_type,
                         level, content, detail, genre, location,
@@ -88,6 +107,7 @@ public class DbManager {
             return list;
         } catch (ParseException e) {
             e.printStackTrace();
+            Log.i("DbManager","wrong dateformat in parsing in DbManager");
         }
         return null;
     }
@@ -119,7 +139,9 @@ public class DbManager {
         int index=(CurrentPage-1)*pageSize; // acquire the index of first record of current page
         Cursor cursor=null;
         if (db!=null){
-            String sql = "select * from " + tablename + " limit ?,?";
+            String sql = "select * from " + tablename
+                    + " order by " + Constant.EVENT_ID + " desc" +
+                    " limit ?,?";
             cursor = db.rawQuery(sql,new String[]{index+"",pageSize+""});
         }
         return cursorToList(cursor);

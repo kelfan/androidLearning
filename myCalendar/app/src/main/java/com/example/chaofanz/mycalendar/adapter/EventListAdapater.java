@@ -58,18 +58,16 @@ public class EventListAdapater extends BaseAdapter {
             holder = new ViewHolder();
             holder.tv_content = (TextView) view.findViewById(R.id.tv_content);
             holder.tv_genre = (TextView) view.findViewById(R.id.tv_genre);
-            holder.tv_level = (TextView) view.findViewById(R.id.tv_level);
             view.setTag(holder);
         }else{
             holder = (ViewHolder) view.getTag();
         }
-        holder.tv_level.setText(list.get(i).getLevel()+"");
         holder.tv_content.setText(list.get(i).getContent());
         holder.tv_genre.setText(list.get(i).getGenre());
         return view;
     }
 
     static class ViewHolder{
-        TextView tv_genre, tv_content, tv_level;
+        TextView tv_genre, tv_content;
     }
 }
