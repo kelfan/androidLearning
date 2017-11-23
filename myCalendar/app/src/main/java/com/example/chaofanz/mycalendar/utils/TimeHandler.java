@@ -3,6 +3,7 @@ package com.example.chaofanz.mycalendar.utils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -21,5 +22,13 @@ public class TimeHandler {
         SimpleDateFormat dateFormat= new SimpleDateFormat(Constant.DATETIME_FORMAT);
 //        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
         return dateFormat.parse(str);
+    }
+
+    public static String getCurrentDateTimeString(){
+        return "'"+ TimeHandler.datetimeToString(Calendar.getInstance().getTime())+ "'";
+    }
+
+    public static Date getCurrentDateTime(){
+        return Calendar.getInstance().getTime();
     }
 }

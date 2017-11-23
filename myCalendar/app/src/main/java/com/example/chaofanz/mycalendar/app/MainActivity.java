@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.chaofanz.mycalendar.R;
@@ -33,12 +34,18 @@ public class MainActivity extends AppCompatActivity {
     private List<Event> totalList; // List Of events from Database
     private EventListAdapater adapter;
     private Boolean isDivPage; // A Boolean Variable To check whether is there any further Page division
+    EditText edtContent,edtDetail,edtDate,edtTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         helper= DbManager.getInstance(this);
+
+        edtContent = findViewById(R.id.edtContent);
+        edtDetail = findViewById(R.id.edtDetail);
+        edtDate = findViewById(R.id.edtDate);
+        edtTime = findViewById(R.id.edtTime);
 
         /*
         attach list Of Event into ListView eventLv
@@ -116,6 +123,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("tag",event.toString());
                 }
                 db.close();
+                break;
+            case R.id.btnAdd:
+                String content = edtContent.getText().toString();
+                helper.addEvent(content);
                 break;
         }
     }

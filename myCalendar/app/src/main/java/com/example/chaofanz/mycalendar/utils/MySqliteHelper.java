@@ -26,6 +26,8 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 
     }
 
+
+    // id, start, end, content, detail, location, level, create, complete, genre, status, repeat
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String CREATE_TABLE = "CREATE TABLE " + Constant.TABLE_NAME + "("
@@ -51,52 +53,67 @@ public class MySqliteHelper extends SQLiteOpenHelper {
     }
 
     // CRUD Events
-    public void addEvent(Event event){
+    public void addEvent(Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Constant.EVENT_ID,event.getId());
-        values.put(Constant.PLAN_START,event.getPlan_start().toString());
-        values.put(Constant.PLAN_END,event.getPlan_end().toString());
-        values.put(Constant.EVENT_CONTENT,event.getContent());
-        values.put(Constant.EVENT_DETAIL,event.getDetail());
-        values.put(Constant.EVENT_LOCATION,event.getLocation());
-        values.put(Constant.EVENT_LEVEL,event.getLevel());
-        values.put(Constant.CREATE_DATE,event.getCreated().toString());
-        values.put(Constant.COMPLETED_DATE,event.getCompleted().toString());
-        values.put(Constant.EVENT_GENRE,event.getGenre());
-        values.put(Constant.EVENT_STATUS,event.getStatus());
-        values.put(Constant.REPEAT_TYPE,event.getRepeat_type());
+        values.put(Constant.EVENT_ID, event.getId());
+        values.put(Constant.PLAN_START, event.getPlan_start().toString());
+        values.put(Constant.PLAN_END, event.getPlan_end().toString());
+        values.put(Constant.EVENT_CONTENT, event.getContent());
+        values.put(Constant.EVENT_DETAIL, event.getDetail());
+        values.put(Constant.EVENT_LOCATION, event.getLocation());
+        values.put(Constant.EVENT_LEVEL, event.getLevel());
+        values.put(Constant.CREATE_DATE, event.getCreated().toString());
+        values.put(Constant.COMPLETED_DATE, event.getCompleted().toString());
+        values.put(Constant.EVENT_GENRE, event.getGenre());
+        values.put(Constant.EVENT_STATUS, event.getStatus());
+        values.put(Constant.REPEAT_TYPE, event.getRepeat_type());
 
         db.insert(Constant.TABLE_NAME, null, values);
         db.close();
     }
 
-    public int updateEvent(Event event){
+    // id, start, end, content, detail, location, level, create, complete, genre, status, repeat
+    public void addEvent(String content) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Constant.EVENT_ID,event.getId());
-        values.put(Constant.PLAN_START,event.getPlan_start().toString());
-        values.put(Constant.PLAN_END,event.getPlan_end().toString());
-        values.put(Constant.EVENT_CONTENT,event.getContent());
-        values.put(Constant.EVENT_DETAIL,event.getDetail());
-        values.put(Constant.EVENT_LOCATION,event.getLocation());
-        values.put(Constant.EVENT_LEVEL,event.getLevel());
-        values.put(Constant.CREATE_DATE,event.getCreated().toString());
-        values.put(Constant.COMPLETED_DATE,event.getCompleted().toString());
-        values.put(Constant.EVENT_GENRE,event.getGenre());
-        values.put(Constant.EVENT_STATUS,event.getStatus());
-        values.put(Constant.REPEAT_TYPE,event.getRepeat_type());
-
-        return db.update(Constant.TABLE_NAME,values,Constant.EVENT_ID+" =?", new String[]{String.valueOf(event.getId())});
+        values.put(Constant.EVENT_CONTENT, content);
+        values.put(Constant.EVENT_LEVEL, 0);
+        values.put(Constant.CREATE_DATE, TimeHandler.getCurrentDateTimeString());
+        values.put(Constant.EVENT_GENRE, "others");
+        values.put(Constant.EVENT_STATUS,0);
+        values.put(Constant.REPEAT_TYPE,0);
+        long result = db.insert(Constant.TABLE_NAME,null,values);
+        db.close();
+//        return result;
     }
 
-    public void deleteEvent(Event event){
+    public int updateEvent(Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(Constant.TABLE_NAME, Constant.EVENT_ID+" =?", new String[]{String.valueOf(event.getId())});
+        ContentValues values = new ContentValues();
+        values.put(Constant.EVENT_ID, event.getId());
+        values.put(Constant.PLAN_START, event.getPlan_start().toString());
+        values.put(Constant.PLAN_END, event.getPlan_end().toString());
+        values.put(Constant.EVENT_CONTENT, event.getContent());
+        values.put(Constant.EVENT_DETAIL, event.getDetail());
+        values.put(Constant.EVENT_LOCATION, event.getLocation());
+        values.put(Constant.EVENT_LEVEL, event.getLevel());
+        values.put(Constant.CREATE_DATE, event.getCreated().toString());
+        values.put(Constant.COMPLETED_DATE, event.getCompleted().toString());
+        values.put(Constant.EVENT_GENRE, event.getGenre());
+        values.put(Constant.EVENT_STATUS, event.getStatus());
+        values.put(Constant.REPEAT_TYPE, event.getRepeat_type());
+
+        return db.update(Constant.TABLE_NAME, values, Constant.EVENT_ID + " =?", new String[]{String.valueOf(event.getId())});
+    }
+
+    public void deleteEvent(Event event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Constant.TABLE_NAME, Constant.EVENT_ID + " =?", new String[]{String.valueOf(event.getId())});
         db.close();
     }
 
-    public Event getEvent(int id){
+    public Event getEvent(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.query(
                 Constant.TABLE_NAME,
@@ -114,9 +131,9 @@ public class MySqliteHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         try {
-            Event event = new Event(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2),
-                    cursor.getInt(3),cursor.getString(4),cursor.getString(5),
-                    cursor.getString(6),cursor.getString(7),
+            Event event = new Event(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
+                    cursor.getInt(3), cursor.getString(4), cursor.getString(5),
+                    cursor.getString(6), cursor.getString(7),
                     TimeHandler.stringToDatetime(cursor.getString(8)),
                     TimeHandler.stringToDatetime(cursor.getString(9)),
                     TimeHandler.stringToDatetime(cursor.getString(10)),

@@ -16,12 +16,12 @@ public class Event {
 
     public Event(int id, int status, int repeat_type, int level, String content, String detail, String genre, String location, Date plan_start, Date plan_end, Date created, Date completed) {
         this.id = id;
-        this.status = status;
-        this.repeat_type = repeat_type;
-        this.level = level;
+        this.status = status; // status like 0 uncategories, 1 scheduled, 2 done, 3 delete, 4 working, 5 important, 6 repeat, 7 waiting, 8 keep, 9 others, 10 lunar calendar
+        this.repeat_type = repeat_type; // 0 non-repeat 1 yearly, 2 monthly, 3 weekly, 4 each workday, more number means repeat several days in a week like 13 means repeat each Monday & Wednesday
+        this.level = level; // the higher the number the bigger the things
         this.content = content;
         this.detail = detail;
-        this.genre = genre;
+        this.genre = genre; // default others
         this.location = location;
         this.plan_start = plan_start;
         this.plan_end = plan_end;
