@@ -5,9 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 
 import com.example.chaofanz.mycalendar.bean.Event;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
@@ -22,7 +24,8 @@ public class MySqliteHelper extends SQLiteOpenHelper {
     }
 
     public MySqliteHelper(Context context) {
-        super(context, Constant.DATABASE_NAME, null, Constant.DATABASE_VER);
+//        super(context, Environment.getExternalStorageDirectory()+ File.separator+ "05fanNotes"+ File.separator + Constant.DATABASE_NAME, null, Constant.DATABASE_VER);
+        super(context, System.getenv("SECONDARY_STORAGE")+ File.separator+ "05fanNotes"+ File.separator+ "calendarDb"+ File.separator + Constant.DATABASE_NAME, null, Constant.DATABASE_VER);
 
     }
 
@@ -74,20 +77,6 @@ public class MySqliteHelper extends SQLiteOpenHelper {
     }
 
     // id, start, end, content, detail, location, level, create, complete, genre, status, repeat
-    public long addEvent(String content) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(Constant.EVENT_CONTENT, content);
-//        values.put(Constant.EVENT_LEVEL, 0);
-//        values.put(Constant.CREATE_DATE, TimeHandler.getCurrentDateTimeString());
-//        values.put(Constant.EVENT_GENRE, "others");
-//        values.put(Constant.EVENT_STATUS,0);
-//        values.put(Constant.REPEAT_TYPE,0);
-//        long result = db.insert(Constant.TABLE_NAME,null,values);
-//        db.close();
-          return addEvent(content,null,null,null,null,null,null,0,0,0);
-    }
-
     public long addEvent(String content,String genre,
                          String start, String end,
                          String detail,
@@ -167,19 +156,6 @@ public class MySqliteHelper extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
             Event event = DbManager.cursorToEvent(cursor);
-//        try {
-//            Event event = new Event(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
-//                    cursor.getInt(3), cursor.getString(4), cursor.getString(5),
-//                    cursor.getString(6), cursor.getString(7),
-//                    TimeHandler.stringToDatetime(cursor.getString(8)),
-//                    TimeHandler.stringToDatetime(cursor.getString(9)),
-//                    TimeHandler.stringToDatetime(cursor.getString(10)),
-//                    TimeHandler.stringToDatetime(cursor.getString(11))
-//            );
             return event;
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
     }
 }
