@@ -25,10 +25,12 @@ public class TimeHandler {
     }
 
     public static String getCurrentDateTimeString(){
-        return "'"+ TimeHandler.datetimeToString(Calendar.getInstance().getTime())+ "'";
+        return TimeHandler.datetimeToString(Calendar.getInstance().getTime());
     }
 
     public static Date getCurrentDateTime(){
         return Calendar.getInstance().getTime();
     }
+
+    public static String getTimezoneString(){ return new SimpleDateFormat("z").format(Calendar.getInstance().getTime()); }
 }

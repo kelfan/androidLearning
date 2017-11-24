@@ -11,6 +11,24 @@ public class Event {
     private String content, detail, genre, location;
     private Date plan_start, plan_end, created, completed;
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", status=" + status +
+                ", repeat_type=" + repeat_type +
+                ", level=" + level +
+                ", content='" + content + '\'' +
+                ", detail='" + detail + '\'' +
+                ", genre='" + genre + '\'' +
+                ", location='" + location + '\'' +
+                ", plan_start=" + plan_start +
+                ", plan_end=" + plan_end +
+                ", created=" + created +
+                ", completed=" + completed +
+                '}';
+    }
+
     public Event() {
     }
 

@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\workspace\androidLearning\datepickerTimepickerDemo\app\app.iml" filepath="E:\workspace\androidLearning\datepickerTimepickerDemo\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/datepickerTimepickerDemo.iml" filepath="$PROJECT_DIR$/datepickerTimepickerDemo.iml" />
+      <module fileurl="file://E:\workspace\androidLearning\datepickerTimepickerDemo\datepickerTimepickerDemo.iml" filepath="E:\workspace\androidLearning\datepickerTimepickerDemo\datepickerTimepickerDemo.iml" />
     </modules>
   </component>
 </project>

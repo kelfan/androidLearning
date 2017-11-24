@@ -74,18 +74,55 @@ public class MySqliteHelper extends SQLiteOpenHelper {
     }
 
     // id, start, end, content, detail, location, level, create, complete, genre, status, repeat
-    public void addEvent(String content) {
+    public long addEvent(String content) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put(Constant.EVENT_CONTENT, content);
+//        values.put(Constant.EVENT_LEVEL, 0);
+//        values.put(Constant.CREATE_DATE, TimeHandler.getCurrentDateTimeString());
+//        values.put(Constant.EVENT_GENRE, "others");
+//        values.put(Constant.EVENT_STATUS,0);
+//        values.put(Constant.REPEAT_TYPE,0);
+//        long result = db.insert(Constant.TABLE_NAME,null,values);
+//        db.close();
+          return addEvent(content,null,null,null,null,null,null,0,0,0);
+    }
+
+    public long addEvent(String content,String genre,
+                         String start, String end,
+                         String detail,
+                         String location,
+                         String complete,
+                         int level, int status, int repeat) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Constant.EVENT_CONTENT, content);
-        values.put(Constant.EVENT_LEVEL, 0);
+        values.put(Constant.EVENT_LEVEL, level);
         values.put(Constant.CREATE_DATE, TimeHandler.getCurrentDateTimeString());
-        values.put(Constant.EVENT_GENRE, "others");
-        values.put(Constant.EVENT_STATUS,0);
-        values.put(Constant.REPEAT_TYPE,0);
+        if (genre == null){
+            genre = "others";
+        }
+        values.put(Constant.EVENT_GENRE, genre);
+        values.put(Constant.EVENT_STATUS,status);
+        values.put(Constant.REPEAT_TYPE,repeat);
+        if (start != null){
+            values.put(Constant.PLAN_START,start);
+        }
+        if (end != null){
+            values.put(Constant.PLAN_END,end);
+        }
+        if (detail != null) {
+            values.put(Constant.EVENT_DETAIL,detail);
+        }
+        if (location != null) {
+            values.put(Constant.EVENT_LOCATION,location);
+        }
+        if (complete != null) {
+            values.put(Constant.COMPLETED_DATE,complete);
+        }
         long result = db.insert(Constant.TABLE_NAME,null,values);
         db.close();
-//        return result;
+        return result;
     }
 
     public int updateEvent(Event event) {
@@ -129,20 +166,20 @@ public class MySqliteHelper extends SQLiteOpenHelper {
         );
         if (cursor != null)
             cursor.moveToFirst();
-
-        try {
-            Event event = new Event(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
-                    cursor.getInt(3), cursor.getString(4), cursor.getString(5),
-                    cursor.getString(6), cursor.getString(7),
-                    TimeHandler.stringToDatetime(cursor.getString(8)),
-                    TimeHandler.stringToDatetime(cursor.getString(9)),
-                    TimeHandler.stringToDatetime(cursor.getString(10)),
-                    TimeHandler.stringToDatetime(cursor.getString(11))
-            );
+            Event event = DbManager.cursorToEvent(cursor);
+//        try {
+//            Event event = new Event(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2),
+//                    cursor.getInt(3), cursor.getString(4), cursor.getString(5),
+//                    cursor.getString(6), cursor.getString(7),
+//                    TimeHandler.stringToDatetime(cursor.getString(8)),
+//                    TimeHandler.stringToDatetime(cursor.getString(9)),
+//                    TimeHandler.stringToDatetime(cursor.getString(10)),
+//                    TimeHandler.stringToDatetime(cursor.getString(11))
+//            );
             return event;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
     }
 }

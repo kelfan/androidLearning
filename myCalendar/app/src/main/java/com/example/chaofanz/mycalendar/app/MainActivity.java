@@ -1,5 +1,7 @@
 package com.example.chaofanz.mycalendar.app;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -7,8 +9,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.chaofanz.mycalendar.R;
 import com.example.chaofanz.mycalendar.adapter.EventListAdapater;
@@ -20,6 +25,7 @@ import com.example.chaofanz.mycalendar.utils.TimeHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private EventListAdapater adapter;
     private Boolean isDivPage; // A Boolean Variable To check whether is there any further Page division
     EditText edtContent,edtDetail,edtDate,edtTime;
+    private int day,month,year,hour,minute; // Variable To record Date and Time
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         // acquire the total number Of pages based on the total number Of records & number of records in each Page
         pageNum = (int) Math.ceil(totalNum/(double)pageSize);
         if (currentPage == 1) {
-            totalList = DbManager.getListByCurrentPage(db,
+            totalList = DbManager.getListByCurrentPage(
                     Constant.TABLE_NAME, currentPage, pageSize);
         }
         adapter = new EventListAdapater(this, totalList);
@@ -71,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     if (currentPage < pageNum) {
                         currentPage++;
                         // add new dataset into the list based on the new Page number
-                        totalList.addAll(DbManager.getListByCurrentPage(db, Constant.TABLE_NAME,
+                        totalList.addAll(DbManager.getListByCurrentPage(Constant.TABLE_NAME,
                                 currentPage, pageSize));
                         adapter.notifyDataSetChanged();
                     }
@@ -93,20 +100,7 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void createDb(View view){
-        SQLiteDatabase db = helper.getWritableDatabase();
-        String currentDatetime = "'"+ TimeHandler.datetimeToString(Calendar.getInstance().getTime())+ "'";
-        for (int i=1;i<=30;i++) {
-            String sql = "insert into "+Constant.TABLE_NAME+" values(null,"
-                    +currentDatetime+", "
-                    +currentDatetime+", 'content', 'detail', 'Hobart', "
-                    +i+", "
-                    +currentDatetime+", "
-                    +currentDatetime+", 'life',"
-                    +i+","
-                    +i+" )";
-            db.execSQL(sql);
-        }
-        db.close();
+        DbManager.createTestDataset(view);
     }
 
     public void onClick(View view) {
@@ -126,7 +120,53 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btnAdd:
                 String content = edtContent.getText().toString();
-                helper.addEvent(content);
+                String detail = edtDetail.getText().toString();
+                String startDate = edtDate.getText().toString();
+                String startTime = edtTime.getText().toString();
+                String startStr = startDate;
+                if (!"".equals(startDate)) {
+                    if ("".equals(startTime)) {
+                        startStr = startDate + " 00:00:00 " + TimeHandler.getTimezoneString();
+                    } else {
+                        startStr = startDate + " "+ startTime + ":00 "+TimeHandler.getTimezoneString();
+                    }
+                }
+                if (!"".equals(content)) {
+                    long result = DbManager.addEvent(content,null,detail,startStr,null,null,null,0,0,0);
+                    if (result > 0) {
+                        Toast.makeText(MainActivity.this, "insert data successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "fail to insert data", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Content cannot be empty", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.btnDate:
+                Calendar c = Calendar.getInstance();
+                day = c.get(Calendar.DAY_OF_MONTH);
+                month = c.get(Calendar.MONTH);
+                year = c.get(Calendar.YEAR);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                        edtDate.setText(year+"-"+(monthOfYear+1)+"-"+dayOfMonth);
+                    }
+                },year,month,day);
+                datePickerDialog.show();
+                break;
+            case R.id.btnTime:
+                c = Calendar.getInstance();
+                hour = c.get(Calendar.HOUR_OF_DAY);
+                minute = c.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+                        edtTime.setText(hourOfDay+":"+minutes);
+                    }
+                },hour,minute,false);
+                timePickerDialog.show();
                 break;
         }
     }
