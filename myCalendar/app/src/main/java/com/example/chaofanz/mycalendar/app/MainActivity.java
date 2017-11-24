@@ -141,6 +141,9 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(MainActivity.this, "Content cannot be empty", Toast.LENGTH_SHORT).show();
                 }
+                Collections.reverse(totalList);
+                totalList.add(DbManager.getLastEvent(Constant.TABLE_NAME));
+                Collections.reverse(totalList);
                 break;
             case R.id.btnDate:
                 Calendar c = Calendar.getInstance();
