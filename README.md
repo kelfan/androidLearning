@@ -3,8 +3,10 @@ Codes and examples of android applications.
 2017-11-16 To
 
 # test device = Samsung note3
-1080*1920 pixels
+1080X1920 pixels
 Android 5.1.1, API 22
+Galaxy Note III Released: 2013. Resolution: 1920×1080 5.7″ display. Full HD (FHD) 1920×1080
+pixel density 386.47 PPI
 
 # myfirstapp = intent
 - This simplest example includes about how to transfer message between two activities;
@@ -23,13 +25,141 @@ Android 5.1.1, API 22
 # sqliteQueryDemo = cursor to list to display data in sqlite database
 # sqliteAdapter = use adapter to display data from sqlite database in external storage
 
+# 控件/textView = 显示文本 
+# 控件/editText = 输入文本框 
+属性 
+    hint 提示信息
+    inputType 输入类型 
+# 控件/imageView = 显示图片 
+属性 
+    src 显示图
+    background 背景图 
+根据屏幕分辨率调用不同文件夹下相同名字的图片->不同分辨率显示
+# 控件/button = 可以点击,有文本属性 
+# 控件/imageButton = 可以点击,有图片属性
+# 控件/autoCompleteTextView = 根据用户输入显示可选项 
+```xml
+<AutoCompleteTextView
+    android:completionThreshold="3" //输入第3个字符后开始提示可选项
+    android:id="@+id/autoCompleteTextView1"
+    android:hint="please input the search keyword"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+```
+
+```java 
+private AutoCompleteTextView acTextView;
+private String[] res = {"beijing1","beijing2","shanghai1","shanghai2"};
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    /**
+     * 1. initial controls
+     * 2. need an adapter
+     * 3. Create dataset -> which match with Key word
+     * 4. binding adapter & autoCompleteTextView
+     */
+
+    acTextView = findViewById(R.id.autoCompleteTextView1);
+    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+            android.R.layout.simple_list_item_1,res);
+    acTextView.setAdapter(adapter);
+}
+```
+
+# 控件/multiAutoCompleteTextView = 根据用户输入多次匹配可选项 
+
 
 # files/app>java>com.examples.name.app>MainActivity = 主页面
 # files/app>res>layout>activity_main.xml = 主页面布局
 # files/app>res>values>strings.xml = 存储一些共用的字符串
 
 
+# 监听事件实现的几种写法 listener 
+## 1. 匿名内部类的实现 = 一次只在一个控件上实现监听 
+```java 
+private Button button1;
+button1 = findViewById(R.id.button1);
+button1.setOnClickListener(new OnClickListener(){
+    @Override
+    public void onClick(View arg0){
+        system.out.println("按钮被点击了");
+    }
+});
+```
+## 2. 独立类的实现 = 多个控件共同实现 
+```java 
+private Button button1;
+button1 = findViewById(R.id.button1);
+button1.setOnClickListener(new MyOnClickListener(){
+    @Override
+    public void onClick(View v){
+        super.onClick(v);
+    }
+});
+
+class MyOnClickListener implements OnClickListener{
+    @Override
+    public void onClick(View v){
+        // 共同的代码 
+    }
+}
+```
+## 3. 实现接口的方式来实现 = 对当前类实现绑定
+```java 
+public class MainActivity extends Activity implements OnClickListener{
+    private Button button1;
+    button1 = findViewById(R.id.button1);
+    button1.setOnClickListener(this);
+
+    @Override
+    public void onClick(View v){
+        // 按钮实现的代码 
+    }
+}
+```
+
 # Match Constraints = 横向自动延伸
+
+# 单位/sp = 多用在文字上 
+# 单位/dp = 在不同分辨率下等比缩放
+
+# marquee Text 走马灯效果 TextView
+```xml
+<com.kelfan.marqueetextviewdemo.MarqueeText
+    android:singleLine="true" // 单行显示
+    android:ellipsize="marquee" // 去除最后的 ...
+    android:focusable="true" // 当前可以focus
+    android:focusableInTouchMode="true" // 当前focus
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/long_text" />
+```
+一个页面多个走马灯需要下面的语句 
+```java 
+public class MarqueeText extends android.support.v7.widget.AppCompatTextView {
+
+
+    public MarqueeText(Context context) {
+        super(context);
+    }
+
+    public MarqueeText(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public MarqueeText(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    public boolean isFocused() {
+        return true;
+    }
+}
+```
 
 # file 文件的各种操作
 [File google](https://developer.android.com/reference/java/io/File.html)

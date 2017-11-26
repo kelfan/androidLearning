@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MarqueeTextViewDemo</string>
+    <string name="long_text">this is a long Text.this is a long Text.this is a long Text.this is a long Text.</string>
+</resources>
