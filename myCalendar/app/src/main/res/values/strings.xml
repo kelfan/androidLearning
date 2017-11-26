@@ -4,6 +4,7 @@
     <string name="button_add">add</string>
     <string name="button_update">update</string>
     <string name="button_delete">delete</string>
+    <string name="button_new">new</string>
 
     <string name="event_content">Content</string>
     <string name="event_detail">Detail</string>
@@ -18,5 +19,8 @@
     <string name="event_end">End</string>
     <string name="event_created">Create</string>
     <string name="event_completed">Complete</string>
+    <string name="event_date">Date</string>
+    <string name="event_time">Time</string>
+
 
 </resources>

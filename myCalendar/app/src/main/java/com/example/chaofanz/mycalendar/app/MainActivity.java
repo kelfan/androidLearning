@@ -2,6 +2,7 @@ package com.example.chaofanz.mycalendar.app;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -138,12 +139,12 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(MainActivity.this, "fail to insert data", Toast.LENGTH_SHORT).show();
                     }
+                    Collections.reverse(totalList);
+                    totalList.add(DbManager.getLastEvent(Constant.TABLE_NAME));
+                    Collections.reverse(totalList);
                 } else {
                     Toast.makeText(MainActivity.this, "Content cannot be empty", Toast.LENGTH_SHORT).show();
                 }
-                Collections.reverse(totalList);
-                totalList.add(DbManager.getLastEvent(Constant.TABLE_NAME));
-                Collections.reverse(totalList);
                 break;
             case R.id.btnDate:
                 Calendar c = Calendar.getInstance();
@@ -170,6 +171,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 },hour,minute,false);
                 timePickerDialog.show();
+                break;
+            case R.id.btnNew:
+                Intent newIntent = new Intent(MainActivity.this,AddActivity.class);
+                startActivity(newIntent);
                 break;
         }
     }
