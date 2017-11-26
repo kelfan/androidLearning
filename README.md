@@ -2,6 +2,10 @@
 Codes and examples of android applications.
 2017-11-16 To
 
+# working 
+https://www.youtube.com/results?search_query=android+constraintlayout+tutorial
+https://www.youtube.com/results?search_query=android+modern+design
+
 # test device = Samsung note3
 1080X1920 pixels
 Android 5.1.1, API 22
@@ -30,6 +34,19 @@ pixel density 386.47 PPI
 属性 
     hint 提示信息
     inputType 输入类型 
+```xml
+<EditText
+    android:id="@+id/msg"
+    android:inputType="number"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="top"
+    android:hint="@string/to"
+    android:inputType="textMultiLine"
+    android:minLines="5"
+    android:text="">
+</EditText>
+```
 # 控件/imageView = 显示图片 
 属性 
     src 显示图
@@ -70,7 +87,125 @@ protected void onCreate(Bundle savedInstanceState) {
 ```
 
 # 控件/multiAutoCompleteTextView = 根据用户输入多次匹配可选项 
+activity_main.xml
+```xml
+    <MultiAutoCompleteTextView
+        android:id="@+id/multiAutoCompleteTextView1"
+        android:hint="please input receivers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+```
 
+mainactivity.java
+```java 
+    private MultiAutoCompleteTextView macTextView;
+    private String[] res = {"beijing1","beijing2","shanghai1","shanghai2"};
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        /** multiAutoCompleteTextView
+         * 1. initial controls
+         * 2. need an adapter
+         * 3. Create dataset -> which match with Key word
+         * 4. binding adapter & autoCompleteTextView
+         * 5. setup separator
+         */
+
+        macTextView = findViewById(R.id.multiAutoCompleteTextView1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,res);
+        macTextView.setAdapter(adapter);
+        // set comma as separator
+        macTextView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+    }
+```
+
+# 控件/toggleButton = 显示打开或关闭状态
+```xml
+    <TextView
+        android:id="@+id/TextView1"
+        android:text="@string/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ToggleButton
+        android:id="@+id/togglebutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+```
+
+```java 
+        final TextView tv = findViewById(R.id.TextView1);
+        ToggleButton tg = findViewById(R.id.togglebutton);
+
+        tg.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                tv.setText(isChecked?"On":"Off");
+//                tv.setBackgroundResource(isChecked?R.drawable.on:R.drawable.off);
+            }
+        });
+```
+
+# 控件/ CheckBox = 多选多 
+```xml
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:checked="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+```
+
+```java 
+    final CheckBox cb = findViewById(R.id.checkbox);
+    cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            String text = cb.getText().toString();
+            Log.i("tag", b?"checked":"unchecked");
+        }
+    });
+```
+
+# 控件/ radiogroup = 多选一 
+```xml
+    <RadioGroup
+        android:id="@+id/rgid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/rb1"
+            android:text="one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/rb2"
+            android:text="two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+```
+
+```java 
+    RadioGroup rg = findViewById(R.id.rgid);
+    rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+            switch (checkedId){
+                case R.id.rb1:
+                    Log.i("tag","one");
+                    break;
+                case R.id.rb2:
+                    Log.i("tag","two");
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+```
 
 # files/app>java>com.examples.name.app>MainActivity = 主页面
 # files/app>res>layout>activity_main.xml = 主页面布局
@@ -247,7 +382,8 @@ Settings(or Preferences in mac)->Editor->Code Completion
 
 
 # 出错/闪退
-1. 有可能是Sql语句出错,如果有数据库的话
+1. 有可能是Sql语句出错,如果有数据库的话;
+2. 取得控件的代码放错地方, 开头只能定义,不能赋予;
 
 # 05/Write to SD card
 AndroidMainfest.xml -> manifest -> before application
@@ -303,8 +439,13 @@ toast.show();  
 ![](assets/README-1f94faf1.png)
 一般我们只需要第一次安装的时候使用第一个按钮运行一次，之后代码变动，只需要点击第三个按钮，你的真机或者模拟器很快就展示出来修改代码之后的效果。
 
-#  Intent = 两个原件之间传递信息
+#  Intent = 两个组件之间传递信息
 An Intent is an object that provides runtime binding between separate components, such as two activities.
+
+1. startActivity(intent) = 没有返回值 
+2. startActivityForResult(intent) = 有返回值
+    - onActivityResult(int requestCode, int resultCode, Intent data)
+    - setResult(resultCode, data)
 
 ```java
 public void sendMessage(View view){
@@ -316,6 +457,122 @@ public void sendMessage(View view){
     intent.putExtra(EXTRA_MESSAGE, message);
     // starts an instance of the DisplayMessageActivity 创建要传递过去的对象实例
     startActivity(intent);
+}
+```
+
+# intent/no result return example 
+1. 注册Activity 
+androidmanifest.xml 
+```xml
+<activity android:name=".secondActivity">
+
+</activity>
+```
+firstActivity 
+```java 
+public class firstActivity extends Activity {
+    private Button btn1;
+    private Context mContext;
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.first_activity);
+//        1. Button To another Page
+        mContext = this;
+        btn1 = findViewById(R.id.btn1);
+//        2. onClick Event
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /** parameter
+                 * 1. Context
+                 * 2. target Activity
+                 */
+                Intent intent = new Intent(mContext,secondActivity.class); //或者使用 firstActivity.this 代替使用 mContext 变量
+                startActivity(intent);
+            }
+        });
+    }
+}
+```
+
+# Intent/result return 
+androidmanifest.xml 
+```xml
+<activity android:name=".secondActivity">
+
+</activity>
+```
+firstActivity.java
+```java 
+public class firstActivity extends Activity {
+    private Button btn1, btn2;
+    private Context mContext;
+    private TextView tv;
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.first_activity);
+//        1. Button To another Page
+        mContext = this;
+        btn1 = findViewById(R.id.btn1);
+        btn2 = findViewById(R.id.btn2);
+        tv = findViewById(R.id.tv1);
+//        2. onClick Event
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, secondActivity.class);
+                /** parameter
+                 * 1. Intent Object
+                 * 2. Symbol Of request, identify request From which Activity
+                 */
+                startActivityForResult(intent,1);
+            }
+        });
+    }
+
+    /**
+     *  To receive the Result From another Activity
+     * @param requestCode Symbol Of request
+     * @param resultCode the Symbol Return From another Activity, From identify From which Activity
+     * @param data the Return Data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 2) {
+            String content = data.getStringExtra("data");
+            tv.setText(content);
+        }
+    }
+}
+```
+secondActivity.java
+```java 
+public class secondActivity extends Activity{
+    private Button btn1;
+    private String returnTxt = "hello world";
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.second_activity);
+        /*
+        Return Data To first Activity
+        the Result actually is an Intent back To the first Activity
+         */
+        btn1 = findViewById(R.id.btn1);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.putExtra("data", returnTxt);
+                setResult(2,intent);
+                // end this Page
+                finish();
+            }
+        });
+    }
 }
 ```
 
@@ -358,8 +615,13 @@ String.format(R.string.did_you_mean,
 String myIntAsString = String.format("%d", myInt);
 ```
 
-# xml/LinearLayout = 堆栈排列布局
- http://blog.csdn.net/llping2011/article/details/9992941
+# 布局/LinearLayout = 堆栈排列布局
+android:orientation="vertical"
+android:gravity="center"
+android:layout_gravity="bottom" //相对于父容器的位置
+android:layout_weight="1"//占父容器的一个比例
+
+http://blog.csdn.net/llping2011/article/details/9992941
 ```xml
  <LinearLayout
         android:orientation="horizontal" >
@@ -369,20 +631,27 @@ String myIntAsString = String.format("%d", myInt);
     </LinearLayout>
 ```
 
-# xml/EditText
-```xml
-<EditText
-    android:id="@+id/msg"
-    android:inputType="number"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="top"
-    android:hint="@string/to"
-    android:inputType="textMultiLine"
-    android:minLines="5"
-    android:text="">
-</EditText>
-```
+# 布局/relativeLayout = 相对布局
+android:layout_alignParentBottom="true"
+android:layout_marginTop="5dp"
+android:layout_centerInParent="true"
+android:layout_below="@+id/tv1"
+android:layout_toRightOf="@+id/tv1"
+
+# 布局/frameLayout = 帧布局 把各个元素重叠在一起 
+用于展示效果 
+# absoluteLayout = 绝对布局 根据x,y定位置 
+android:layout_x="35dp"
+android:layout_y="35dp"
+
+# 布局/TableLayout = 表格布局
+android:collapseColumns="0,2" //隐藏其中的格子,0是第一格 
+android:shrinkColumns="3" //格子中文字太长可以换行显示 
+android:stretchColumns="2" //把一个格子延伸显示 
+android:stretchColumns="0,1,2" //填入所有数字就是,平均分布 
+android:stretchColumns="\*" //所有格子分均拉伸
+android:layout_column="1" //格子在哪一列显示,1是第二列开始显示 
+android:layout_span="4" //元素跨多少格 
 
 
 # Android 在软键盘弹出时将布局上移，不掩盖控件
@@ -392,6 +661,50 @@ http://www.jianshu.com/p/8c98df35d368
 <activity android:name=".ui.activity.LoginActivity"
 android:windowSoftInputMode="adjustResize|stateHidden" />
 ```
+
+# android 四大组件 
+# 组件/ activity 
+- 创建使用 
+    - 继承activity类 
+    - 重写方法 
+    - 设置显示布局 
+    - 注册activity 
+- 四种状态 
+    - active/running 
+    - Pause 
+    - stop 
+    - killed 
+- 创建到销毁 
+    - onCreate -> onstart -> onResume[当前活动] -> onPause -> onStop -> onDestroy 
+- 前台后台切换
+    - onCreate -> onstart -> onResume -> onPause -> onStop -> onRestart -> onStart -> onResume 
+- 失去焦点
+    - onCreate -> onstart -> onResume -> onPause -> onResume
+
+![android activity生命周期](http://upload-images.jianshu.io/upload_images/5863900-480d0898d1531a0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+```xml
+<!-- 注册 -->
+<activity
+    android:theme="@style/Theme.AppCompat.Dialog"
+    android:name=".Second_Activity"/>
+```
+
+```java 
+// 关联xml和展现Layout
+public class Second_Activity extends Activity {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.second_view);
+    }
+}
+```
+
+
+# 组件/ service 
+# 组件/ broadcastReceiver 
+# 组件/ Content provider 
 
 # sources
 - Android 经典项目开发实战

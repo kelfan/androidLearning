@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.administrator.tablelayoutdemo.MainActivity">
+
+    <Button
+        android:id="@+id/button1"
+        android:text="@string/app_name" />
+
+    <TableLayout android:collapseColumns="0,2">
+        <TableRow
+            android:id="@+id/Tablerow1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button android:text="Button1" />
+            <Button android:text="Button2" />
+            <Button android:text="Button3" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout android:shrinkColumns="3">
+        <TableRow
+            android:id="@+id/Tablerow2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button android:text="Button1" />
+            <Button android:text="Button2" />
+            <Button android:text="Button3" />
+            <Button android:text="Button3wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwws" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout android:stretchColumns="2">
+        <TableRow
+            android:id="@+id/Tablerow3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button android:text="Button1" />
+            <Button android:text="Button2" />
+            <Button android:text="Button3" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout android:stretchColumns="0,1,2">
+        <TableRow
+            android:id="@+id/Tablerow4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button android:text="Button1" />
+            <Button android:text="Button2" />
+            <Button android:text="Button3" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout android:stretchColumns="*">
+        <TableRow
+            android:id="@+id/Tablerow5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button android:text="Button1" />
+            <Button android:text="Button2" />
+            <Button android:text="Button3" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout android:stretchColumns="*">
+        <TableRow
+            android:id="@+id/Tablerow6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button android:text="Button1" android:layout_column="1" />
+            <Button android:text="Button2" />
+            <Button android:text="Button3" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/Tablerow9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button android:text="Button1" />
+            <Button android:text="Button2" />
+            <Button android:text="Button3" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:stretchColumns="*"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableRow
+            android:id="@+id/Tablerow7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button android:text="Button1"
+                android:layout_span="4"
+                android:layout_column="1" />
+            <Button android:text="Button2" />
+            <Button android:text="Button3" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/Tablerow8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <Button android:text="Button1" android:layout_column="1" />
+            <Button android:text="Button2" />
+            <Button android:text="Button3" />
+        </TableRow>
+    </TableLayout>
+</TableLayout>
