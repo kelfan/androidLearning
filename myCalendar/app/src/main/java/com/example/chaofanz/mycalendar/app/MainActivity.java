@@ -33,7 +33,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private MySqliteHelper helper;
     private ListView eventLv;
-    private SQLiteDatabase db;
     private int totalNum; // Variable for the total number Of records in current Context
     private int pageSize = 20; // total number Of records will be displayed in a page
     private int pageNum; // represent the number of page can be displayed
@@ -59,9 +58,8 @@ public class MainActivity extends AppCompatActivity {
         attach list Of Event into ListView eventLv
          */
         eventLv = (ListView) findViewById(R.id.eventLv);
-        db = helper.getWritableDatabase();
         // acquire the total number Of records in the Database
-        totalNum = DbManager.getDataCount(db, Constant.TABLE_NAME);
+        totalNum = DbManager.getDataCount(Constant.TABLE_NAME);
         // acquire the total number Of pages based on the total number Of records & number of records in each Page
         pageNum = (int) Math.ceil(totalNum/(double)pageSize);
         if (currentPage == 1) {

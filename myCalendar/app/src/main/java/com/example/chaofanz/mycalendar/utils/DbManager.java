@@ -124,6 +124,11 @@ public class DbManager {
             return list;
     }
 
+    public static int getDataCount(String tablename){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        return getDataCount(db,tablename);
+    }
+
     /**
      * acquire the total number of records based on database and tablename
      * @param db the database object

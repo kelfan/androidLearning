@@ -29,6 +29,144 @@ pixel density 386.47 PPI
 # sqliteQueryDemo = cursor to list to display data in sqlite database
 # sqliteAdapter = use adapter to display data from sqlite database in external storage
 
+# Adapter/ 数据适配器 = 把复杂数据填充在视图上 
+新建Adapter -> 添加数据源到Adapter -> 视图加载Adapter 
+
+# adapter/ ArrayAdapter = 绑定单一数据,如集合或数组 
+```java
+private ListView listView;
+private ArrayAdapter<String> arrayAdapter;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    // 1. acquire ListView
+    listView = findViewById(R.id.list_view);
+    // 2. acquire Datasource
+    String[] arrayData = {"Apple", "banana", "cat", "dog"};
+    // 3. create Adapter
+    /**
+     * parameter
+     * @context this
+     * @LayoutResources xml View To display data
+     * @Resources data source
+     */
+    arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayData);
+    // 4. attach datasource To View
+    listView.setAdapter(arrayAdapter);
+}
+```
+
+
+# adapter/ SimpleAdapter = 绑定格式复杂的数据,只能泛型集合
+```java 
+    private ListView simpleListView;
+    private SimpleAdapter simpleAdapter;
+    private List<Map<String,Object>> datalist;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        // 1. acquire ListView
+        simpleListView = findViewById(R.id.simple_list_view);
+        // 2. acquire Datasource
+        datalist = new ArrayList<Map<String, Object>>();
+        // 3. create Adapter
+        /**
+         * parameters
+         * @context
+         * @data datasource a key-value map
+         * @resource Layout
+         * @map key in the map
+         * @to id in the View
+         */
+        simpleAdapter = new SimpleAdapter(this,
+                getData(),
+                R.layout.item,
+                new String[]{"pic","text"},
+                new int[]{R.id.pic, R.id.text});
+        // 4. attach datasource To View
+        simpleListView.setAdapter(simpleAdapter);
+    }
+
+    private List<Map<String, Object>> getData() {
+        for(int i=0;i<20;i++) {
+            Map<String, Object> map = new HashMap<String,Object>();
+            map.put("pic", R.mipmap.ic_launcher_round);
+            map.put("text", "thing" + i);
+            datalist.add(map);
+        }
+        return datalist;
+    }
+```
+
+# listener/ OnScrollListener = 滚动list触发 
+```java 
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,AbsListView.OnScrollListener {
+
+    private ListView simpleListView;
+    private SimpleAdapter simpleAdapter;
+    private List<Map<String,Object>> datalist;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        simpleListView.setOnScrollListener(this);
+    }
+
+
+    @Override
+    public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+        switch (scrollState) {
+            case SCROLL_STATE_FLING:
+                Log.i("Main", "用户在手指离开屏幕后,屏幕惯性滑动");
+                Map<String,Object> map = new HashMap<String,Object>();
+                map.put("pic", R.mipmap.ic_launcher_round);
+                map.put("text", "add item");
+                datalist.add(map);
+                simpleAdapter.notifyDataSetChanged();
+                break;
+            case SCROLL_STATE_IDLE:
+                Log.i("Main", "停止滚动");
+                break;
+            case SCROLL_STATE_TOUCH_SCROLL:
+                Log.i("Main", "触屏滑动");
+                break;
+        }
+    }
+}
+```
+# Listener/ OnItemListener = 单个条目点击 
+```java 
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,AbsListView.OnScrollListener {
+
+    private ListView simpleListView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        simpleListView = findViewById(R.id.simple_list_view);
+
+        simpleListView.setOnItemClickListener(this);
+        simpleListView.setOnScrollListener(this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        String text = simpleListView.getItemAtPosition(position) + "";
+        Toast.makeText(this,"position"+position+" text="+text, Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+# notifyDataChange = 刷新界面 
+
 # 控件/textView = 显示文本 
 # 控件/editText = 输入文本框 
 属性 
@@ -381,9 +519,11 @@ Settings(or Preferences in mac)->Editor->Code Completion
 
 
 
-# 出错/闪退
+# 出错|异常/闪退
 1. 有可能是Sql语句出错,如果有数据库的话;
 2. 取得控件的代码放错地方, 开头只能定义,不能赋予;
+3. Activity活动没有注册
+4. 权限没有获得
 
 # 05/Write to SD card
 AndroidMainfest.xml -> manifest -> before application
@@ -663,7 +803,7 @@ android:windowSoftInputMode="adjustResize|stateHidden" />
 ```
 
 # android 四大组件 
-# 组件/ activity 
+# 组件/ activity = 显示画面的前台活动
 - 创建使用 
     - 继承activity类 
     - 重写方法 
@@ -680,6 +820,10 @@ android:windowSoftInputMode="adjustResize|stateHidden" />
     - onCreate -> onstart -> onResume -> onPause -> onStop -> onRestart -> onStart -> onResume 
 - 失去焦点
     - onCreate -> onstart -> onResume -> onPause -> onResume
+- theme 应用图形样式
+    - 例如 theme.black.notitlebar 黑底没有顶栏
+- 异常 
+    - 有没有在androidManifest.xml注册的活动,就会抛异常闪退
 
 ![android activity生命周期](http://upload-images.jianshu.io/upload_images/5863900-480d0898d1531a0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -702,21 +846,27 @@ public class Second_Activity extends Activity {
 ```
 
 
-# 组件/ service 
-# 组件/ broadcastReceiver 
-# 组件/ Content provider 
+# 组件/ service = 后台活动
+# 组件/ broadcastReceiver = 全局范围接收和过滤
+
+# 组件/ Content provider = 内容提供者 用来管理数据库访问以及程序间共享 
+
+# permission/ 自定义权限 
+```xml
+    <permission android:name="syh.permission.STARTMYACTIVITY" android:protectionLevel="normal" />
+   <uses-permission android:name="syh.permission.STARTMYACTIVITY" />
+<application>
+    <activity android:name="PrivActivity" android:permission="syh.permission.STARTMYACTIVITY">
+    </activity>
+</application>
+```
+
 
 # sources
 - Android 经典项目开发实战
 - [Android Studio Tutorial - Alarm Manager](https://www.youtube.com/watch?v=-Q5MFwgXIcc)
 - [Xamarin Android Tutorial - Linear Layout](https://www.youtube.com/watch?v=Wj-WT4uWlKA&list=PLaoF-xhnnrRVglZztNl99ih76fvBOLMe8)
 - [Android Studio Tutorial - Text Recognition using Google Vision](https://www.youtube.com/watch?v=7qw-zl9XGd4&list=PLaoF-xhnnrRWHtmb8ZGmu8N4Wl2Zr26V7&t=5)
-- []()
-- []()
-- []()
-- []()
-- []()
-- []()
 
 # Raturns all available SD-Cards in the system (include emulated)
 ```java
@@ -1612,12 +1762,27 @@ TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDia
 timePickerDialog.show();
 ```
 
+# androidManifest.xml 
+常用标签 
+    包名,版本信息,组件篇,权限篇
+
+
+# style样式/ shape = 一些共用的方框样式 
+drawable -> shape -> white_background.xml
+属性 
+    corners 圆角
+    gradient 渐变 startcolor endColor
+    stroke width 边宽度 
+    solid Color 纯色
 
 # SQLiteOpenHelper
 SQLiteOpenHelper  ->帮助类
 onCreate()        ->创建方法
 onUpgrade()       ->数据库升级方法
 onOpen()          ->打开数据库方法
+
+# style样式/ selector = 按钮的变化样式 
+
 
 # SQLiteOpenHelper/example
 ```java
