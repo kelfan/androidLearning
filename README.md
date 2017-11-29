@@ -870,6 +870,8 @@ public class Second_Activity extends Activity {
 - [Android Studio Tutorial - Alarm Manager](https://www.youtube.com/watch?v=-Q5MFwgXIcc)
 - [Xamarin Android Tutorial - Linear Layout](https://www.youtube.com/watch?v=Wj-WT4uWlKA&list=PLaoF-xhnnrRVglZztNl99ih76fvBOLMe8)
 - [Android Studio Tutorial - Text Recognition using Google Vision](https://www.youtube.com/watch?v=7qw-zl9XGd4&list=PLaoF-xhnnrRWHtmb8ZGmu8N4Wl2Zr26V7&t=5)
+- [Android Card View and Recycler View](https://www.youtube.com/watch?v=7Fe1jigV5Qs)
+- [Android Studio Tutorial - Collapsing Toolbar Layout](https://www.youtube.com/watch?v=BTYuLho5_rE)
 
 # Raturns all available SD-Cards in the system (include emulated)
 ```java

@@ -1,134 +1,201 @@
-# android listview with image and text
+# Modern Profile UI Design in Android Studio - codes
+https://www.youtube.com/watch?v=2pirZvqXza0
+![](assets/README-70716901.png)
 
-# adapter/ ArrayAdapter = 绑定单一数据,如集合或数组
-![](assets/README-1cb1efa1.png)
-```java
-private ListView listView;
-private ArrayAdapter<String> arrayAdapter;
+# activity_main.xml
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/graylight"
+    android:orientation="vertical"
+    tools:context="me.chaofanz.profileui.MainActivity">
 
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    // 1. acquire ListView
-    listView = findViewById(R.id.list_view);
-    // 2. acquire Datasource
-    String[] arrayData = {"Apple", "banana", "cat", "dog"};
-    // 3. create Adapter
-    /**
-     * parameter
-     * @context this
-     * @LayoutResources xml View To display data
-     * @Resources data source
-     */
-    arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayData);
-    // 4. attach datasource To View
-    listView.setAdapter(arrayAdapter);
-}
-```
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="405dp">
+        <LinearLayout
+            android:background="@drawable/gradientbackground"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:orientation="vertical">
 
-# adapter/ SimpleAdapter = 绑定格式复杂的数据,只能泛型集合
-![](assets/README-c1507e04.png)
-```java
-    private ListView simpleListView;
-    private SimpleAdapter simpleAdapter;
-    private List<Map<String,Object>> datalist;
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="45dp"
+                android:src="@drawable/head" />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#fff"
+                android:text="William Show"
+                android:textStyle="bold"
+                android:textSize="21sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <android.support.v7.widget.CardView
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="275dp"
+            android:layout_width="400dp"
+            android:layout_height="120dp">
+            <LinearLayout
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textSize="20sp"
+                        android:text="Photos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:text="125"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/startblue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textSize="20sp"
+                        android:text="Followers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:text="1205"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/startblue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textSize="20sp"
+                        android:text="Following"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:text="360"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/startblue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        // 1. acquire ListView
-        simpleListView = findViewById(R.id.simple_list_view);
-        // 2. acquire Datasource
-        datalist = new ArrayList<Map<String, Object>>();
-        // 3. create Adapter
-        /**
-         * parameters
-         * @context
-         * @data datasource a key-value map
-         * @resource Layout
-         * @map key in the map
-         * @to id in the View
-         */
-        simpleAdapter = new SimpleAdapter(this,
-                getData(),
-                R.layout.item,
-                new String[]{"pic","text"},
-                new int[]{R.id.pic, R.id.text});
-        // 4. attach datasource To View
-        simpleListView.setAdapter(simpleAdapter);
-    }
+    <LinearLayout
+        android:layout_marginTop="45dp"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:paddingLeft="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/ic_email_black_24dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+            <TextView
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="William@gmail.com"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="25dp"
+            android:paddingLeft="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/ic_phone_android_black_24dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+            <TextView
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="+266 225 225"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="25dp"
+            android:paddingLeft="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/ic_group_add_black_24dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+            <TextView
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="Add to group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="25dp"
+            android:paddingLeft="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/ic_forum_black_24d"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+            <TextView
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="Show all comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
 
-    private List<Map<String, Object>> getData() {
-        for(int i=0;i<20;i++) {
-            Map<String, Object> map = new HashMap<String,Object>();
-            map.put("pic", R.mipmap.ic_launcher_round);
-            map.put("text", "thing" + i);
-            datalist.add(map);
-        }
-        return datalist;
-    }
-```
+    <Button
+        android:textColor="#fff"
+        android:background="@drawable/buttonstyleithgradient"
+        android:layout_marginTop="35dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Follow Me"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content" />
 
-# Listener/ OnItemListener = 单个条目点击
-```java
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,AbsListView.OnScrollListener {
-
-    private ListView simpleListView;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        simpleListView = findViewById(R.id.simple_list_view);
-
-        simpleListView.setOnItemClickListener(this);
-        simpleListView.setOnScrollListener(this);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        String text = simpleListView.getItemAtPosition(position) + "";
-        Toast.makeText(this,"position"+position+" text="+text, Toast.LENGTH_SHORT).show();
-    }
-}
-```
-# listener/ OnScrollListener = 滚动list触发
-```java
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,AbsListView.OnScrollListener {
-
-    private ListView simpleListView;
-    private SimpleAdapter simpleAdapter;
-    private List<Map<String,Object>> datalist;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        simpleListView.setOnScrollListener(this);
-    }
-
-    @Override
-    public void onScrollStateChanged(AbsListView absListView, int scrollState) {
-        switch (scrollState) {
-            case SCROLL_STATE_FLING:
-                Log.i("Main", "用户在手指离开屏幕后,屏幕惯性滑动");
-                Map<String,Object> map = new HashMap<String,Object>();
-                map.put("pic", R.mipmap.ic_launcher_round);
-                map.put("text", "add item");
-                datalist.add(map);
-                simpleAdapter.notifyDataSetChanged();
-                break;
-            case SCROLL_STATE_IDLE:
-                Log.i("Main", "停止滚动");
-                break;
-            case SCROLL_STATE_TOUCH_SCROLL:
-                Log.i("Main", "触屏滑动");
-                break;
-        }
-    }
-}
+</LinearLayout>
 ```

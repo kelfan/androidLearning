@@ -122,6 +122,7 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp" />
             <TextView
+                android:textStyle="bold"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:text="William@gmail.com"
@@ -129,6 +130,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
+            android:layout_marginTop="25dp"
             android:paddingLeft="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -137,6 +139,7 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp" />
             <TextView
+                android:textStyle="bold"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:text="+266 225 225"
@@ -144,6 +147,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
+            android:layout_marginTop="25dp"
             android:paddingLeft="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -152,13 +156,15 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp" />
             <TextView
+                android:textStyle="bold"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="add to group"
+                android:text="Add to group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
+            android:layout_marginTop="25dp"
             android:paddingLeft="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -167,12 +173,22 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp" />
             <TextView
+                android:textStyle="bold"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="show all comments"
+                android:text="Show all comments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
+    
+    <Button
+        android:textColor="#fff"
+        android:background="@drawable/buttonstyleithgradient"
+        android:layout_marginTop="35dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Follow Me"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content" />
     
 </LinearLayout>
