@@ -1,5 +1,7 @@
 package com.example.chaofanz.mycalendar.bean;
 
+import com.example.chaofanz.mycalendar.utils.TimeHandler;
+
 import java.util.Date;
 
 /**
@@ -29,7 +31,8 @@ public class Event {
                 '}';
     }
 
-    public Event() {
+    public String getStartDay(){
+        return TimeHandler.getDayString(plan_start);
     }
 
     public Event(int id, int status, int repeat_type, int level, String content, String detail, String genre, String location, Date plan_start, Date plan_end, Date created, Date completed) {

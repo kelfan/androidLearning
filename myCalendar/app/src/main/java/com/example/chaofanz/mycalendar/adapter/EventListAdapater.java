@@ -63,7 +63,7 @@ public class EventListAdapater extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         holder.tv_content.setText(list.get(i).getContent());
-        holder.tv_genre.setText(list.get(i).getGenre());
+        holder.tv_genre.setText(list.get(i).getStartDay());
         return view;
     }
 

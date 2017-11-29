@@ -1,5 +1,7 @@
 package com.example.chaofanz.mycalendar.utils;
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +24,15 @@ public class TimeHandler {
         SimpleDateFormat dateFormat= new SimpleDateFormat(Constant.DATETIME_FORMAT);
 //        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
         return dateFormat.parse(str);
+    }
+
+    public static String getDayString(Date date){
+        if (date!=null){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd:HH");
+            return dateFormat.format(date);
+        }
+        Log.i("My", "getDayString's date is null");
+        return "";
     }
 
     public static String getCurrentDateTimeString(){
