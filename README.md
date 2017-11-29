@@ -2,7 +2,7 @@
 Codes and examples of android applications.
 2017-11-16 To
 
-# working 
+# working
 https://www.youtube.com/results?search_query=android+constraintlayout+tutorial
 https://www.youtube.com/results?search_query=android+modern+design
 
@@ -29,10 +29,10 @@ pixel density 386.47 PPI
 # sqliteQueryDemo = cursor to list to display data in sqlite database
 # sqliteAdapter = use adapter to display data from sqlite database in external storage
 
-# Adapter/ 数据适配器 = 把复杂数据填充在视图上 
-新建Adapter -> 添加数据源到Adapter -> 视图加载Adapter 
+# Adapter/ 数据适配器 = 把复杂数据填充在视图上
+新建Adapter -> 添加数据源到Adapter -> 视图加载Adapter
 
-# adapter/ ArrayAdapter = 绑定单一数据,如集合或数组 
+# adapter/ ArrayAdapter = 绑定单一数据,如集合或数组
 ```java
 private ListView listView;
 private ArrayAdapter<String> arrayAdapter;
@@ -60,7 +60,7 @@ protected void onCreate(Bundle savedInstanceState) {
 
 
 # adapter/ SimpleAdapter = 绑定格式复杂的数据,只能泛型集合
-```java 
+```java
     private ListView simpleListView;
     private SimpleAdapter simpleAdapter;
     private List<Map<String,Object>> datalist;
@@ -102,8 +102,8 @@ protected void onCreate(Bundle savedInstanceState) {
     }
 ```
 
-# listener/ OnScrollListener = 滚动list触发 
-```java 
+# listener/ OnScrollListener = 滚动list触发
+```java
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,AbsListView.OnScrollListener {
 
     private ListView simpleListView;
@@ -140,8 +140,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 }
 ```
-# Listener/ OnItemListener = 单个条目点击 
-```java 
+# Listener/ OnItemListener = 单个条目点击
+```java
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,AbsListView.OnScrollListener {
 
     private ListView simpleListView;
@@ -165,13 +165,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 }
 ```
 
-# notifyDataChange = 刷新界面 
+# notifyDataChange = 刷新界面
 
-# 控件/textView = 显示文本 
-# 控件/editText = 输入文本框 
-属性 
+# 控件/textView = 显示文本
+# 控件/editText = 输入文本框
+属性
     hint 提示信息
-    inputType 输入类型 
+    inputType 输入类型
 ```xml
 <EditText
     android:id="@+id/msg"
@@ -185,14 +185,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     android:text="">
 </EditText>
 ```
-# 控件/imageView = 显示图片 
-属性 
+# 控件/imageView = 显示图片
+属性
     src 显示图
-    background 背景图 
+    background 背景图
 根据屏幕分辨率调用不同文件夹下相同名字的图片->不同分辨率显示
-# 控件/button = 可以点击,有文本属性 
+# 控件/button = 可以点击,有文本属性
 # 控件/imageButton = 可以点击,有图片属性
-# 控件/autoCompleteTextView = 根据用户输入显示可选项 
+# 控件/autoCompleteTextView = 根据用户输入显示可选项
 ```xml
 <AutoCompleteTextView
     android:completionThreshold="3" //输入第3个字符后开始提示可选项
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     android:layout_height="wrap_content" />
 ```
 
-```java 
+```java
 private AutoCompleteTextView acTextView;
 private String[] res = {"beijing1","beijing2","shanghai1","shanghai2"};
 @Override
@@ -224,7 +224,7 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-# 控件/multiAutoCompleteTextView = 根据用户输入多次匹配可选项 
+# 控件/multiAutoCompleteTextView = 根据用户输入多次匹配可选项
 activity_main.xml
 ```xml
     <MultiAutoCompleteTextView
@@ -235,7 +235,7 @@ activity_main.xml
 ```
 
 mainactivity.java
-```java 
+```java
     private MultiAutoCompleteTextView macTextView;
     private String[] res = {"beijing1","beijing2","shanghai1","shanghai2"};
 
@@ -274,7 +274,7 @@ mainactivity.java
         android:layout_height="wrap_content" />
 ```
 
-```java 
+```java
         final TextView tv = findViewById(R.id.TextView1);
         ToggleButton tg = findViewById(R.id.togglebutton);
 
@@ -287,7 +287,7 @@ mainactivity.java
         });
 ```
 
-# 控件/ CheckBox = 多选多 
+# 控件/ CheckBox = 多选多
 ```xml
     <CheckBox
         android:id="@+id/checkbox"
@@ -296,7 +296,7 @@ mainactivity.java
         android:layout_height="wrap_content" />
 ```
 
-```java 
+```java
     final CheckBox cb = findViewById(R.id.checkbox);
     cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -307,7 +307,7 @@ mainactivity.java
     });
 ```
 
-# 控件/ radiogroup = 多选一 
+# 控件/ radiogroup = 多选一
 ```xml
     <RadioGroup
         android:id="@+id/rgid"
@@ -326,7 +326,7 @@ mainactivity.java
     </RadioGroup>
 ```
 
-```java 
+```java
     RadioGroup rg = findViewById(R.id.rgid);
     rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
         @Override
@@ -350,9 +350,9 @@ mainactivity.java
 # files/app>res>values>strings.xml = 存储一些共用的字符串
 
 
-# 监听事件实现的几种写法 listener 
-## 1. 匿名内部类的实现 = 一次只在一个控件上实现监听 
-```java 
+# 监听事件实现的几种写法 listener
+## 1. 匿名内部类的实现 = 一次只在一个控件上实现监听
+```java
 private Button button1;
 button1 = findViewById(R.id.button1);
 button1.setOnClickListener(new OnClickListener(){
@@ -362,8 +362,8 @@ button1.setOnClickListener(new OnClickListener(){
     }
 });
 ```
-## 2. 独立类的实现 = 多个控件共同实现 
-```java 
+## 2. 独立类的实现 = 多个控件共同实现
+```java
 private Button button1;
 button1 = findViewById(R.id.button1);
 button1.setOnClickListener(new MyOnClickListener(){
@@ -376,12 +376,12 @@ button1.setOnClickListener(new MyOnClickListener(){
 class MyOnClickListener implements OnClickListener{
     @Override
     public void onClick(View v){
-        // 共同的代码 
+        // 共同的代码
     }
 }
 ```
 ## 3. 实现接口的方式来实现 = 对当前类实现绑定
-```java 
+```java
 public class MainActivity extends Activity implements OnClickListener{
     private Button button1;
     button1 = findViewById(R.id.button1);
@@ -389,14 +389,14 @@ public class MainActivity extends Activity implements OnClickListener{
 
     @Override
     public void onClick(View v){
-        // 按钮实现的代码 
+        // 按钮实现的代码
     }
 }
 ```
 
 # Match Constraints = 横向自动延伸
 
-# 单位/sp = 多用在文字上 
+# 单位/sp = 多用在文字上
 # 单位/dp = 在不同分辨率下等比缩放
 
 # marquee Text 走马灯效果 TextView
@@ -410,8 +410,8 @@ public class MainActivity extends Activity implements OnClickListener{
     android:layout_height="wrap_content"
     android:text="@string/long_text" />
 ```
-一个页面多个走马灯需要下面的语句 
-```java 
+一个页面多个走马灯需要下面的语句
+```java
 public class MarqueeText extends android.support.v7.widget.AppCompatTextView {
 
 
@@ -505,6 +505,8 @@ myContext.deleteFile(fileName);
 # shortcuts
 https://jaeger.itscoder.com/android/2016/02/14/android-studio-tips.html
 https://developer.android.com/studio/intro/keyboard-shortcuts.html
+http://blog.csdn.net/hyr83960944/article/details/38388429
+
 # shortcut/Alt + Enter = 错误快速修复 (or Option + Enter on Mac)
 # shortcut/Alt + insert = constructor getter setter
 # shortcut/Alt + 单击 = 竖着选多个元素
@@ -513,6 +515,7 @@ https://developer.android.com/studio/intro/keyboard-shortcuts.html
 # shortcut/Alt + j or ctrl + g = 多选相同元素
 ![](assets/README-88d6706d.png)
 # shortcut/Alt + q = 快速查查function
+# shrotcut/ Ctrl+Alt+ Space = 代码提示 hint Suggestion
 
 # setting/ autocomplete case insensitive
 Settings(or Preferences in mac)->Editor->Code Completion
@@ -582,7 +585,7 @@ toast.show();  
 #  Intent = 两个组件之间传递信息
 An Intent is an object that provides runtime binding between separate components, such as two activities.
 
-1. startActivity(intent) = 没有返回值 
+1. startActivity(intent) = 没有返回值
 2. startActivityForResult(intent) = 有返回值
     - onActivityResult(int requestCode, int resultCode, Intent data)
     - setResult(resultCode, data)
@@ -600,16 +603,16 @@ public void sendMessage(View view){
 }
 ```
 
-# intent/no result return example 
-1. 注册Activity 
-androidmanifest.xml 
+# intent/no result return example
+1. 注册Activity
+androidmanifest.xml
 ```xml
 <activity android:name=".secondActivity">
 
 </activity>
 ```
-firstActivity 
-```java 
+firstActivity
+```java
 public class firstActivity extends Activity {
     private Button btn1;
     private Context mContext;
@@ -636,15 +639,15 @@ public class firstActivity extends Activity {
 }
 ```
 
-# Intent/result return 
-androidmanifest.xml 
+# Intent/result return
+androidmanifest.xml
 ```xml
 <activity android:name=".secondActivity">
 
 </activity>
 ```
 firstActivity.java
-```java 
+```java
 public class firstActivity extends Activity {
     private Button btn1, btn2;
     private Context mContext;
@@ -689,7 +692,7 @@ public class firstActivity extends Activity {
 }
 ```
 secondActivity.java
-```java 
+```java
 public class secondActivity extends Activity{
     private Button btn1;
     private String returnTxt = "hello world";
@@ -778,20 +781,20 @@ android:layout_centerInParent="true"
 android:layout_below="@+id/tv1"
 android:layout_toRightOf="@+id/tv1"
 
-# 布局/frameLayout = 帧布局 把各个元素重叠在一起 
-用于展示效果 
-# absoluteLayout = 绝对布局 根据x,y定位置 
+# 布局/frameLayout = 帧布局 把各个元素重叠在一起
+用于展示效果
+# absoluteLayout = 绝对布局 根据x,y定位置
 android:layout_x="35dp"
 android:layout_y="35dp"
 
 # 布局/TableLayout = 表格布局
-android:collapseColumns="0,2" //隐藏其中的格子,0是第一格 
-android:shrinkColumns="3" //格子中文字太长可以换行显示 
-android:stretchColumns="2" //把一个格子延伸显示 
-android:stretchColumns="0,1,2" //填入所有数字就是,平均分布 
+android:collapseColumns="0,2" //隐藏其中的格子,0是第一格
+android:shrinkColumns="3" //格子中文字太长可以换行显示
+android:stretchColumns="2" //把一个格子延伸显示
+android:stretchColumns="0,1,2" //填入所有数字就是,平均分布
 android:stretchColumns="\*" //所有格子分均拉伸
-android:layout_column="1" //格子在哪一列显示,1是第二列开始显示 
-android:layout_span="4" //元素跨多少格 
+android:layout_column="1" //格子在哪一列显示,1是第二列开始显示
+android:layout_span="4" //元素跨多少格
 
 
 # Android 在软键盘弹出时将布局上移，不掩盖控件
@@ -802,27 +805,27 @@ http://www.jianshu.com/p/8c98df35d368
 android:windowSoftInputMode="adjustResize|stateHidden" />
 ```
 
-# android 四大组件 
+# android 四大组件
 # 组件/ activity = 显示画面的前台活动
-- 创建使用 
-    - 继承activity类 
-    - 重写方法 
-    - 设置显示布局 
-    - 注册activity 
-- 四种状态 
-    - active/running 
-    - Pause 
-    - stop 
-    - killed 
-- 创建到销毁 
-    - onCreate -> onstart -> onResume[当前活动] -> onPause -> onStop -> onDestroy 
+- 创建使用
+    - 继承activity类
+    - 重写方法
+    - 设置显示布局
+    - 注册activity
+- 四种状态
+    - active/running
+    - Pause
+    - stop
+    - killed
+- 创建到销毁
+    - onCreate -> onstart -> onResume[当前活动] -> onPause -> onStop -> onDestroy
 - 前台后台切换
-    - onCreate -> onstart -> onResume -> onPause -> onStop -> onRestart -> onStart -> onResume 
+    - onCreate -> onstart -> onResume -> onPause -> onStop -> onRestart -> onStart -> onResume
 - 失去焦点
     - onCreate -> onstart -> onResume -> onPause -> onResume
 - theme 应用图形样式
     - 例如 theme.black.notitlebar 黑底没有顶栏
-- 异常 
+- 异常
     - 有没有在androidManifest.xml注册的活动,就会抛异常闪退
 
 ![android activity生命周期](http://upload-images.jianshu.io/upload_images/5863900-480d0898d1531a0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -834,7 +837,7 @@ android:windowSoftInputMode="adjustResize|stateHidden" />
     android:name=".Second_Activity"/>
 ```
 
-```java 
+```java
 // 关联xml和展现Layout
 public class Second_Activity extends Activity {
     @Override
@@ -849,9 +852,9 @@ public class Second_Activity extends Activity {
 # 组件/ service = 后台活动
 # 组件/ broadcastReceiver = 全局范围接收和过滤
 
-# 组件/ Content provider = 内容提供者 用来管理数据库访问以及程序间共享 
+# 组件/ Content provider = 内容提供者 用来管理数据库访问以及程序间共享
 
-# permission/ 自定义权限 
+# permission/ 自定义权限
 ```xml
     <permission android:name="syh.permission.STARTMYACTIVITY" android:protectionLevel="normal" />
    <uses-permission android:name="syh.permission.STARTMYACTIVITY" />
@@ -1762,17 +1765,17 @@ TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDia
 timePickerDialog.show();
 ```
 
-# androidManifest.xml 
-常用标签 
+# androidManifest.xml
+常用标签
     包名,版本信息,组件篇,权限篇
 
 
-# style样式/ shape = 一些共用的方框样式 
+# style样式/ shape = 一些共用的方框样式
 drawable -> shape -> white_background.xml
-属性 
+属性
     corners 圆角
     gradient 渐变 startcolor endColor
-    stroke width 边宽度 
+    stroke width 边宽度
     solid Color 纯色
 
 # SQLiteOpenHelper
@@ -1781,7 +1784,7 @@ onCreate()        ->创建方法
 onUpgrade()       ->数据库升级方法
 onOpen()          ->打开数据库方法
 
-# style样式/ selector = 按钮的变化样式 
+# style样式/ selector = 按钮的变化样式
 
 
 # SQLiteOpenHelper/example
