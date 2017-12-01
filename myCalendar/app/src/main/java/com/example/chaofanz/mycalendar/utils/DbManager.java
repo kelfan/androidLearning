@@ -172,10 +172,7 @@ public class DbManager {
     }
 
     public static Event getLastEvent(String tablename){
-        SQLiteDatabase db = helper.getWritableDatabase();
-        int lastEventId = getDataCount(db, tablename);
-        db.close();
-        return helper.getEvent(lastEventId);
+        return helper.getLastEvent(tablename);
     }
 
     /**
@@ -197,6 +194,10 @@ public class DbManager {
             db.execSQL(sql);
         }
         db.close();
+    }
+
+    public static Event getEventById(int id){
+        return helper.getEventById(id);
     }
 }
 

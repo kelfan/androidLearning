@@ -23,5 +23,12 @@
     <string name="event_date">Date</string>
     <string name="event_time">Time</string>
 
+    <string name="event_status_working">Working</string>
+    <string name="event_status_waiting">Waiting</string>
+    <string name="event_status_schedule">Schedule</string>
+    <string name="event_status_important">Important</string>
+    <string name="event_status_others">Others</string>
+    <string name="add_update">add/update</string>
+
 
 </resources>

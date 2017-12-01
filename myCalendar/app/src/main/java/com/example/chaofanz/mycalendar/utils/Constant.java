@@ -5,6 +5,8 @@ package com.example.chaofanz.mycalendar.utils;
  */
 
 public class Constant {
+    public static final String EVENT_ITEM_INTENT="EventItem";
+
     //database
     public static final int DATABASE_VER = 1;
     public static final String DATABASE_NAME = "MYCALENDAR.db";

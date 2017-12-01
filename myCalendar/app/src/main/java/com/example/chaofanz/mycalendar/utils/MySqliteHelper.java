@@ -96,6 +96,9 @@ public class MySqliteHelper extends SQLiteOpenHelper {
         values.put(Constant.REPEAT_TYPE,repeat);
         if (start != null){
             values.put(Constant.PLAN_START,start);
+            if (end == null){
+                end = start;
+            }
         }
         if (end != null){
             values.put(Constant.PLAN_END,end);
@@ -139,7 +142,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Event getEvent(int id) {
+    public Event getEventById(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.query(
                 Constant.TABLE_NAME,
@@ -157,5 +160,26 @@ public class MySqliteHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
             Event event = DbManager.cursorToEvent(cursor);
             return event;
+    }
+
+    public Event getLastEvent(String tablename) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query(
+                tablename,
+                new String[]{Constant.EVENT_ID, Constant.EVENT_CONTENT, Constant.EVENT_STATUS,
+                        Constant.EVENT_DETAIL, Constant.EVENT_LEVEL, Constant.EVENT_LOCATION,
+                        Constant.EVENT_GENRE, Constant.PLAN_END, Constant.PLAN_START,
+                        Constant.REPEAT_TYPE, Constant.CREATE_DATE, Constant.COMPLETED_DATE},
+                null,
+                null,
+                null,
+                null,
+                Constant.EVENT_ID +" desc",
+                "1"
+        );
+        if (cursor != null)
+            cursor.moveToFirst();
+        Event event = DbManager.cursorToEvent(cursor);
+        return event;
     }
 }

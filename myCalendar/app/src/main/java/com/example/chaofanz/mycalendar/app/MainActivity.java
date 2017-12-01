@@ -5,11 +5,15 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Parcelable;
+import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -30,7 +34,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private MySqliteHelper helper;
     private ListView eventLv;
     private int totalNum; // Variable for the total number Of records in current Context
@@ -92,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
                 isDivPage = ((firstVisibleItem + visibleItemCount) == totalItemCount);
             }
         });
+
+        eventLv.setOnItemClickListener(this);
+
     }
 
     /**
@@ -175,5 +182,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(newIntent);
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        Intent itemIntent = new Intent(MainActivity.this, AddActivity.class);
+        itemIntent.putExtra(Constant.EVENT_ITEM_INTENT, (int) id);
+        startActivity(itemIntent);
     }
 }
