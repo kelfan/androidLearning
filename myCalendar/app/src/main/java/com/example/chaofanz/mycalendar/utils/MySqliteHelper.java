@@ -94,13 +94,19 @@ public class MySqliteHelper extends SQLiteOpenHelper {
         values.put(Constant.EVENT_GENRE, genre);
         values.put(Constant.EVENT_STATUS,status);
         values.put(Constant.REPEAT_TYPE,repeat);
-        if (start != null){
+        if (start != null && !"".equals(start)){
+            if (TimeHandler.verifyDateTime(start) == -1) {
+                return -1;
+            }
             values.put(Constant.PLAN_START,start);
             if (end == null){
                 end = start;
             }
         }
-        if (end != null){
+        if (end != null && !"".equals(end)){
+            if (TimeHandler.verifyDateTime(end) == -1 ){
+                return -1;
+            }
             values.put(Constant.PLAN_END,end);
         }
         if (detail != null) {
@@ -177,9 +183,11 @@ public class MySqliteHelper extends SQLiteOpenHelper {
                 Constant.EVENT_ID +" desc",
                 "1"
         );
-        if (cursor != null)
+        if (cursor.getCount() > 0){
             cursor.moveToFirst();
-        Event event = DbManager.cursorToEvent(cursor);
-        return event;
+            Event event = DbManager.cursorToEvent(cursor);
+            return event;
+        }
+        return null;
     }
 }

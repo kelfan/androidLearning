@@ -103,11 +103,11 @@ public class DbManager {
                     level, content, detail, genre, location,
                     plan_start, plan_end, created, completed);
             return event;
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            Log.e("DbManager","wrong dateformat in parsing in DbManager");
+            Log.e("Test/DbManager","wrong dateformat in parsing in DbManager");
+            return null;
         }
-        return null;
     }
 
     /**
@@ -168,6 +168,30 @@ public class DbManager {
                                 String start, String end,
                                 String location, String complete,
                                 int level, int status, int repeat){
+        return helper.addEvent(content, genre, start, end, detail, location, complete, level, status, repeat);
+    }
+
+    public static long addEvent(String content, String genre, String detail,
+                                String startDate, String startTime,
+                                String endDate,String endTime,
+                                String location, String complete,
+                                int level, int status, int repeat){
+        String start = startDate;
+        if (!"".equals(startDate) && startDate != null) {
+            if ("".equals(startTime) && startTime != null) {
+                start = startDate + " 00:00:00 " + TimeHandler.getTimezoneString();
+            } else {
+                start = startDate + " "+ startTime + ":00 "+TimeHandler.getTimezoneString();
+            }
+        }
+        String end = endDate;
+        if (!"".equals(endDate) && endDate != null) {
+            if ("".equals(endTime) && endTime != null ) {
+                end = endDate + " 00:00:00 " + TimeHandler.getTimezoneString();
+            } else {
+                end = endDate + " "+ endTime + ":00 "+TimeHandler.getTimezoneString();
+            }
+        }
         return helper.addEvent(content, genre, start, end, detail, location, complete, level, status, repeat);
     }
 

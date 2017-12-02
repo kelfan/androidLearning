@@ -27,4 +27,7 @@ public class Constant {
     public static final String REPEAT_TYPE = "Repeat_Type";      // event can be repeated by 1 yearly, 2 monthly, 3 weekly, 4 each workday, more number means repeat several days in a week like 13 means repeat each Monday & Wednesday and 234  means repeat on Mon,Tue & Wed
 
     public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss z";
+    public static final String DATETIME_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String DATETIME_TIME_FORMAT = "HH:mm";
+    public static final String DATETIME_PRESENT = "MM/dd HH:mm";
 }

@@ -129,24 +129,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 String detail = edtDetail.getText().toString();
                 String startDate = edtDate.getText().toString();
                 String startTime = edtTime.getText().toString();
-                String startStr = startDate;
-                if (!"".equals(startDate)) {
-                    if ("".equals(startTime)) {
-                        startStr = startDate + " 00:00:00 " + TimeHandler.getTimezoneString();
-                    } else {
-                        startStr = startDate + " "+ startTime + ":00 "+TimeHandler.getTimezoneString();
-                    }
+                if (!"".equals(startDate) && TimeHandler.verifyDate(startDate) == -1) {
+                    Toast.makeText(MainActivity.this, "date format should be yyyy-MM-dd", Toast.LENGTH_SHORT).show();
+                    break;
                 }
+                if (!"".equals(startTime) && TimeHandler.verifyTime(startTime) == -1) {
+                    Toast.makeText(MainActivity.this, "time format should be HH:mm", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
                 if (!"".equals(content)) {
-                    long result = DbManager.addEvent(content,null,detail,startStr,null,null,null,0,0,0);
+                    long result = DbManager.addEvent(content,null,detail,startDate,startTime,null,null,null,null,0,0,0);
                     if (result > 0) {
                         Toast.makeText(MainActivity.this, "insert data successfully", Toast.LENGTH_SHORT).show();
+                        Collections.reverse(totalList);
+                        totalList.add(DbManager.getLastEvent(Constant.TABLE_NAME));
+                        Collections.reverse(totalList);
+                        adapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(MainActivity.this, "fail to insert data", Toast.LENGTH_SHORT).show();
                     }
-                    Collections.reverse(totalList);
-                    totalList.add(DbManager.getLastEvent(Constant.TABLE_NAME));
-                    Collections.reverse(totalList);
                 } else {
                     Toast.makeText(MainActivity.this, "Content cannot be empty", Toast.LENGTH_SHORT).show();
                 }
@@ -178,8 +180,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 timePickerDialog.show();
                 break;
             case R.id.btnNew:
-                Intent newIntent = new Intent(MainActivity.this,AddActivity.class);
-                startActivity(newIntent);
+                Intent itemIntent = new Intent(MainActivity.this, AddActivity.class);
+                itemIntent.putExtra(Constant.EVENT_ITEM_INTENT, -1);
+                startActivity(itemIntent);
                 break;
         }
     }

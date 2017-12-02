@@ -12,7 +12,7 @@
         android:textAlignment="textStart"
         android:layout_marginLeft="5dp"
         android:textColor="#aa0000"
-        android:textSize="25sp" />
+        android:textSize="@dimen/normalFontSize" />
 
     <TextView
         android:id="@+id/tv_content"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:gravity="left"
         android:text="@string/event_content"
-        android:textSize="25sp"
+        android:textSize="@dimen/normalFontSize"
         android:textColor="#00aa00"
         />
 </LinearLayout>

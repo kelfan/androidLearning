@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:scrollbars="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -12,55 +13,72 @@
             android:id="@+id/BtnAddUpdate"
             android:text="@string/add_update"
             android:onClick="onClick"
+            android:textSize="@dimen/normalFontSize"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="@dimen/element_high" />
         <Button
             android:id="@+id/btnDelete"
             android:text="@string/button_delete"
             android:onClick="onClick"
+            android:textSize="@dimen/normalFontSize"
             android:layout_width="wrap_content"
+            android:layout_height="@dimen/element_high" />
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spinnerStatus"
+        android:hint="@string/event_status"
+        android:textSize="@dimen/normalFontSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/edtGenre"
+            android:hint="@string/event_genre"
+            android:inputType="text"
+            android:textSize="@dimen/normalFontSize"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"/>
+        <EditText
+            android:id="@+id/edtContent"
+            android:hint="@string/event_content"
+            android:inputType="text"
+            android:textSize="@dimen/normalFontSize"
+            android:layout_width="0dp"
+            android:layout_weight="5"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
     <EditText
-        android:id="@+id/edtContent"
-        android:hint="@string/event_content"
-        android:inputType="text"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/edtGenre"
-        android:hint="@string/event_genre"
-        android:inputType="text"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
         android:id="@+id/edtDetail"
         android:hint="@string/event_detail"
+        android:textSize="@dimen/normalFontSize"
         android:inputType="textMultiLine"
-        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:orientation="horizontal">
         <EditText
             android:id="@+id/edtStartDate"
             android:hint="@string/event_start_date"
             android:inputType="date"
+            android:textSize="@dimen/normalFontSize"
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="match_parent" />
         <Button
             android:id="@+id/btnStartDate"
             android:text="@string/event_date"
+            android:textSize="@dimen/normalFontSize"
             android:onClick="onClick"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -70,11 +88,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:orientation="horizontal">
         <EditText
             android:id="@+id/edtStartTime"
             android:hint="@string/event_start_time"
+            android:textSize="@dimen/normalFontSize"
             android:inputType="time"
             android:layout_width="0dp"
             android:layout_weight="3"
@@ -83,6 +101,7 @@
             android:id="@+id/btnStartTime"
             android:text="@string/event_time"
             android:onClick="onClick"
+            android:textSize="@dimen/normalFontSize"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
@@ -91,11 +110,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:orientation="horizontal">
         <EditText
             android:id="@+id/edtEndDate"
             android:hint="@string/event_end_date"
+            android:textSize="@dimen/normalFontSize"
             android:inputType="date"
             android:layout_width="0dp"
             android:layout_weight="3"
@@ -103,6 +122,7 @@
         <Button
             android:id="@+id/btnEndDate"
             android:text="@string/event_date"
+            android:textSize="@dimen/normalFontSize"
             android:onClick="onClick"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -112,11 +132,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:orientation="horizontal">
         <EditText
             android:id="@+id/edtEndTime"
             android:hint="@string/event_end_time"
+            android:textSize="@dimen/normalFontSize"
             android:inputType="time"
             android:layout_width="0dp"
             android:layout_weight="3"
@@ -124,6 +144,7 @@
         <Button
             android:id="@+id/btnEndTime"
             android:text="@string/event_time"
+            android:textSize="@dimen/normalFontSize"
             android:onClick="onClick"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -134,17 +155,18 @@
         android:id="@+id/edtLevel"
         android:inputType="number"
         android:hint="@string/event_level"
+        android:textSize="@dimen/normalFontSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:orientation="horizontal">
         <EditText
             android:id="@+id/edtLocation"
             android:hint="@string/event_location"
+            android:textSize="@dimen/normalFontSize"
             android:inputType="text"
             android:layout_width="0dp"
             android:layout_weight="3"
@@ -153,6 +175,7 @@
             android:id="@+id/btnLocation"
             android:text="@string/event_location"
             android:onClick="onClick"
+            android:textSize="@dimen/normalFontSize"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
@@ -161,12 +184,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:orientation="horizontal">
         <EditText
             android:id="@+id/edtRepeat"
             android:hint="@string/event_repeat"
             android:inputType="text"
+            android:textSize="@dimen/normalFontSize"
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="match_parent" />
@@ -174,15 +197,12 @@
             android:id="@+id/btnRepeat"
             android:text="@string/event_repeat"
             android:onClick="onClick"
+            android:textSize="@dimen/normalFontSize"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
     </LinearLayout>
 
-    <Spinner
-        android:id="@+id/spinnerStatus"
-        android:hint="@string/event_status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
 
 </LinearLayout>

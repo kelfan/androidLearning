@@ -26,12 +26,41 @@ public class TimeHandler {
         return dateFormat.parse(str);
     }
 
-    public static String getDayString(Date date){
+    public static Date stringToDatetimeNoException(String str){
+        try{
+            SimpleDateFormat dateFormat= new SimpleDateFormat(Constant.DATETIME_FORMAT);
+            return dateFormat.parse(str);
+        }catch (ParseException e) {
+            e.printStackTrace();
+            Log.i("Test/TimeHandler","datetime parse error");
+        }
+        return null;
+    }
+
+    public static String getDateString(Date date){
         if (date!=null){
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd:HH");
+            SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.DATETIME_DATE_FORMAT);
             return dateFormat.format(date);
         }
-        Log.i("My", "getDayString's date is null");
+        Log.i("Test/TimeHandler", "getDayString's date is null");
+        return "";
+    }
+
+    public static String getTimeString(Date date){
+        if (date!=null){
+            SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.DATETIME_TIME_FORMAT);
+            return dateFormat.format(date);
+        }
+        Log.i("Test/TimeHandler", "getDayString's date is null");
+        return "";
+    }
+
+    public static String getDayString(Date date){
+        if (date!=null){
+            SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.DATETIME_PRESENT);
+            return dateFormat.format(date);
+        }
+        Log.i("Test/TimeHandler", "getDayString's date is null");
         return "";
     }
 
@@ -44,4 +73,34 @@ public class TimeHandler {
     }
 
     public static String getTimezoneString(){ return new SimpleDateFormat("z").format(Calendar.getInstance().getTime()); }
+
+    public static long verifyDate(String date){
+        try{
+            SimpleDateFormat dateFormat= new SimpleDateFormat(Constant.DATETIME_DATE_FORMAT);
+            dateFormat.parse(date);
+            return 1;
+        }catch (Exception e) {
+            return -1;
+        }
+    }
+
+    public static long verifyTime(String date){
+        try{
+            SimpleDateFormat dateFormat= new SimpleDateFormat(Constant.DATETIME_TIME_FORMAT);
+            dateFormat.parse(date);
+            return 1;
+        }catch (Exception e) {
+            return -1;
+        }
+    }
+
+    public static long verifyDateTime(String date){
+        try{
+            SimpleDateFormat dateFormat= new SimpleDateFormat(Constant.DATETIME_FORMAT);
+            dateFormat.parse(date);
+            return 1;
+        }catch (Exception e) {
+            return -1;
+        }
+    }
 }

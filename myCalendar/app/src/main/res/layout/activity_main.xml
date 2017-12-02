@@ -11,130 +11,148 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <EditText
             android:id="@+id/edtContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:hint="@string/event_content"
             android:inputType="text"
-            android:layout_marginBottom="10dp"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/normalFontSize"
+            />
+
         <Button
             android:id="@+id/btnNew"
-            android:text="@string/button_new"
-            android:onClick="onClick"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
+            android:onClick="onClick"
+            android:textSize="@dimen/normalFontSize"
+            android:text="@string/button_new" />
     </LinearLayout>
 
 
     <EditText
         android:id="@+id/edtDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:hint="@string/event_detail"
         android:inputType="textMultiLine"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textSize="@dimen/normalFontSize" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:textSize="@dimen/normalFontSize">
+
         <EditText
             android:id="@+id/edtDate"
-            android:hint="@string/event_start_date"
-            android:inputType="date"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="3"
-            android:layout_height="match_parent" />
+            android:textSize="@dimen/normalFontSize"
+            android:hint="@string/event_start_date"
+            android:inputType="date" />
+
         <Button
             android:id="@+id/btnDate"
-            android:text="@string/event_date"
-            android:onClick="onClick"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/normalFontSize"
             android:layout_weight="1"
-            android:layout_height="match_parent" />
+            android:onClick="onClick"
+            android:text="@string/event_date" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:textSize="@dimen/normalFontSize">
+
         <EditText
             android:id="@+id/edtTime"
-            android:hint="@string/event_start_time"
-            android:inputType="time"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/normalFontSize"
             android:layout_weight="3"
-            android:layout_height="match_parent" />
+            android:hint="@string/event_start_time"
+            android:inputType="time" />
+
         <Button
             android:id="@+id/btnTime"
-            android:text="@string/event_time"
-            android:onClick="onClick"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/normalFontSize"
             android:layout_weight="1"
-            android:layout_height="match_parent" />
+            android:onClick="onClick"
+            android:text="@string/event_time" />
     </LinearLayout>
 
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <!--<Button-->
-            <!--android:text="Create"-->
-            <!--android:onClick="createDb"-->
-            <!--android:background="#aa0000"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
+        <!--android:text="Create"-->
+        <!--android:onClick="createDb"-->
+        <!--android:background="#aa0000"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
 
         <Button
             android:id="@+id/btnQuery"
-            android:text="@string/button_query"
-            android:onClick="onClick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textSize="@dimen/normalFontSize"
+            android:onClick="onClick"
+            android:text="@string/button_query" />
+
         <Button
             android:id="@+id/btnAdd"
-            android:text="@string/button_add"
-            android:onClick="onClick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:textSize="@dimen/normalFontSize"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="@string/button_add" />
+
         <Button
             android:id="@+id/btnUpdate"
-            android:text="@string/button_update"
+            android:textSize="@dimen/normalFontSize"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="@string/button_update" />
+
         <Button
             android:id="@+id/btnDelete"
-            android:text="@string/button_delete"
             android:layout_width="0dp"
+            android:textSize="@dimen/normalFontSize"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="@string/button_delete" />
     </LinearLayout>
 
     <!--<ListView-->
-        <!--android:id="@+id/list_view"-->
-        <!--android:choiceMode="singleChoice"-->
-        <!--android:onClick="onClick"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
+    <!--android:id="@+id/list_view"-->
+    <!--android:choiceMode="singleChoice"-->
+    <!--android:onClick="onClick"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
 
     <!--</ListView>-->
 
 
-
-
     <TextView
-        android:text="@string/event_status_working"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/event_status_working" />
+
     <ListView
         android:id="@+id/workingEventLv"
         android:layout_width="match_parent"
@@ -143,9 +161,10 @@
     </ListView>
 
     <TextView
-        android:text="@string/event_status_schedule"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/event_status_schedule" />
+
     <ListView
         android:id="@+id/scheduledEventLv"
         android:layout_width="match_parent"
@@ -154,9 +173,10 @@
     </ListView>
 
     <TextView
-        android:text="@string/event_status_important"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/event_status_important" />
+
     <ListView
         android:id="@+id/importantEventLv"
         android:layout_width="match_parent"
@@ -165,9 +185,10 @@
     </ListView>
 
     <TextView
-        android:text="@string/event_status_others"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/event_status_others" />
+
     <ListView
         android:id="@+id/eventLv"
         android:layout_width="match_parent"
