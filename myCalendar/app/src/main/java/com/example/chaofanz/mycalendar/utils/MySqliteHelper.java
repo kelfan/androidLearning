@@ -30,7 +30,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
     }
 
 
-    // id, start, end, content, detail, location, level, create, complete, genre, status, repeat
+    // id, start, end, content, detail, location, level, create, complete, genre, Status, repeat
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String CREATE_TABLE = "CREATE TABLE " + Constant.TABLE_NAME + "("
@@ -76,7 +76,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    // id, start, end, content, detail, location, level, create, complete, genre, status, repeat
+    // id, start, end, content, detail, location, level, create, complete, genre, Status, repeat
     public long addEvent(String content,String genre,
                          String start, String end,
                          String detail,
@@ -123,18 +123,31 @@ public class MySqliteHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public long updateEvent(int id, String content,String genre,
+                         String start, String end,
+                         String detail,
+                         String location,
+                         String complete,
+                         int level, int status, int repeat) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = processEvent(content, genre, start, end, detail, location, complete, level, status, repeat);
+        long result = db.update(Constant.TABLE_NAME, values, Constant.EVENT_ID + " =?", new String[]{ Integer.toString(id) });
+        db.close();
+        return result;
+    }
+
     public int updateEvent(Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Constant.EVENT_ID, event.getId());
-        values.put(Constant.PLAN_START, event.getPlan_start().toString());
-        values.put(Constant.PLAN_END, event.getPlan_end().toString());
+        values.put(Constant.PLAN_START, TimeHandler.datetimeToString(event.getPlan_start()));
+        values.put(Constant.PLAN_END, TimeHandler.datetimeToString(event.getPlan_end()));
         values.put(Constant.EVENT_CONTENT, event.getContent());
         values.put(Constant.EVENT_DETAIL, event.getDetail());
         values.put(Constant.EVENT_LOCATION, event.getLocation());
         values.put(Constant.EVENT_LEVEL, event.getLevel());
-        values.put(Constant.CREATE_DATE, event.getCreated().toString());
-        values.put(Constant.COMPLETED_DATE, event.getCompleted().toString());
+        values.put(Constant.CREATE_DATE, TimeHandler.datetimeToString(event.getCreated()));
+        values.put(Constant.COMPLETED_DATE, TimeHandler.datetimeToString(event.getCompleted()));
         values.put(Constant.EVENT_GENRE, event.getGenre());
         values.put(Constant.EVENT_STATUS, event.getStatus());
         values.put(Constant.REPEAT_TYPE, event.getRepeat_type());
@@ -142,10 +155,15 @@ public class MySqliteHelper extends SQLiteOpenHelper {
         return db.update(Constant.TABLE_NAME, values, Constant.EVENT_ID + " =?", new String[]{String.valueOf(event.getId())});
     }
 
-    public void deleteEvent(Event event) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(Constant.TABLE_NAME, Constant.EVENT_ID + " =?", new String[]{String.valueOf(event.getId())});
-        db.close();
+    public int deleteEvent(Event event) {
+        try{
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.delete(Constant.TABLE_NAME, Constant.EVENT_ID + " =?", new String[]{String.valueOf(event.getId())});
+            db.close();
+            return 0;
+        }catch (Exception e){
+            return -1;
+        }
     }
 
     public Event getEventById(int id) {
@@ -189,5 +207,49 @@ public class MySqliteHelper extends SQLiteOpenHelper {
             return event;
         }
         return null;
+    }
+
+    // add string into values to put into event
+    public ContentValues processEvent(String content,String genre,
+                                      String start, String end,
+                                      String detail,
+                                      String location,
+                                      String complete,
+                                      int level, int status, int repeat) {
+        ContentValues values = new ContentValues();
+        values.put(Constant.EVENT_CONTENT, content);
+        values.put(Constant.EVENT_LEVEL, level);
+        values.put(Constant.CREATE_DATE, TimeHandler.getCurrentDateTimeString());
+        if (genre == null){
+            genre = "others";
+        }
+        values.put(Constant.EVENT_GENRE, genre);
+        values.put(Constant.EVENT_STATUS,status);
+        values.put(Constant.REPEAT_TYPE,repeat);
+        if (start != null && !"".equals(start)){
+            if (TimeHandler.verifyDateTime(start) == -1) {
+                return null;
+            }
+            values.put(Constant.PLAN_START,start);
+            if (end == null){
+                end = start;
+            }
+        }
+        if (end != null && !"".equals(end)){
+            if (TimeHandler.verifyDateTime(end) == -1 ){
+                return null;
+            }
+            values.put(Constant.PLAN_END,end);
+        }
+        if (detail != null) {
+            values.put(Constant.EVENT_DETAIL,detail);
+        }
+        if (location != null) {
+            values.put(Constant.EVENT_LOCATION,location);
+        }
+        if (complete != null) {
+            values.put(Constant.COMPLETED_DATE,complete);
+        }
+        return values;
     }
 }

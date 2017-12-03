@@ -1,6 +1,8 @@
 package com.example.chaofanz.mycalendar.utils;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -15,9 +17,12 @@ import java.util.TimeZone;
 
 public class TimeHandler {
     public static String datetimeToString(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.DATETIME_FORMAT);
-        String result = dateFormat.format(date);
-        return result;
+        if (date != null){
+            SimpleDateFormat dateFormat = new SimpleDateFormat(Constant.DATETIME_FORMAT);
+            String result = dateFormat.format(date);
+            return result;
+        }
+        return null;
     }
 
     public static Date stringToDatetime(String str) throws ParseException {
@@ -102,5 +107,37 @@ public class TimeHandler {
         }catch (Exception e) {
             return -1;
         }
+    }
+
+    public static long checkTime(Context context, String date, String time){
+        if (!"".equals(date) && TimeHandler.verifyDate(date) == -1) {
+            Toast.makeText(context, "date format should be yyyy-MM-dd", Toast.LENGTH_SHORT).show();
+            return -1;
+        }
+        if (!"".equals(time) && TimeHandler.verifyTime(time) == -1) {
+            Toast.makeText(context, "time format should be HH:mm", Toast.LENGTH_SHORT).show();
+            return -1;
+        }
+        return 0;
+    }
+
+    public static String combineDateTime(Context context, String date, String time){
+        if (!"".equals(date) && TimeHandler.verifyDate(date) == -1) {
+            Toast.makeText(context, "date format should be yyyy-MM-dd", Toast.LENGTH_SHORT).show();
+            return "";
+        }
+        if (!"".equals(time) && TimeHandler.verifyTime(time) == -1) {
+            Toast.makeText(context, "time format should be HH:mm", Toast.LENGTH_SHORT).show();
+            return "";
+        }
+        String start = date;
+        if (!"".equals(date) && date != null) {
+            if ("".equals(time) && time != null) {
+                start = date + " 00:00:00 " + TimeHandler.getTimezoneString();
+            } else {
+                start = date + " "+ time + ":00 "+TimeHandler.getTimezoneString();
+            }
+        }
+        return start;
     }
 }

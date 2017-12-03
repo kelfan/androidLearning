@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // 1.设置数据源
         list = new ArrayList<String>();
         list.add("北京");
-        list.add("上海");
+        list.add("上海");,
         list.add("广州");
         list.add("深圳");
 

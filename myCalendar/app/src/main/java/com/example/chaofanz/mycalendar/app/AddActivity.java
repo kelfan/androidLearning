@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -12,27 +15,34 @@ import android.widget.Toast;
 
 import com.example.chaofanz.mycalendar.R;
 import com.example.chaofanz.mycalendar.bean.Event;
+import com.example.chaofanz.mycalendar.bean.Status;
 import com.example.chaofanz.mycalendar.utils.Constant;
+import com.example.chaofanz.mycalendar.utils.DatetimePicker;
 import com.example.chaofanz.mycalendar.utils.DbManager;
+import com.example.chaofanz.mycalendar.utils.StatusManager;
 import com.example.chaofanz.mycalendar.utils.TimeHandler;
 
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
 
 /**
  * Created by Administrator on 2017/11/26.
  */
 
-public class AddActivity extends AppCompatActivity {
+public class AddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Button btnAddUpdate, btnStartDate, btnStartTime, btnEndDate, btnEndTime;
     EditText edtContent, edtDetail, edtGenre, edtStartDate, edtEndDate, edtStartTime, edtEndTime, edtLevel, edtLocation, edtRepeat;
     Spinner spinnerStatus;
+    private ArrayAdapter spinnerAdapter;
+    private Event event;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         // aqcuire resources from view
-        btnAddUpdate = findViewById(R.id.BtnAddUpdate);
+        btnAddUpdate = findViewById(R.id.btnAddUpdate);
         btnStartDate = findViewById(R.id.btnStartDate);
         btnStartTime = findViewById(R.id.btnStartTime);
         btnEndDate = findViewById(R.id.btnEndDate);
@@ -49,11 +59,19 @@ public class AddActivity extends AppCompatActivity {
         edtRepeat = findViewById(R.id.edtRepeat);
         spinnerStatus = findViewById(R.id.spinnerStatus);
 
+        // set the spinner for dropdown status
+        List<String> statusList = StatusManager.getStatusList();
+        spinnerAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                statusList);
+        spinnerStatus.setAdapter(spinnerAdapter);
+        spinnerStatus.setOnItemSelectedListener(this);
+
         // acquire the event id from selected item of mainactivity's listview
         int eventId = getIntent().getExtras().getInt(Constant.EVENT_ITEM_INTENT);
         if (eventId > 0 ) {
 //            set content text of AddActivity view
-            Event event = DbManager.getEventById(eventId);
+            event = DbManager.getEventById(eventId);
             edtContent.setText(event.getContent());
             edtDetail.setText(event.getDetail());
             edtGenre.setText(event.getGenre());
@@ -64,8 +82,92 @@ public class AddActivity extends AppCompatActivity {
             edtLevel.setText(String.valueOf(event.getLevel()));
             edtLocation.setText(event.getLocation());
             edtRepeat.setText(String.valueOf(event.getRepeat_type()));
-//            spinnerStatus.setText(event.getDetail());
+            spinnerStatus.setSelection(event.getStatus());
+        }
 
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        if (event != null && event.getStatus() != i){
+            event.setStatus(i);
+            DbManager.updateEvent(event);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnStartDate:
+                DatetimePicker.datePicker(this,edtStartDate);
+                break;
+            case R.id.btnEndDate:
+                DatetimePicker.datePicker(this,edtEndDate);
+                break;
+            case R.id.btnStartTime:
+                DatetimePicker.timePicker(this,edtStartTime);
+                break;
+            case R.id.btnEndTime:
+                DatetimePicker.timePicker(this,edtEndTime);
+                break;
+            case R.id.btnAddUpdate:
+                String start = TimeHandler.combineDateTime(this,edtStartDate.getText().toString(),edtStartTime.getText().toString());
+                if ("".equals(start) ){ break; }
+                String end = TimeHandler.combineDateTime(this,edtEndDate.getText().toString(),edtEndTime.getText().toString());
+                if ("".equals(end)){ break; }
+
+                if (event!=null){
+                    long result = DbManager.updateEvent(
+                            event.getId(),
+                            edtContent.getText().toString(),
+                            edtGenre.getText().toString(),
+                            start,
+                            end,
+                            edtDetail.getText().toString(),
+                            edtLocation.getText().toString(),
+                            null,
+                            Integer.parseInt(edtLevel.getText().toString()),
+                            (int)spinnerStatus.getSelectedItemId(),
+                            Integer.parseInt(edtRepeat.getText().toString())
+                            );
+                    if (result < 0) {
+                        Toast.makeText(this, "update failed", Toast.LENGTH_SHORT);
+                    } else {
+                        Toast.makeText(this, "update success", Toast.LENGTH_SHORT);
+                    }
+                }else {
+                    long result = DbManager.addEvent(
+                            edtContent.getText().toString(),
+                            edtGenre.getText().toString(),
+                            start,
+                            end,
+                            edtDetail.getText().toString(),
+                            edtLocation.getText().toString(),
+                            event.getCompleted().toString(),
+                            Integer.parseInt(edtLevel.getText().toString()),
+                            (int)spinnerStatus.getSelectedItemId(),
+                            Integer.parseInt(edtRepeat.getText().toString())
+                    );
+                    if (result < 0) {
+                        Toast.makeText(this, "add failed", Toast.LENGTH_SHORT);
+                    } else {
+                        Toast.makeText(this, "add success", Toast.LENGTH_SHORT);
+                    }
+                }
+                break;
+            case R.id.btnDelete:
+                if (event != null) {
+                    DbManager.deleteEvent(event);
+                    Intent intent = new Intent();
+                    intent.putExtra("id", event.getId());
+                    setResult(2, intent);
+                    finish();
+                }
+                break;
         }
     }
 }

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.chaofanz.mycalendar.bean.Event;
 
@@ -222,6 +223,27 @@ public class DbManager {
 
     public static Event getEventById(int id){
         return helper.getEventById(id);
+    }
+
+    public static long updateEvent( int id, String content,String genre,
+                                  String start, String end,
+                                  String detail,
+                                  String location,
+                                  String complete,
+                                  int level, int status, int repeat){
+        long result = helper.updateEvent(id, content, genre, start, end, detail, location, complete, level, status, repeat);
+        return result;
+    }
+
+    public static long updateEvent(Event event) {
+        return helper.updateEvent(event);
+    }
+
+    public static int deleteEvent(Event event) {
+        if (event != null) {
+            return helper.deleteEvent(event);
+        }
+        return -2;
     }
 }
 

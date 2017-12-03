@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         eventLv.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int scrollState) {
-                // AbsListView.OnScrollListener.SCROLL_STATE_IDLE means the status when the scroll is stoped
+                // AbsListView.OnScrollListener.SCROLL_STATE_IDLE means the Status when the scroll is stoped
                 if (isDivPage && AbsListView.OnScrollListener.SCROLL_STATE_IDLE == scrollState) {
                     if (currentPage < pageNum) {
                         currentPage++;
@@ -191,6 +191,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         Intent itemIntent = new Intent(MainActivity.this, AddActivity.class);
         itemIntent.putExtra(Constant.EVENT_ITEM_INTENT, (int) id);
-        startActivity(itemIntent);
+//        startActivity(itemIntent);
+        startActivityForResult(itemIntent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // if user delete a event
+        if (requestCode == 1 && resultCode == 2){
+            int id = data.getIntExtra("id",-1);
+            if (id != -1){
+                currentPage = 1;
+                totalList.clear();
+                totalList.addAll(DbManager.getListByCurrentPage(Constant.TABLE_NAME, currentPage, pageSize));
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 }

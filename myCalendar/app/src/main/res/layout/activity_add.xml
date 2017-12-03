@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:id="@+id/BtnAddUpdate"
+            android:id="@+id/btnAddUpdate"
             android:text="@string/add_update"
             android:onClick="onClick"
             android:textSize="@dimen/normalFontSize"

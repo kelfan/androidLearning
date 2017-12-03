@@ -715,6 +715,15 @@ http://blog.csdn.net/hyr83960944/article/details/38388429
 Settings(or Preferences in mac)->Editor->Code Completion
 
 
+# 出错/ adapter.notifyDataSetChanged() 没反应 
+http://blog.csdn.net/findsafety/article/details/51559630
+这个时候，newlist指向的是一个和list指向不同的堆内存
+
+```java 
+list.clear();
+list.addAll(newlist);
+adapter.notifyDataSetChanged();
+```
 
 # 出错|异常/闪退
 1. 有可能是Sql语句出错,如果有数据库的话;
