@@ -1822,6 +1822,48 @@ TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDia
 timePickerDialog.show();
 ```
 
+# datepicker 
+```java 
+//datepicker初始化
+datePicker.init(year, calendar.get(Calendar.MINUTE), day, new DatePicker.OnDateChangedListener() {
+    @Override
+    public void onDateChanged(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+        setTitle(year+"-"+(monthOfYear+1)+"-"+dayOfMonth);
+    }
+});
+```
+
+# timepicker
+```java 
+//Timepicker初始化
+timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+    @Override
+    public void onTimeChanged(TimePicker timePicker, int hourOfDay, int minute) {
+        setTitle(hourOfDay+":"+minute);
+    }
+});
+```
+
+# DatePickerDialog
+```java 
+new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+        setTitle(year+"-"+(monthOfYear+1)+"-"+dayOfMonth);
+    }
+},year,calendar.get(Calendar.MONTH),day).show();
+```
+
+# TimePickerDialog
+```java 
+new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+    @Override
+    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+        setTitle(hourOfDay + ":" + minute);
+    }
+}, hour, minute, true).show(); //last parameter = is24hourView
+```
+
 # androidManifest.xml
 常用标签
     包名,版本信息,组件篇,权限篇
