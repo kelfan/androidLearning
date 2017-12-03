@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kelfan.gridviewimooc.MainActivity">
+
+    <!--
+        android:numColumns="" 每一行显示多少列
+        android:horizontalSpacing="" 两列之间的间距
+        android:verticalSpacing=""  两行之间的间距
+    -->
+
+    <GridView
+        android:id="@+id/gridView"
+        android:numColumns="3"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </GridView>
+
+</android.support.constraint.ConstraintLayout>
