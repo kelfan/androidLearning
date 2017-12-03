@@ -1,6 +1,7 @@
 package com.kelfan.imoocdatetimepicker;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
@@ -54,6 +55,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        new DatePickerDialog()
+        new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                setTitle(year+"-"+(monthOfYear+1)+"-"+dayOfMonth);
+            }
+        },year,calendar.get(Calendar.MONTH),day).show();
+
+        new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                setTitle(hourOfDay + ":" + minute);
+            }
+        }, hour, minute, true).show(); //last parameter = is24hourView
     }
 }
