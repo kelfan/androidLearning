@@ -135,9 +135,9 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                             Integer.parseInt(edtRepeat.getText().toString())
                             );
                     if (result < 0) {
-                        Toast.makeText(this, "update failed", Toast.LENGTH_SHORT);
+                        Toast.makeText(this, "update failed", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(this, "update success", Toast.LENGTH_SHORT);
+                        Toast.makeText(this, "update success", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     long result = DbManager.addEvent(
@@ -153,9 +153,9 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                             Integer.parseInt(edtRepeat.getText().toString())
                     );
                     if (result < 0) {
-                        Toast.makeText(this, "add failed", Toast.LENGTH_SHORT);
+                        Toast.makeText(this, "add failed", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(this, "add success", Toast.LENGTH_SHORT);
+                        Toast.makeText(this, "add success", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
@@ -166,6 +166,13 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                     intent.putExtra("id", event.getId());
                     setResult(2, intent);
                     finish();
+                }
+                break;
+            case R.id.btnRepeat:
+                try {
+                    Integer repeat = Integer.parseInt(edtRepeat.getText().toString());
+                } catch (Exception e) {
+                    Toast.makeText(this, "repeat should be integer", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
