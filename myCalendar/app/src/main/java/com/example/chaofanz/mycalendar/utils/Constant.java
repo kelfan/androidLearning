@@ -30,5 +30,5 @@ public class Constant {
     public static final String DATETIME_DATE_FORMAT = "yyyy-MM-dd";
     public static final String DATETIME_TIME_FORMAT = "HH:mm";
     public static final String DATETIME_PRESENT = "MM/dd HH:mm";
-    public static final String[] WEEKDAY = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Daily", "Weekly", "Monthly", "Yearly"};
+    public static final String[] REPEAT_WAYS = new String[]{"0 Non Repeat","1 Monday", "2 Tuesday", "3 Wednesday", "4 Thursday", "5 Friday", "6 Saturday", "7 Sunday", "8 Daily", "9 Weekly", "10 Monthly", "11 Yearly"};
 }

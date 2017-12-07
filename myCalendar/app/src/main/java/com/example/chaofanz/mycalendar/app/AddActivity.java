@@ -1,9 +1,12 @@
 package com.example.chaofanz.mycalendar.app;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,7 +34,7 @@ import java.util.logging.Level;
  */
 
 public class AddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    Button btnAddUpdate, btnStartDate, btnStartTime, btnEndDate, btnEndTime;
+    Button btnAddUpdate, btnStartDate, btnStartTime, btnEndDate, btnEndTime,btnRepeat;
     EditText edtContent, edtDetail, edtGenre, edtStartDate, edtEndDate, edtStartTime, edtEndTime, edtLevel, edtLocation, edtRepeat;
     Spinner spinnerStatus;
     private ArrayAdapter spinnerAdapter;
@@ -47,6 +50,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         btnStartTime = findViewById(R.id.btnStartTime);
         btnEndDate = findViewById(R.id.btnEndDate);
         btnEndTime = findViewById(R.id.btnEndTime);
+        btnRepeat = findViewById(R.id.btnRepeat);
         edtContent = findViewById(R.id.edtContent);
         edtDetail = findViewById(R.id.edtDetail);
         edtGenre = findViewById(R.id.edtGenre);
@@ -169,12 +173,58 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 }
                 break;
             case R.id.btnRepeat:
-                try {
-                    Integer repeat = Integer.parseInt(edtRepeat.getText().toString());
-                } catch (Exception e) {
-                    Toast.makeText(this, "repeat should be integer", Toast.LENGTH_SHORT).show();
-                }
+                multiSelectDialog(this, Constant.REPEAT_WAYS, edtRepeat);
                 break;
         }
+    }
+
+    private String multiSelectDialog(Context context, final String[] options, EditText edtText) {
+        boolean[] bool = new boolean[options.length];
+        return multiSelectDialog(context, options, bool, edtText);
+    }
+
+    private String multiSelectDialog(Context context, final String[] options, final boolean[] checked, final EditText edtText) {
+        // build an alertdialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final String[] output = {""};
+        builder.setMultiChoiceItems(options, checked, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which, boolean isChecked) {
+                // update the current focused item's checked status
+                checked[which] = isChecked;
+            }
+        });
+
+        // set a title for Alert Dialog
+        builder.setTitle("repeat type");
+
+        // set the positive/yes Button Click listener
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                // do something when click positive Button
+                output[0] = "";
+                for (int i=0;i<=checked.length-1;i++) {
+                    if (checked[i]) {
+                        output[0] += i+"";
+                    }
+                }
+                edtText.setText(output[0]);
+            }
+        });
+
+        // set the neutral/cancel button Click Listener
+        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // do something when click the neutral button
+            }
+        });
+
+        // Create & show
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        return output[0];
     }
 }
