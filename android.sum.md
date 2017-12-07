@@ -520,6 +520,34 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 }
 ```
 
+# 控件/progressbar 进度条 
+android工程师的第二门课(第1季)
+>   大小环形进度条 = 没有进度数
+    水平进度条 = 有进度数 
+    setProgress 最大 10000,一般设最高9999
+    第一进度,第二进度和最大显示进度
+    对话框形式的进度条
+    自定义样式 
+
+# 控件/webView 显示网页 
+android工程师的第二门课(第1季)
+>   通过Intent调用系统浏览器
+    获取网络访问权限 
+    处理页面导航 -> 例如返回是退回上一页而不是退出程序
+    getSettings 启用JavaScript
+    页面添加加载进度条 
+    页面缓存打开 
+
+# 控件/fragment 相当一个页面中的frame 
+android工程师的第二门课(第1季)
+>   静态加载
+    动态加载 
+
+
+
+
+
+
 # setting/ NoTitleBar
 ```xml
     <application
