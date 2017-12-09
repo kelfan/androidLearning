@@ -19,7 +19,6 @@
     1. change style.xml into NoActionBar
     1. MainActivity add `setSupportActionBar`
     1. Change theme to `android:theme="@style/ThemeOverlay.AppCompat.Dark"`
-1. 
 
 # MainActivity add menu icon
 ```java 

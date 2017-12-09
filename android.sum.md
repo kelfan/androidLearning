@@ -2116,6 +2116,38 @@ onOpen()          ->打开数据库方法
 
 # style样式/ selector = 按钮的变化样式
 
+# drawer/ sliding window 
+快速添加
+> package -> right click -> new -> activity -> navigation drawer activity  
+
+layout
+1. nav_header...xml -> 上方显示头像和文字的地方  drawer High position image and Text  
+1. activity_xxx.xml -> 主页的布局 main display of the homepage 
+1. app_bar...xml -> 顶部遮挡和浮标 cover the top bar area + floatingaction Button 
+1. content_navigation.xml -> 怎样展现内容 control the template to display Contents 
+menu
+1. ...menu.xml -> 有那些选项 contents of items 
+
+
+# Resources
+Drawer
+- [Creating Tabs in Android Studio with Tabbed Activity](https://www.youtube.com/watch?v=00LLd7qr9sA)
+- [Android Studio - Creating Sidebar Navigation Drawer](https://www.youtube.com/watch?v=u9gDooP8IhU)
+- [Android Navigation Drawer Example using Fragments](https://www.youtube.com/watch?v=-SUvA1fXaKw)
+floating action button 
+- [Android Material Design - 12 - Floating Action Button](https://www.youtube.com/watch?v=EfvCMZgAqG4)
+- [Android Floating Action Button with Animations](https://www.youtube.com/watch?v=orcpzMo7igQ)
+menu 
+- [ANDROID BOOM MENU](https://www.youtube.com/watch?v=AAvvDySvJFc)
+- [ANDROID SIDE MENU](https://www.youtube.com/watch?v=LrXLjiT9HIc)
+dashboard 
+- [Material Home Page Design (Dashboard) in android studio](https://www.youtube.com/watch?v=-YCUrHFUxlA)
+CardView 
+- [Android Studio Tutorial - Grid Layout and CardView](https://www.youtube.com/watch?v=VUPM387qyrw)
+unit Test 
+- [Android app development for beginners - 26 - Android - Unit test for Activity - Activity Test Rule](https://www.youtube.com/watch?v=_TR6QcRozAg)
+constraintlayout
+- [Constraint Layout Android XML Tutorial](https://www.youtube.com/watch?v=uI20G-cbS1U)
 
 # SQLiteOpenHelper/example
 ```java
