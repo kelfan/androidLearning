@@ -2128,6 +2128,14 @@ layout
 menu
 1. ...menu.xml -> 有那些选项 contents of items 
 
+# drawer/ tab Layout 
+1. new drawer Activity 
+1. add `tabLayout` in `app_bar...xml` after `toolbar`
+1. add `tabsPager.java` extends `fragmentStatePagerAdapter`
+1. add `Fragment` with unchecked last 2 options
+1. add Switch between fragments 
+1. add `viewpager` in `content_main.xml`
+1. MainActivity.java set Adapter 
 
 # Resources
 Drawer
@@ -2148,6 +2156,10 @@ unit Test
 - [Android app development for beginners - 26 - Android - Unit test for Activity - Activity Test Rule](https://www.youtube.com/watch?v=_TR6QcRozAg)
 constraintlayout
 - [Constraint Layout Android XML Tutorial](https://www.youtube.com/watch?v=uI20G-cbS1U)
+latitude&longitude 
+- [YouTube](https://www.youtube.com/results?search_query=android+studio+get+current+latitude+and+longitude)
+broadcast receiver 
+[YouTube](https://www.youtube.com/results?search_query=android+studio+receiver+share+)
 
 # SQLiteOpenHelper/example
 ```java
