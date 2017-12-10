@@ -2137,6 +2137,13 @@ menu
 1. add `viewpager` in `content_main.xml`
 1. MainActivity.java set Adapter 
 
+# rename project And package 
+1. Right click on project in project pane.
+2. Click "Open module settings"
+3. In the project structure frame, click app below the Modules
+4. Click "Flavors" and change "Application Id".
+5. Edit Manifest.xml in your project and rebuild it. ->  use refactor -> package 
+
 # Resources
 Drawer
 - [Creating Tabs in Android Studio with Tabbed Activity](https://www.youtube.com/watch?v=00LLd7qr9sA)
