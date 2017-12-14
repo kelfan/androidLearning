@@ -1,22 +1,31 @@
-# Android TabLayout Tutorial using ViewPager and Fragments
-- [YouTube](https://www.youtube.com/watch?v=ZnhSbXuJaqQ)
+# Android Broadcast Intent and Broadcast Receiver
+https://www.youtube.com/watch?v=lGwDARPSCkE
 
-# Process 
-1. new Tab Activity 
-1. Create `Tab.java` and related `tab.xml` 
-1. Change `getItem` Of `SectionsPagerAdapter` in MainActivity.java 
-
-# getItem 
+# Broadcast Receiver 
+1. new -> other -> Broadcast Receiver 
+1. Send 
 ```java 
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return new Tab1();
-                case 1:
-                    return new Tab2();
-                case 2:
-                    return new Tab3();
-            }
-            return null;
-        }
+    public void onBtnSendBroadcastClick(View view) {
+        Intent intent = new Intent("vn.vtgames.broadcastsender");
+        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        this.sendBroadcast(intent);
+    }
 ```
+1. Receive 
+```java 
+public class MyReceiver extends BroadcastReceiver {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        // TODO: This method is called when the BroadcastReceiver is receiving
+        // an Intent broadcast.
+        // throw new UnsupportedOperationException("Not yet implemented");
+        String action = intent.getAction();
+        Toast.makeText(context, "detected: "+action, Toast.LENGTH_SHORT).show();
+
+    }
+}
+```
+1. debug 
+    1. launch Activity = nothing or do not launch Activity 
+    1. 

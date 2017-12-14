@@ -287,6 +287,39 @@ mainactivity.java
         });
 ```
 
+# 图片无限循环播放
+android工程师的第二门课(第1季) > gallery
+```java 
+image.setBackgroundResource(res[position%res.length])
+```
+
+# 控件/ ViewPager 
+android工程师的第二门课(第1季)
+- adapter 
+    - PagerAdapter = 使用View而不是Fragment
+    - FragmentPagerAdapter = 不销毁
+    - fragmentStatePagerAdapter = 可以动态销毁
+
+# 控件/ViewPager/ PagerTabStrip vs. PagerTitleStrip = 分页显示, 相当于Tab, 二选一就可以
+android工程师的第二门课(第1季)
+
+# 控件/ Viewflipper = 实现图片轮播和手势滑动显示View 
+android工程师的第二门课(第1季)
+# 控件/ ScrollView = 实现滚动效果 
+android工程师的第二门课(第1季)
+```java 
+// TextView的总高度 <= 一屏幕的高度＋滚动条的滚动距离 
+if(scroll.getChildAt(0).getMeasureHeight() <= scroll.getHeight() + scroll.getScrollY()) {} 
+    // Height = 屏幕高度 
+    // measureHeight = 内容的全部显示的高度 
+    // ScrollY = 滚动的距离 
+```
+
+# 控件/ gallery = 图片浏览器 -> deprecated
+android工程师的第二门课(第1季)
+# 控件/ seekbar = 可拖动的进度条 
+android工程师的第二门课(第1季)
+
 # 控件/ CheckBox = 多选多
 ```xml
     <CheckBox
@@ -542,6 +575,8 @@ android工程师的第二门课(第1季)
 android工程师的第二门课(第1季)
 >   静态加载
     动态加载 
+    生命周期 
+    跟Activity传递数据
 
 
 
@@ -1045,6 +1080,7 @@ String myIntAsString = String.format("%d", myInt);
 ```
 
 # 布局/LinearLayout = 堆栈排列布局
+性能>relativeLayout 
 android:orientation="vertical"
 android:gravity="center"
 android:layout_gravity="bottom" //相对于父容器的位置
@@ -1073,7 +1109,7 @@ android:layout_toRightOf="@+id/tv1"
 android:layout_x="35dp"
 android:layout_y="35dp"
 
-# 布局/TableLayout = 表格布局
+# 布局/TableLayout = 表格布局 -> 被 gridView 代替 
 android:collapseColumns="0,2" //隐藏其中的格子,0是第一格
 android:shrinkColumns="3" //格子中文字太长可以换行显示
 android:stretchColumns="2" //把一个格子延伸显示
@@ -1082,6 +1118,14 @@ android:stretchColumns="\*" //所有格子分均拉伸
 android:layout_column="1" //格子在哪一列显示,1是第二列开始显示
 android:layout_span="4" //元素跨多少格
 
+# 布局/ include = 把重复的代码放在一个地方,然后include插入到需要的地方 
+[Android攻城狮的第二门课(第1季)-慕课网](http://www.imooc.com/learn/107)
+
+# 布局/ merge = merge代表回头代替的顶头标签
+[Android攻城狮的第二门课(第1季)-慕课网](http://www.imooc.com/learn/107)
+
+# 布局/ viewstub = 惰性加载, 不使用就不加载,适用不常用的元素 
+[Android攻城狮的第二门课(第1季)-慕课网](http://www.imooc.com/learn/107)
 
 # Android 在软键盘弹出时将布局上移，不掩盖控件
 http://www.jianshu.com/p/8c98df35d368
@@ -2137,6 +2181,93 @@ menu
 3. In the project structure frame, click app below the Modules
 4. Click "Flavors" and change "Application Id".
 5. Edit Manifest.xml in your project and rebuild it. ->  use refactor -> package 
+
+# 原生分享
+```java 
+Intent share_intent = new Intent();
+        share_intent.setAction(Intent.ACTION_SEND);//设置分享行为
+        share_intent.setType("text/plain");//设置分享内容的类型
+        share_intent.putExtra(Intent.EXTRA_SUBJECT, contentTitle);//添加分享内容标题
+        share_intent.putExtra(Intent.EXTRA_TEXT, content);//添加分享内容
+        //创建分享的Dialog
+        share_intent = Intent.createChooser(share_intent, dialogTitle);
+        activity.startActivity(share_intent);
+
+作者：自导自演的机器人
+链接：http://www.jianshu.com/p/88f166dd43b7
+來源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+```
+
+
+# 接收分享 BroadcastReceiver 
+AndroidMainfest.xml -> Activity里放入 
+```xml 
+<intent-filter>  
+     <action android:name="android.intent.action.SEND" />  
+     <category android:name="android.intent.category.DEFAULT" />  
+     <data android:mimeType="image/*" />  
+</intent-filter>  
+ <intent-filter>  
+      <action android:name="android.intent.action.SEND" />  
+      <category android:name="android.intent.category.DEFAULT" />  
+      <data android:mimeType="text/plain" />  
+</intent-filter>  
+<intent-filter>  
+       <action android:name="android.intent.action.SEND_MULTIPLE" />  
+       <category android:name="android.intent.category.DEFAULT" />  
+       <data android:mimeType="image/*" />  
+</intent-filter>
+```
+
+```java 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import java.util.ArrayList;
+
+class MyActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+        if (Intent.ACTION_SEND.equals(action)&&type!=null){
+            if ("text/plain".equals(type)){
+                dealTextMessage(intent);
+            }else if(type.startsWith("image/")){
+                dealPicStream(intent);
+            }
+        }else if (Intent.ACTION_SEND_MULTIPLE.equals(action)&&type!=null){
+            if (type.startsWith("image/")){
+                dealMultiplePicStream(intent);
+            }
+        }
+    }
+
+    void dealTextMessage(Intent intent){
+        String share = intent.getStringExtra(Intent.EXTRA_TEXT);
+        String title = intent.getStringExtra(Intent.EXTRA_TITLE);
+    }
+
+    void dealPicStream(Intent intent){
+        Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+    }
+
+    void dealMultiplePicStream(Intent intent){
+        ArrayList<Uri> arrayList = intent.getParcelableArrayListExtra(intent.EXTRA_STREAM);
+    }
+}
+
+作者：学海摆渡人
+链接：http://www.jianshu.com/p/30fe5307689c
+來源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+```
+
+
 
 # Resources
 Drawer
