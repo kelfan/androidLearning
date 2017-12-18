@@ -833,7 +833,9 @@ method must declare the following:
 - A void return value
 - A View as the only parameter (it is the View object that was clicked)
 
-# Toast = pop message in a short time
+# Toast = pop message in a short time 可以改变位置,带图片,自定义样式
+- [Android攻城狮的第二门课(第2季)-慕课网 ](http://www.imooc.com/learn/142) :改变位置,带图片,自定义样式
+
 ```java
 Toast.makeText(getApplicationContext(),"Hello Javatpoint",Toast.LENGTH_SHORT).show();  
 // or
@@ -841,6 +843,7 @@ Toast toast=Toast.makeText(getApplicationContext(),"Hello Javatpoint",Toast.LE
 toast.setMargin(50,50);  
 toast.show();  
 ```
+
 
 # JRebel = ~~快速调试~~ 已经收费
 [ANDROID 高效调试神器 JREBEL](http://stormzhang.com/2016/11/21/use-jrebel-for-android/)
