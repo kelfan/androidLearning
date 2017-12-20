@@ -833,7 +833,7 @@ method must declare the following:
 - A void return value
 - A View as the only parameter (it is the View object that was clicked)
 
-# Toast = pop message in a short time 可以改变位置,带图片,自定义样式
+# 控件/Toast = pop message in a short time 可以改变位置,带图片,自定义样式
 - [Android攻城狮的第二门课(第2季)-慕课网 ](http://www.imooc.com/learn/142) :改变位置,带图片,自定义样式
 
 ```java
@@ -843,7 +843,23 @@ Toast toast=Toast.makeText(getApplicationContext(),"Hello Javatpoint",Toast.LE
 toast.setMargin(50,50);  
 toast.show();  
 ```
+# 控件/AlertDialog = 提示框 
+[  Android攻城狮的第二门课(第2季)-慕课网 ](http://www.imooc.com/learn/142)
+确认对话框, 单选 多选 列表 和 自定义 
 
+# 控件/notification = 状态栏通知栏通知 
+[  Android攻城狮的第二门课(第2季)-慕课网 ](http://www.imooc.com/learn/142)
+可以设置和取消
+
+# 控件/optionsMenu = 右键实现的选项菜单 
+[  Android攻城狮的第二门课(第2季)-慕课网 ](http://www.imooc.com/learn/142)
+有动态跟静态添加 
+
+# 控件/ContextMenu = 上下文菜单, 长按实现的菜单 
+[  Android攻城狮的第二门课(第2季)-慕课网 ](http://www.imooc.com/learn/142)
+
+# 控件/subMenu = 菜单下的子菜单 
+[  Android攻城狮的第二门课(第2季)-慕课网 ](http://www.imooc.com/learn/142)
 
 # JRebel = ~~快速调试~~ 已经收费
 [ANDROID 高效调试神器 JREBEL](http://stormzhang.com/2016/11/21/use-jrebel-for-android/)
@@ -1232,7 +1248,7 @@ public static String[] getStorageDirectories()
             rv.add("/storage/sdcard0");
         }
         else
-        {
+        {[Error Happened](http://7.1. 7.2. 7.2.1. 7.2.2. 7.2.3. 7.2.4. 7.3. 7.3.1. 7.3.2. 7.3.3. 7.3.4. 7.4. 7.5)
             rv.add(rawExternalStorage);
         }
     }
@@ -2269,6 +2285,7 @@ class MyActivity extends Activity {
 來源：简书
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 ```
+
 
 
 
