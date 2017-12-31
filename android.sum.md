@@ -2321,6 +2321,13 @@ broadcast receiver
 - [Android Card View and Recycler View](https://www.youtube.com/watch?v=7Fe1jigV5Qs)
 - [Android Studio Tutorial - Collapsing Toolbar Layout](https://www.youtube.com/watch?v=BTYuLho5_rE)
 
+# source/notepad 
+- [Notepad Android Tutorial - How to make a notepad (part 1)](https://www.youtube.com/watch?v=GPJ4CH_dj2E)
+- [Create NotePad - Android Tutorial - Part 1](https://www.youtube.com/watch?v=SzWBI_9UZ6M)
+- [ANDROID MINI NOTEPAD (COPY & PASTE APP)](https://www.youtube.com/watch?v=YpN6XQoGgNs)
+
+# source/navigation 
+- [Android Working with Bottom Navigation](https://www.androidhive.info/2017/12/android-working-with-bottom-navigation/)
 
 # SQLiteOpenHelper/example
 ```java
