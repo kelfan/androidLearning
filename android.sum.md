@@ -2,6 +2,12 @@
 Codes and examples of android applications.
 2017-11-16 To
 
+# learning Path 
+- Kotlin 
+- unitTest 
+- Android Material Design
+- MVP 
+
 # working
 https://www.youtube.com/results?search_query=android+constraintlayout+tutorial
 https://www.youtube.com/results?search_query=android+modern+design
@@ -777,6 +783,83 @@ http://blog.csdn.net/hyr83960944/article/details/38388429
 # setting/ autocomplete case insensitive
 Settings(or Preferences in mac)->Editor->Code Completion
 
+# list to Array 
+```java 
+String[] myStringArray = list.toArray(new String[list.size()])
+```
+
+# 输入时元素随键盘上移 
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.chaofanz.textappend">
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+```
+
+# list to String 
+```java 
+ArrayList<String> list = new ArrayList<String>();
+list.add("one");
+list.add("two");
+list.add("three");
+
+String listString = "";
+
+for (String s : list)
+{
+    listString += s + "\t";
+}
+
+System.out.println(listString);
+```
+
+# string to list
+```java 
+String s = "lorem,ipsum,dolor,sit,amet";
+
+List<String> myList = new ArrayList<String>(Arrays.asList(s.split(",")));
+
+System.out.println(myList);  // prints [lorem, ipsum, dolor, sit, amet]
+```
+
+# list 排列忽略大小写 
+```java 
+Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
+```
+
+```java 
+Custom Comparator should help
+
+Collections.sort(list, new Comparator<String>() {
+    @Override
+    public int compare(String s1, String s2) {
+        return s1.compareToIgnoreCase(s2);
+    }
+});
+Or if you are using Java 8:
+
+list.sort(String::compareToIgnoreCase);
+```
 
 # 出错/ adapter.notifyDataSetChanged() 没反应 
 http://blog.csdn.net/findsafety/article/details/51559630
@@ -2326,8 +2409,19 @@ broadcast receiver
 - [Create NotePad - Android Tutorial - Part 1](https://www.youtube.com/watch?v=SzWBI_9UZ6M)
 - [ANDROID MINI NOTEPAD (COPY & PASTE APP)](https://www.youtube.com/watch?v=YpN6XQoGgNs)
 
+# source text
+- [ANDROID TEXT LINKIFY](https://www.youtube.com/watch?v=WuZ02toAJoQ)
+- [ADDING LINKS INSIDE A TEXTVIEW ](https://www.youtube.com/watch?v=aQIqQ2-lyO8)
+- [Android Studio Tutorial - AutoLink TextView](https://www.youtube.com/watch?v=KhuPAQ7r1RU)
+- [Multi colored TextView in Android Studio](https://www.youtube.com/watch?v=24PaPEosWY0)
+- [HOW TO SHOW HTML INSIDE TEXTVIEW - Android Development](https://www.youtube.com/watch?v=sDhJh-zlgCg)
+- [textview animation](https://www.youtube.com/watch?v=x6r7Z8QNdpc)
+
 # source/navigation 
 - [Android Working with Bottom Navigation](https://www.androidhive.info/2017/12/android-working-with-bottom-navigation/)
+
+# source/design 
+- [Android Material Design](https://www.youtube.com/watch?v=vOo_ZXxd8v4&list=PLlxmoA0rQ-Lzd9-NUrP5Wi18OMi4R-zs_)
 
 # SQLiteOpenHelper/example
 ```java
