@@ -2370,7 +2370,9 @@ class MyActivity extends Activity {
 ```
 
 
-
+# toolbar 根据数量 延伸到下面 
+`android:uiOptions="splitActionBarWhenNarrow"`
+https://stackoverflow.com/questions/27482012/how-to-show-action-items-at-the-bottom-using-toolbar
 
 # Resources
 Drawer
