@@ -2374,6 +2374,10 @@ class MyActivity extends Activity {
 `android:uiOptions="splitActionBarWhenNarrow"`
 https://stackoverflow.com/questions/27482012/how-to-show-action-items-at-the-bottom-using-toolbar
 
+
+# recyclerView and cardView 
+- [Getting Started With RecyclerView and CardView on Android](https://code.tutsplus.com/tutorials/getting-started-with-recyclerview-and-cardview-on-android--cms-23465)
+
 # Resources
 Drawer
 - [Creating Tabs in Android Studio with Tabbed Activity](https://www.youtube.com/watch?v=00LLd7qr9sA)
