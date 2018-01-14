@@ -1,10 +1,8 @@
-package com.kelfan.fantexteditorv2;
+package com.kelfan.tditor;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,16 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
-import com.kelfan.fantexteditorv2.Util.FileWorker;
-
-import java.util.ArrayList;
+import Util.FileHandler;
+import Util.FileWorker;
+import Util.StringStyleWorker;
+import Util.StringWorker;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter recyclerAdapter;
-    private RecyclerView.LayoutManager recyclerLM;
+
+    private EditText editText;
+    private MenuItem sortItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +36,16 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                String txt = editText.getText().toString();
+                int result = FileHandler.write_app_file(Constant.DEFAULT_FILE_NAME, txt);
+                if (result == Constant.RESULT_SUCCESS) {
+                    Snackbar.make(view, "Save success", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    Snackbar.make(view, "Fail to save file", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+
             }
         });
 
@@ -50,8 +58,13 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // get file data
-        String fileStr = FileWorker.readStringFromData(Constant.PATH, Constant.FILENAME);
+        // editText
+        editText = findViewById(R.id.editText);
+        String fileStr = FileHandler.read_app_file(Constant.DEFAULT_FILE_NAME);
+        CharSequence displayStr = editHandler.todoHandle(fileStr);
+        editText.setText(displayStr);
+
+
     }
 
     @Override
@@ -109,5 +122,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void sort(MenuItem item) {
+        String text = editText.getText().toString();
+        text = StringWorker.stringSortByLine(text, false);
+        CharSequence ts = editHandler.todoHandle(text);
+        editText.setText(ts);
     }
 }
