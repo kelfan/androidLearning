@@ -2526,6 +2526,60 @@ textView.setText(Html.fromHtml(styledText), TextView.BufferType.SPANNABLE);
 ```
 https://stackoverflow.com/questions/2730706/highlighting-text-color-using-html-fromhtml-in-android
 
+
+# String match Start 
+```java 
+// Do you mean:
+
+if(newStr4.startsWith("Mon") || newStr4.startsWith("Tues") || ...)
+// or you could use regular expression:
+
+if (newStr4.matches("(Mon|Tues|Wed|Thurs|Fri).*"))
+```
+https://stackoverflow.com/questions/9790584/how-to-check-if-a-string-starts-with-one-of-several-prefixes
+
+# 函数引用 
+```java 
+List<Integer> list = Arrays.asList(12,5,45,18,33,24,40);
+
+// Using an anonymous class
+findNumbers(list, new BiPredicate<Integer, Integer>() {
+  public boolean test(Integer i1, Integer i2) {
+    return Numbers.isMoreThanFifty(i1, i2);
+  }
+});
+
+// Using a lambda expression
+findNumbers(list, (i1, i2) -> Numbers.isMoreThanFifty(i1, i2));
+
+// Using a method reference
+findNumbers(list, Numbers::isMoreThanFifty);
+```
+
+# call\ method by String name 
+https://stackoverflow.com/questions/2943054/call-a-function-by-its-name-given-from-string-java
+```java 
+public void callByName(Object obj, String funcName) throws Exception {
+    // Ignoring any possible result
+    obj.getClass().getDeclaredMethod(funcName).invoke(obj);
+}
+```
+static method 
+```java 
+public void callClassByName(Class cls, String funcName) throws Exception {
+    // Ignoring any possible result
+    cls.getDeclaredMethod(funcName).invoke(null);
+}
+```
+
+# reflection
+https://stackoverflow.com/questions/4896315/android-java-calling-a-method-using-reflection
+```java 
+Method m = YourClass.class.getMethod("method_name",new Class[] { Integer.class }) 
+m.invoke(null,123); //first argument is the object to invoke on, ignored if static method
+```
+
+
 # Resources
 Drawer
 - [Creating Tabs in Android Studio with Tabbed Activity](https://www.youtube.com/watch?v=00LLd7qr9sA)

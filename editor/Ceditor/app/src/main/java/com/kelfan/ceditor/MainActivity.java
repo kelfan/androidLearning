@@ -48,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
                 "  <h3>This is a heading</h3>\n" +
                 "  <p>This is a paragraph.</p>\n" +
                 "</div>";
+
+//        String s5 = "<ol>\n" +
+//                "  <li>Coffee</li>\n" +
+//                "  <li>Tea</li>\n" +
+//                "  <li>Milk</li>\n" +
+//                "</ol>";
         colorEditText.setText(Html.fromHtml(s5));
 //        colorEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 //            @Override
