@@ -2424,6 +2424,107 @@ https://stackoverflow.com/questions/19691530/valid-values-for-androidfontfamily-
 ```
 https://stackoverflow.com/questions/15997186/is-it-possible-to-set-the-color-of-a-string-directly-in-string-xml
 
+#  editable setSpan
+```java 
+        editable.setSpan(new ForegroundColorSpan(Color.BLUE), 0, 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE); // 不包括开头加入的,但包括结尾插入
+        editable.setSpan(new UnderlineSpan(), 0, 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE); // 开头结尾插入都包括
+        editable.setSpan(new StyleSpan(Typeface.BOLD),0,1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        editable.setSpan(new BackgroundColorSpan(Color.GREEN), 0, 1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+
+        TypefaceSpan typefaceSpan = new TypefaceSpan("sans-serif-thin");
+        editable.setSpan(typefaceSpan,0,1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+```
+
+
+# many Color in text String 
+```java 
+TextView myTextView = new TextView(this);
+SpannableString myStr1 = new SpannableString("Hello");
+SpannableString myStr2 = new SpannableString("World");
+myStr1.setSpan( new ForegroundColorSpan(Color.RED), 0, myStr1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );
+myStr2.setSpan( new ForegroundColorSpan(Color.GREEN), 0, myStr2.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE );
+myTextView.setText(TextUtils.concat(myStr1, " ", myStr2));
+```
+https://stackoverflow.com/questions/8915109/add-multiple-styles-at-once-to-spannablestring
+
+# add new Color line 
+```java 
+public void displayOutput()
+{
+    TextView output=(TextView) findViewById(R.id.textView1);
+    output.setMaxLines(20000);
+    //File sdcard = Environment.getExternalStorageDirectory();
+    File file = new File("/sdcard/file.txt");
+    try {
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String line;
+        while ((line = br.readLine()) != null) {
+            if (line.substring(0,1).equals("R")) {
+                appendColoredText(output, line, Color.RED);
+            } else if (line.substring(0,1).equals("Y")) {
+                appendColoredText(output, line, Color.YELLOW);
+            } else if (line.substring(0,1).equals("C")) {
+                appendColoredText(output, line, Color.CYAN);
+            } else {
+                appendColoredText(output, line, Color.WHITE);
+            }   
+        }
+    }
+    catch (IOException e) {
+        Toast.makeText(getApplicationContext(),"Error reading file!",Toast.LENGTH_LONG).show();
+        e.printStackTrace();
+    }
+}
+
+public static void appendColoredText(TextView tv, String text, int color) {
+    int start = tv.getText().length();
+    tv.append(text);
+    int end = tv.getText().length();
+    Spannable spannableText = (Spannable) tv.getText();
+    spannableText.setSpan(new ForegroundColorSpan(color), start, end, 0);
+    tv.append("\n");
+}
+```
+https://stackoverflow.com/questions/21123975/different-color-on-each-line-in-textview
+
+# Decorating TextView via SpannableString in Android
+AbsoluteSizeSpan. A span that allows you to specify an exact size in pixels or density independent pixels.
+AlignmentSpan. A span that attaches an alignment (from Layout.Alignment).
+BackgroundColorSpan. A span that specifies a background color (the color behind the text, such as for highlighting).
+ClickableSpan. A span that has an onClick method that is triggered. (This class is abstract, so you can extend it with a class that specifies the onClick behavior.)
+DrawableMarginSpan. A span that draws a Drawable plus the specified amount of spacing.
+DynamicDrawableSpan. A span that you can extend to provide a Drawable that may change (but the size must remain the same).
+EasyEditSpan. A span that just marks some text so that the TextView can easily delete it.
+ForegroundColorSpan. A span that changes the color of the text (basically just called setColor(int) on the TextPaint object).
+IconMarginSpan. A span that draws a Bitmap plus the specified amount of spacing.
+ImageSpan. A span that draws an image specified as a Bitmap, Drawable, URI, or resource ID.
+LeadingMarginSpan. A span that adjusts the margin.
+LocaleSpan. A span that changes the locale of text (available in API level 17 and above).
+MaskFilterSpan. A span that sets the MaskFilter of the TextPaint (such as for blurring or embossing).
+MetricAffectingSpan. A span that affects the height and/or width of characters (this is an abstract class).
+QuoteSpan. A span that puts a vertical line to the left of the selected text to indicate it is a quote; by default the line is blue.
+RasterizerSpan. A span that sets the Rasterizer of the TextPaint (generally not useful to you).
+RelativeSizeSpan. A span that changes the text size relative to the supplied float (for instance, setting a 0.5 float will cause the text to render at half size).
+ReplacementSpan. A span that can be extended when something custom is drawn in place of the spanned text (e.g., ImageSpan extends this).
+ScaleXSpan. A span that provides a multiplier to use when calling the TextPaint’s setTextScaleX(float) method. (In other words, setting this to 0.5 will cause the text to be scaled to half size along the X-axis, thus appearing squished.)
+StrikethroughSpan. A span that simply passes true to the TextPaint’s setStrikeThruText(boolean) method, causing the text to have a line through it (useful for showing deleted text, such as in a draft of a document).
+StyleSpan. A span that adds bold and/or italic to the text.
+SubscriptSpan. A span that makes the text subscript (below the baseline).
+SuggestionSpan. A span that holds possible replacement suggestions, such as for a incorrectly spelled word (available in API level 14 and above).
+SuperscriptSpan. A span that makes the text superscript (above the baseline).
+TabStopSpan. A span that allows you to specify an offset from the leading margin of a line.
+TextAppearanceSpan. A span that allows you to pass in a TextAppearance for styling.
+TypefaceSpan. A span that uses a specific typeface family (monospace, serif, or sans-serif only).
+UnderlineSpan. A span that underlines the text.
+URLSpan. A ClickableSpan that attempts to view the specified URL when clicked.
+
+
+# HTML text Color 
+```java 
+String styledText = "This is <font color='red'>simple</font>.";
+textView.setText(Html.fromHtml(styledText), TextView.BufferType.SPANNABLE);
+```
+https://stackoverflow.com/questions/2730706/highlighting-text-color-using-html-fromhtml-in-android
 
 # Resources
 Drawer
