@@ -51,15 +51,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // get file data
-        ArrayList mDataset = FileWorker.readListFromSecondSD(Constant.PATH, Constant.FILENAME);
-
-        // recyclerView part
-        recyclerView = findViewById(R.id.main_recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerLM = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(recyclerLM);
-        recyclerAdapter = new MyRecyclerAdapter(mDataset);
-        recyclerView.setAdapter(recyclerAdapter);
+        ArrayList mDataset = FileWorker.readListFromSD(Constant.PATH, Constant.FILENAME);
     }
 
     @Override

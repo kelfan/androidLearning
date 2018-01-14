@@ -2378,6 +2378,53 @@ https://stackoverflow.com/questions/27482012/how-to-show-action-items-at-the-bot
 # recyclerView and cardView 
 - [Getting Started With RecyclerView and CardView on Android](https://code.tutsplus.com/tutorials/getting-started-with-recyclerview-and-cardview-on-android--cms-23465)
 
+
+# setSpan text color  
+```java 
+    sorry_Span=new SpannableString("Sorry, you dont have any registered device, what you want to do ?");
+    sorry_Span.setSpan(new ForegroundColorSpan(Color.BLUE), 36, 42, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    //sorry_Span.setSpan(new ForegroundColorSpan(R.color.blue_txt), 36, 42, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    sorry_Msg.setText(sorry_Span);
+```
+
+```java 
+    sorry_Span=new SpannableString("Sorry, you dont have any registered device, what you want to do ?");
+
+   // sorry_Span.setSpan(new ForegroundColorSpan(Color.rgb(34,141,65), 36, 42, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+sorry_Span.setSpan(new ForegroundColorSpan(getResource().getColor(R.color.mycolor), 36, 42, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    sorry_Msg.setText(sorry_Span);
+```
+https://stackoverflow.com/questions/14399039/spanable-string-color-results-black-color/14400135#14400135
+
+# setSpan 自定义 字体 
+```java 
+  TextView txt = (TextView) findViewById(R.id.custom_fonts);  
+        txt.setTextSize(30);
+        Typeface font = Typeface.createFromAsset(getAssets(), "Akshar.ttf");
+        Typeface font2 = Typeface.createFromAsset(getAssets(), "bangla.ttf");   
+        SpannableStringBuilder SS = new SpannableStringBuilder("আমারநல்வரவு");
+        SS.setSpan (new CustomTypefaceSpan("", font2), 0, 4,Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        SS.setSpan (new CustomTypefaceSpan("", font), 4, 11,Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        txt.setText(SS);
+```
+https://stackoverflow.com/questions/6612316/how-set-spannable-object-font-with-custom-font
+
+# fontfamily 
+android:fontFamily list
+https://stackoverflow.com/questions/19691530/valid-values-for-androidfontfamily-and-what-they-map-to
+
+# set Color to text String 
+```java 
+    TextView tv= (TextView)findviewById(R.id.textView1);
+    tv.setText("");  
+    String s="Hello World";
+    SpannableString ss=  new SpannableString(s);                
+    ss.setSpan(new ForegroundColorSpan(Color.GREEN), 0, 5, 0);  
+    tv.setText(ss);
+```
+https://stackoverflow.com/questions/15997186/is-it-possible-to-set-the-color-of-a-string-directly-in-string-xml
+
+
 # Resources
 Drawer
 - [Creating Tabs in Android Studio with Tabbed Activity](https://www.youtube.com/watch?v=00LLd7qr9sA)
