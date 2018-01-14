@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.kelfan.ceditor.MainActivity">
+
+    <EditText
+        android:id="@+id/editText"
+        android:gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textFilter|textMultiLine|textNoSuggestions"
+        android:minLines="10"
+        android:text="H我是阿萨德发的阿道夫"
+        />
 
     <com.kelfan.ceditor.ColorEditText
         android:id="@+id/colorEditText"
@@ -12,8 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textFilter|textMultiLine|textNoSuggestions"
-        android:minLines="20"
+        android:minLines="10"
         android:text="H我是阿萨德发的阿道夫"
         />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
