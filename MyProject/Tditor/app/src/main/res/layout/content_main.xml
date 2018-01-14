@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.kelfan.fantexteditorv2.MainActivity"
+    tools:context="com.kelfan.tditor.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
     <ScrollView
@@ -18,8 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textFilter|textMultiLine|textNoSuggestions"
-            android:minLines="10"
+            android:minLines="20"
             />
+
 
     </ScrollView>
 
