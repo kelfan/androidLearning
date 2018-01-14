@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import Util.FileHandler;
 import Util.FileWorker;
 import Util.StringStyleWorker;
 import Util.StringWorker;
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 String txt = editText.getText().toString();
-                int result = FileHandler.write_app_file(Constant.DEFAULT_FILE_NAME, txt);
+                int result = FileWorker.writeToSD(Constant.DEFAULT_FILE_PATH, Constant.DEFAULT_FILE_NAME, txt);
                 if (result == Constant.RESULT_SUCCESS) {
                     Snackbar.make(view, "Save success", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity
 
         // editText
         editText = findViewById(R.id.editText);
-        String fileStr = FileHandler.read_app_file(Constant.DEFAULT_FILE_NAME);
+        String fileStr = FileWorker.readStringFromSD(Constant.DEFAULT_FILE_PATH, Constant.DEFAULT_FILE_NAME);
         CharSequence displayStr = editHandler.todoHandle(fileStr);
         editText.setText(displayStr);
 

@@ -22,6 +22,42 @@ public class StringStyleWorker {
         return s;
     }
 
+    public static SpannableString setTextOrange(String inStr) {
+        return setTextColor(inStr, ColorWorker.ORANGE);
+    }
+
+    public static SpannableString setTextBlue(String inStr) {
+        return setTextColor(inStr, ColorWorker.BLUE_SEA);
+    }
+
+    public static SpannableString setTextRed(String inStr) {
+        return setTextColor(inStr, ColorWorker.RED_CORAL);
+    }
+
+    public static SpannableString setTextYellow(String inStr) {
+        return setTextColor(inStr, ColorWorker.BROWN_WOOD);
+    }
+
+    public static SpannableString setTextGreen(String inStr) {
+        return setTextColor(inStr, ColorWorker.GREEN_SEA);
+    }
+
+    public static SpannableString setTextPurple(String inStr) {
+        return setTextColor(inStr, ColorWorker.PURPLE_LIGHT);
+    }
+
+    public static SpannableString setTextLightYellow(String inStr) {
+        return setTextColor(inStr, ColorWorker.YELLOW_VERY_LIGHT);
+    }
+
+    public static SpannableString setTextLightBlue(String inStr) {
+        return setTextColor(inStr, ColorWorker.BLUE_VERY_LIGHT);
+    }
+
+    public static SpannableString setTextYellowDeep(String inStr) {
+        return setTextColor(inStr, ColorWorker.YELLOW_DEEP);
+    }
+
 
     public static SpannableString backgroundYellow(String inStr) {
         SpannableString s = new SpannableString(inStr);
