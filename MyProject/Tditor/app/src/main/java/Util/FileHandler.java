@@ -9,11 +9,11 @@ import com.kelfan.tditor.Constant;
 public class FileHandler {
 
     public static String read_app_file(String filename) {
-        return FileWorker.readStringFromSD(Constant.DEFAULT_FILE_PATH, filename);
+        return FileWorker.readStringFromSecondSD(Constant.DEFAULT_FILE_PATH, filename);
     }
 
     public static int write_app_file(String filename, String txt) {
-        return FileWorker.writeToSD(Constant.DEFAULT_FILE_PATH, filename, txt);
+        return FileWorker.writeToSecondSD(Constant.DEFAULT_FILE_PATH, filename, txt);
     }
 
 }

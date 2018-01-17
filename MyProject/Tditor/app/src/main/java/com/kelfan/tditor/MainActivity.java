@@ -78,10 +78,12 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void afterTextChanged(Editable editable) {
-                editHandler.addLineNumber(editText, textView, 25);
+                int count = editable.toString().split("\n").length;
+                editHandler.addLineNumber(editText, textView, count);
             }
         });
         String fileStr = FileHandler.read_app_file(Constant.DEFAULT_FILE_NAME);
+
         CharSequence displayStr = editHandler.todoHandle(fileStr);
         editText.setText(displayStr);
 
