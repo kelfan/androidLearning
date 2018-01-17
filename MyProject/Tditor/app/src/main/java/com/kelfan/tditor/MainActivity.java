@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void afterTextChanged(Editable editable) {
-                // change linenumber of Textview when the text change 
+                // change linenumber of Textview when the text change
                 editHandler.addLineNumber(editText, textView, 0);
             }
         });
