@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -78,16 +79,20 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void afterTextChanged(Editable editable) {
-                int count = editable.toString().split("\n").length;
-                editHandler.addLineNumber(editText, textView, count);
+                // change linenumber of Textview when the text change 
+                editHandler.addLineNumber(editText, textView, 0);
             }
         });
         String fileStr = FileHandler.read_app_file(Constant.DEFAULT_FILE_NAME);
-
         CharSequence displayStr = editHandler.todoHandle(fileStr);
         editText.setText(displayStr);
-
-
+        // fix the bug for wrong display of line number in start up
+        editText.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+                editHandler.addLineNumber(editText, textView, 0);
+            }
+        });
     }
 
     @Override
