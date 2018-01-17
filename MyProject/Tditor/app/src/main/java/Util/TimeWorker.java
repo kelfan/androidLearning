@@ -27,18 +27,14 @@ public class TimeWorker {
         if (difference <= 0) {
             difference += 7;
         }
+//        if (cWeekday != weekday) {
+//            int days = (Calendar.SATURDAY - cWeekday + Math.abs(weekday-cWeekday)) % 7;
+//            now.add(Calendar.DAY_OF_YEAR, days);
+//        }
         now.add(Calendar.DAY_OF_YEAR, difference);
         Date date = now.getTime();
-        String format = new SimpleDateFormat(UtilConstant.DAYWEEKFORMAT).format(date);
+        String format = new SimpleDateFormat("yyyy-MM-dd").format(date);
         return format;
     }
 
-
-    public static String getNextDay(int days) {
-        Calendar now = Calendar.getInstance();
-        now.add(Calendar.DAY_OF_YEAR, days);
-        Date date = now.getTime();
-        String format = new SimpleDateFormat(UtilConstant.DAYWEEKFORMAT).format(date);
-        return format;
-    }
 }

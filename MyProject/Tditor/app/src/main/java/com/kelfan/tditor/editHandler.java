@@ -25,9 +25,8 @@ public class editHandler {
         ArrayList<String> strList = StringWorker.stringToList(instr, "\n");
         CharSequence result = new SpannableString("");
         for (String s : strList) {
-            // all string command codes can change to Constant files for change or setting
-            s = s.replace(".rq", TimeWorker.getDate()); // get Current time
-            s = s.replace(".dt", TimeWorker.getDatetime()); // get Current datetime
+            s = s.replace(".rq", TimeWorker.getDate());
+            s = s.replace(".dt", TimeWorker.getDatetime());
             s = s.replace(".mon", TimeWorker.getNextWeekday(Calendar.MONDAY));
             s = s.replace(".tue", TimeWorker.getNextWeekday(Calendar.TUESDAY));
             s = s.replace(".wed", TimeWorker.getNextWeekday(Calendar.WEDNESDAY));
@@ -35,14 +34,6 @@ public class editHandler {
             s = s.replace(".fri", TimeWorker.getNextWeekday(Calendar.FRIDAY));
             s = s.replace(".sat", TimeWorker.getNextWeekday(Calendar.SATURDAY));
             s = s.replace(".sun", TimeWorker.getNextWeekday(Calendar.SUNDAY));
-            s = s.replace(".dqt", TimeWorker.getNextDay(-3)); //大前天
-            s = s.replace(".qt", TimeWorker.getNextDay(-2)); //前天
-            s = s.replace(".zt", TimeWorker.getNextDay(-1)); // 昨天
-            s = s.replace(".jt", TimeWorker.getNextDay(0)); // 今天
-            s = s.replace(".mt", TimeWorker.getNextDay(1)); //明天
-            s = s.replace(".ht", TimeWorker.getNextDay(2)); //后天
-            s = s.replace(".dht", TimeWorker.getNextDay(3)); //大后天
-
             CharSequence ss = new SpannableString(s);
             ss = addStyle(ss,"\\？", ColorWorker.BLUE_VERY_LIGHT);
             ss = addStyle(ss,"，", ColorWorker.YELLOW_VERY_LIGHT);
