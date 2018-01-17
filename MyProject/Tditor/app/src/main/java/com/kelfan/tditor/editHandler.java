@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import Util.ColorWorker;
 import Util.StringStyleWorker;
 import Util.StringWorker;
+import Util.TimeWorker;
 
 /**
  * Created by Administrator on 14/01/2018.
@@ -22,8 +23,10 @@ public class editHandler {
         ArrayList<String> strList = StringWorker.stringToList(instr, "\n");
         CharSequence result = new SpannableString("");
         for (String s : strList) {
+            s = s.replace(".rq", TimeWorker.getDate());
+            s = s.replace(".dt", TimeWorker.getDatetime());
             CharSequence ss = new SpannableString(s);
-            ss = addStyle(ss,"\\?", ColorWorker.BLUE_VERY_LIGHT);
+            ss = addStyle(ss,"\\？", ColorWorker.BLUE_VERY_LIGHT);
             ss = addStyle(ss,"，", ColorWorker.YELLOW_VERY_LIGHT);
             ss = addStyle(ss,"！", ColorWorker.PURPLE_LIGHT);
             ss = addStyle(ss,"。", ColorWorker.YELLOW_DEEP);
