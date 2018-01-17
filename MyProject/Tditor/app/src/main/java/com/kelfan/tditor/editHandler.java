@@ -7,7 +7,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.lang.reflect.Method;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import Util.ColorWorker;
 import Util.StringStyleWorker;
@@ -25,6 +27,13 @@ public class editHandler {
         for (String s : strList) {
             s = s.replace(".rq", TimeWorker.getDate());
             s = s.replace(".dt", TimeWorker.getDatetime());
+            s = s.replace(".mon", TimeWorker.getNextWeekday(Calendar.MONDAY));
+            s = s.replace(".tue", TimeWorker.getNextWeekday(Calendar.TUESDAY));
+            s = s.replace(".wed", TimeWorker.getNextWeekday(Calendar.WEDNESDAY));
+            s = s.replace(".thu", TimeWorker.getNextWeekday(Calendar.THURSDAY));
+            s = s.replace(".fri", TimeWorker.getNextWeekday(Calendar.FRIDAY));
+            s = s.replace(".sat", TimeWorker.getNextWeekday(Calendar.SATURDAY));
+            s = s.replace(".sun", TimeWorker.getNextWeekday(Calendar.SUNDAY));
             CharSequence ss = new SpannableString(s);
             ss = addStyle(ss,"\\？", ColorWorker.BLUE_VERY_LIGHT);
             ss = addStyle(ss,"，", ColorWorker.YELLOW_VERY_LIGHT);
