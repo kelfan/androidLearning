@@ -2579,6 +2579,15 @@ Method m = YourClass.class.getMethod("method_name",new Class[] { Integer.class }
 m.invoke(null,123); //first argument is the object to invoke on, ignored if static method
 ```
 
+# String substring position indexOf 
+```java 
+        String i = "][123]124124";
+        int pos = i.toLowerCase().indexOf("[".toLowerCase());
+        int pos2 = i.toLowerCase().indexOf("]".toLowerCase(), pos);
+
+        System.out.println(pos);
+        System.out.println(pos2);
+```
 
 # Resources
 Drawer

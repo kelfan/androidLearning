@@ -54,4 +54,8 @@ public class StringWorker {
     public static String replaceByLine(String inStr, String supersede, String replace) {
         return inStr.replace(supersede, replace);
     }
+
+    public static long countLetter(String inStr, String letter) {
+        return (inStr.length() - inStr.replace(letter, "").length()) / letter.length();
+    }
 }
