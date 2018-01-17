@@ -3,6 +3,8 @@ package com.kelfan.tditor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import Util.FileHandler;
 import Util.FileWorker;
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private EditText editText;
+    private TextView textView;
     private MenuItem sortItem;
 
     @Override
@@ -60,6 +64,23 @@ public class MainActivity extends AppCompatActivity
 
         // editText
         editText = findViewById(R.id.editText);
+        textView = findViewById(R.id.textView);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                editHandler.addLineNumber(editText, textView, 25);
+            }
+        });
         String fileStr = FileHandler.read_app_file(Constant.DEFAULT_FILE_NAME);
         CharSequence displayStr = editHandler.todoHandle(fileStr);
         editText.setText(displayStr);

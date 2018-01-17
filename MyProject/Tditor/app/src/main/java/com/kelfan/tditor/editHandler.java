@@ -1,9 +1,12 @@
 package com.kelfan.tditor;
 
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -55,5 +58,18 @@ public class editHandler {
             }
         }
         return cha;
+    }
+
+    public static void addLineNumber(EditText editText, TextView textView, int minLines) {
+        // add lines numbers in textView align with editText
+        int lines = editText.getLineCount();
+        if (lines <= minLines) {
+            lines = minLines;
+        }
+        String linesText = "";
+        for (int z=1; z<=lines; z++) {
+            linesText = linesText + z + "\n";
+        }
+        textView.setText(linesText);
     }
 }

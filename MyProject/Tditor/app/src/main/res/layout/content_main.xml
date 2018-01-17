@@ -9,20 +9,54 @@
     tools:showIn="@layout/app_bar_main">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/editText"
-            android:gravity="top"
-            android:layout_marginStart="5dp"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textFilter|textMultiLine|textNoSuggestions"
-            android:minLines="20"
-            />
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:background="#eeeeee"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="1"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/editText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:gravity="left|top"
+                android:inputType="textMultiLine"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </android.support.constraint.ConstraintLayout>
 
     </ScrollView>
+
+
+
+
 
 </android.support.constraint.ConstraintLayout>
