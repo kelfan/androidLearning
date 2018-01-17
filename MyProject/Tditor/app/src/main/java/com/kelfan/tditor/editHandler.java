@@ -23,32 +23,33 @@ public class editHandler {
         CharSequence result = new SpannableString("");
         for (String s : strList) {
             String start = result.toString();
-            result = addStyle(result, s, "\\?", ColorWorker.BLUE_VERY_LIGHT);
-            result = addStyle(result, s, "，", ColorWorker.YELLOW_VERY_LIGHT);
-            result = addStyle(result, s, "！", ColorWorker.PURPLE_LIGHT);
-            result = addStyle(result, s, "。", ColorWorker.YELLOW_DEEP);
-            result = addStyle(result, s, "1", ColorWorker.BROWN_WOOD);
-            result = addStyle(result, s, "2", ColorWorker.RED_CORAL);
-            result = addStyle(result, s, "3", ColorWorker.YELLOW_LIGHT);
-            result = addStyle(result, s, "4", ColorWorker.GREEN_FOREST);
-            result = addStyle(result, s, "5", ColorWorker.BLUE_LIGHT);
-            result = addStyle(result, s, "6", ColorWorker.BLUE_SEA);
-            result = addStyle(result, s, "7", ColorWorker.BLUE_DEEP);
-            result = addStyle(result, s, "8", ColorWorker.PURPLE_LIGHT);
-            result = addStyle(result, s, "9", ColorWorker.PURPLE_DEEP);
-            result = addStyle(result, s, " ", ColorWorker.ORANGE);
-            result = addLevel(result, s, ",", ColorWorker.GREEN_GRASS);
-            result = addLevel(result, s, "/", ColorWorker.GREEN_GRASS);
-            result = addBackground(result, s, "()", ColorWorker.BLUE);
-            result = addBackground(result, s, "<>", ColorWorker.BLUE);
-            result = addBackground(result, s, "[]", ColorWorker.BLUE);
-            result = addBackground(result, s, "{}", ColorWorker.BLUE);//.*\{.*\}.*
+            CharSequence ss = new SpannableString(s);
+            ss = addStyle(ss, s, "\\?", ColorWorker.BLUE_VERY_LIGHT);
+            ss = addStyle(ss, s, "，", ColorWorker.YELLOW_VERY_LIGHT);
+            ss = addStyle(ss, s, "！", ColorWorker.PURPLE_LIGHT);
+            ss = addStyle(ss, s, "。", ColorWorker.YELLOW_DEEP);
+            ss = addStyle(ss, s, "1", ColorWorker.BROWN_WOOD);
+            ss = addStyle(ss, s, "2", ColorWorker.RED_CORAL);
+            ss = addStyle(ss, s, "3", ColorWorker.YELLOW_LIGHT);
+            ss = addStyle(ss, s, "4", ColorWorker.GREEN_FOREST);
+            ss = addStyle(ss, s, "5", ColorWorker.BLUE_LIGHT);
+            ss = addStyle(ss, s, "6", ColorWorker.BLUE_SEA);
+            ss = addStyle(ss, s, "7", ColorWorker.BLUE_DEEP);
+            ss = addStyle(ss, s, "8", ColorWorker.PURPLE_LIGHT);
+            ss = addStyle(ss, s, "9", ColorWorker.PURPLE_DEEP);
+            ss = addStyle(ss, s, " ", ColorWorker.ORANGE);
+            ss = addLevel(ss, s, ",", ColorWorker.GREEN_GRASS);
+            ss = addLevel(ss, s, "/", ColorWorker.GREEN_GRASS);
+            ss = addBackground(ss, s, "()", ColorWorker.BLUE);
+            ss = addBackground(ss, s, "<>", ColorWorker.BLUE);
+            ss = addBackground(ss, s, "[]", ColorWorker.BLUE);
+            ss = addBackground(ss, s, "{}", ColorWorker.BLUE);//.*\{.*\}.*
             String end = result.toString();
-            if (start.length() == end.length()) {
-                result = TextUtils.concat(result, new SpannableString(s));
-            }
-            Log.e("fan", start + " " + end);
-            result = TextUtils.concat(result, new SpannableString("\n"));
+//            if (start.length() == end.length()) {
+//                result = TextUtils.concat(result, new SpannableString(s));
+//            }
+//            Log.e("fan", start + " " + end);
+            result = TextUtils.concat(result,ss ,new SpannableString("\n"));
         }
         return result;
     }
@@ -76,7 +77,7 @@ public class editHandler {
                         methodName,
                         String.class, int.class, String.class);
                 CharSequence s = (CharSequence) m.invoke(null, inStr, color, condition);
-                cha = TextUtils.concat(cha, s);
+                cha = s;
             } catch (Exception e) {
                 e.printStackTrace();
             }
