@@ -22,61 +22,55 @@ public class editHandler {
         ArrayList<String> strList = StringWorker.stringToList(instr, "\n");
         CharSequence result = new SpannableString("");
         for (String s : strList) {
-            String start = result.toString();
             CharSequence ss = new SpannableString(s);
-            ss = addStyle(ss, s, "\\?", ColorWorker.BLUE_VERY_LIGHT);
-            ss = addStyle(ss, s, "，", ColorWorker.YELLOW_VERY_LIGHT);
-            ss = addStyle(ss, s, "！", ColorWorker.PURPLE_LIGHT);
-            ss = addStyle(ss, s, "。", ColorWorker.YELLOW_DEEP);
-            ss = addStyle(ss, s, "1", ColorWorker.BROWN_WOOD);
-            ss = addStyle(ss, s, "2", ColorWorker.RED_CORAL);
-            ss = addStyle(ss, s, "3", ColorWorker.YELLOW_LIGHT);
-            ss = addStyle(ss, s, "4", ColorWorker.GREEN_FOREST);
-            ss = addStyle(ss, s, "5", ColorWorker.BLUE_LIGHT);
-            ss = addStyle(ss, s, "6", ColorWorker.BLUE_SEA);
-            ss = addStyle(ss, s, "7", ColorWorker.BLUE_DEEP);
-            ss = addStyle(ss, s, "8", ColorWorker.PURPLE_LIGHT);
-            ss = addStyle(ss, s, "9", ColorWorker.PURPLE_DEEP);
-            ss = addStyle(ss, s, " ", ColorWorker.ORANGE);
-            ss = addLevel(ss, s, ",", ColorWorker.GREEN_GRASS);
-            ss = addLevel(ss, s, "/", ColorWorker.GREEN_GRASS);
-            ss = addBackground(ss, s, "()", ColorWorker.BLUE);
-            ss = addBackground(ss, s, "<>", ColorWorker.BLUE);
-            ss = addBackground(ss, s, "[]", ColorWorker.BLUE);
-            ss = addBackground(ss, s, "{}", ColorWorker.BLUE);//.*\{.*\}.*
-            String end = result.toString();
-//            if (start.length() == end.length()) {
-//                result = TextUtils.concat(result, new SpannableString(s));
-//            }
-//            Log.e("fan", start + " " + end);
+            ss = addStyle(ss,"\\?", ColorWorker.BLUE_VERY_LIGHT);
+            ss = addStyle(ss,"，", ColorWorker.YELLOW_VERY_LIGHT);
+            ss = addStyle(ss,"！", ColorWorker.PURPLE_LIGHT);
+            ss = addStyle(ss,"。", ColorWorker.YELLOW_DEEP);
+            ss = addStyle(ss,"1", ColorWorker.BROWN_WOOD);
+            ss = addStyle(ss,"2", ColorWorker.RED_CORAL);
+            ss = addStyle(ss,"3", ColorWorker.YELLOW_LIGHT);
+            ss = addStyle(ss,"4", ColorWorker.GREEN_FOREST);
+            ss = addStyle(ss,"5", ColorWorker.BLUE_LIGHT);
+            ss = addStyle(ss,"6", ColorWorker.BLUE_SEA);
+            ss = addStyle(ss,"7", ColorWorker.BLUE_DEEP);
+            ss = addStyle(ss,"8", ColorWorker.PURPLE_LIGHT);
+            ss = addStyle(ss,"9", ColorWorker.PURPLE_DEEP);
+            ss = addStyle(ss," ", ColorWorker.ORANGE);
+            ss = addLevel(ss,",", ColorWorker.GREEN_GRASS);
+            ss = addLevel(ss,"/", ColorWorker.GREEN_GRASS);
+            ss = addBackground(ss,"()", ColorWorker.BLUE);
+            ss = addBackground(ss,"<>", ColorWorker.BLUE);
+            ss = addBackground(ss,"[]", ColorWorker.BLUE);
+            ss = addBackground(ss,"{}", ColorWorker.BLUE);
             result = TextUtils.concat(result,ss ,new SpannableString("\n"));
         }
         return result;
     }
 
 
-    public static CharSequence addStyle(CharSequence cha, String inStr, String startStr, int color) {
+    public static CharSequence addStyle(CharSequence cha, String startStr, int color) {
         String regularCondition = String.format("%s.*", startStr);
-        return addCondition(cha, inStr,regularCondition, "setTextColor", color, null);
+        return addCondition(cha, regularCondition, "setTextColor", color, null);
     }
 
-    public static CharSequence addLevel(CharSequence cha, String inStr, String s1, int color) {
+    public static CharSequence addLevel(CharSequence cha, String s1, int color) {
         String regularCondition = String.format(".*\\%s.*", s1);
-        return addCondition(cha, inStr,regularCondition, "setLevel", color, s1);
+        return addCondition(cha, regularCondition, "setLevel", color, s1);
     }
 
-    public static CharSequence addBackground(CharSequence cha, String inStr, String range, int color) {
-        String regularCondition = String.format(".*\\%s.*\\%s.*", range.charAt(0), range.charAt(1));
-        return addCondition(cha, inStr,regularCondition, "setBackground", color, range);
+    public static CharSequence addBackground(CharSequence cha, String range, int color) {
+        String regularCondition = String.format(".*\\%s.*\\%s.*", range.charAt(0), range.charAt(1));//.*\{.*\}.*
+        return addCondition(cha, regularCondition, "setBackground", color, range);
     }
 
-    public static CharSequence addCondition(CharSequence cha, String inStr, String regularCondition, String methodName, int color, String condition) {
-        if (inStr.matches(regularCondition)) {
+    public static CharSequence addCondition(CharSequence cha, String regularCondition, String methodName, int color, String condition) {
+        if (cha.toString().matches(regularCondition)) {
             try {
                 Method m = StringStyleWorker.class.getMethod(
                         methodName,
                         String.class, int.class, String.class);
-                CharSequence s = (CharSequence) m.invoke(null, inStr, color, condition);
+                CharSequence s = (CharSequence) m.invoke(null, cha.toString(), color, condition);
                 cha = s;
             } catch (Exception e) {
                 e.printStackTrace();
