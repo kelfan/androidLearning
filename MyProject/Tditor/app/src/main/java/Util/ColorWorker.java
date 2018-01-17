@@ -1,5 +1,6 @@
 package Util;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 
 /**
@@ -42,5 +43,23 @@ public class ColorWorker {
     public static final int SALMON = Color.parseColor("#6F4242");
     public static final int GREEN_SEA = Color.parseColor("#238E68");
 
+    /**
+     * Returns the complimentary (opposite) color.
+     * @param color int RGB color to return the compliment of
+     * @return int RGB of compliment color
+     */
+    public static int getComplimentColor(int color) {
+        // get existing colors
+        int alpha = Color.alpha(color);
+        int red = Color.red(color);
+        int blue = Color.blue(color);
+        int green = Color.green(color);
 
+        // find compliments
+        red = (~red) & 0xff;
+        blue = (~blue) & 0xff;
+        green = (~green) & 0xff;
+
+        return Color.argb(alpha, red, green, blue);
+    }
 }
