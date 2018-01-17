@@ -79,14 +79,13 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void afterTextChanged(Editable editable) {
-                // change linenumber of Textview when the text change
-                editHandler.addLineNumber(editText, textView, 0);
+                int count = editable.toString().split("\n").length;
+                editHandler.addLineNumber(editText, textView, count);
             }
         });
         String fileStr = FileHandler.read_app_file(Constant.DEFAULT_FILE_NAME);
         CharSequence displayStr = editHandler.todoHandle(fileStr);
         editText.setText(displayStr);
-        // fix the bug for wrong display of line number in start up
         editText.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
