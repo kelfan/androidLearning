@@ -2,6 +2,8 @@ package Util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -11,11 +13,28 @@ import java.util.Date;
 public class TimeWorker {
 
     public static String getDate() {
-        return new SimpleDateFormat("yyyy-mm-dd").format(new Date());
+        return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     }
 
     public static String getDatetime() {
-        return new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(new Date());
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+    }
+
+    public static String getNextWeekday(int weekday) {
+        Calendar now = Calendar.getInstance();
+        int cWeekday = now.get(Calendar.DAY_OF_WEEK);
+        int difference = weekday - cWeekday;
+        if (difference <= 0) {
+            difference += 7;
+        }
+//        if (cWeekday != weekday) {
+//            int days = (Calendar.SATURDAY - cWeekday + Math.abs(weekday-cWeekday)) % 7;
+//            now.add(Calendar.DAY_OF_YEAR, days);
+//        }
+        now.add(Calendar.DAY_OF_YEAR, difference);
+        Date date = now.getTime();
+        String format = new SimpleDateFormat("MM-dd EEE").format(date);
+        return format;
     }
 
 }
