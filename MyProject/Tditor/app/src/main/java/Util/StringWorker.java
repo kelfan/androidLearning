@@ -25,7 +25,7 @@ public class StringWorker {
 
     public static String stringSortByLine(String inString, boolean desc) {
         ArrayList<String> list = stringToListByLine(inString);
-        if (desc == false) {
+        if (!desc) {
             Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
         } else {
             Collections.sort(list, Collections.reverseOrder(String.CASE_INSENSITIVE_ORDER));
