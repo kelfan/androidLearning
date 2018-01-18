@@ -1,11 +1,14 @@
 package com.kelfan.tditor;
 
+import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -74,18 +77,33 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                char lastEnter = charSequence.charAt(i);
+                if (i1 == 0 && i > 0 && lastEnter == '\n') {
+                    StringBuilder s = new StringBuilder(charSequence);
+                    String sub = s.substring(0, i);
+                    int lastN = sub.lastIndexOf("\n");
+                    if (lastN < s.length() - 1) {
+                        char lastChar = s.charAt(lastN + 1);
+                        if (lastChar != '\n') {
+                            s.insert(i + 1, lastChar);
+                            CharSequence displayStr = editHandler.todoHandle(s.toString());
+                            editText.setText(displayStr);
+                            editText.setSelection(i + 2);
+                        }
+                    }
+                }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                int count = editable.toString().split("\n").length;
-                editHandler.addLineNumber(editText, textView, count);
+                // change line number in TextView when text in editText Change
+                editHandler.addLineNumber(editText, textView, 0);
             }
         });
         String fileStr = FileHandler.read_app_file(Constant.DEFAULT_FILE_NAME);
         CharSequence displayStr = editHandler.todoHandle(fileStr);
         editText.setText(displayStr);
+        // fix the problem for line numbers in start up
         editText.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
