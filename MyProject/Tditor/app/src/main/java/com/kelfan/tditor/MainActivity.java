@@ -77,18 +77,20 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                char lastEnter = charSequence.charAt(i);
-                if (i1 == 0 && i > 0 && lastEnter == '\n') {
-                    StringBuilder s = new StringBuilder(charSequence);
-                    String sub = s.substring(0, i);
-                    int lastN = sub.lastIndexOf("\n");
-                    if (lastN < s.length() - 1) {
-                        char lastChar = s.charAt(lastN + 1);
-                        if (lastChar != '\n') {
-                            s.insert(i + 1, lastChar);
-                            CharSequence displayStr = editHandler.todoHandle(s.toString());
-                            editText.setText(displayStr);
-                            editText.setSelection(i + 2);
+                if (i1 == 0 && i > 0) {
+                    char lastEnter = charSequence.charAt(i);
+                    if (lastEnter == '\n') {
+                        StringBuilder s = new StringBuilder(charSequence);
+                        String sub = s.substring(0, i);
+                        int lastN = sub.lastIndexOf("\n");
+                        if (lastN < s.length() - 1) {
+                            char lastChar = s.charAt(lastN + 1);
+                            if (lastChar != '\n') {
+                                s.insert(i + 1, lastChar);
+                                CharSequence displayStr = editHandler.todoHandle(s.toString());
+                                editText.setText(displayStr);
+                                editText.setSelection(i + 2);
+                            }
                         }
                     }
                 }
