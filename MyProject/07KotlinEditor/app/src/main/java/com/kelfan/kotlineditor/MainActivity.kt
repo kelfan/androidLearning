@@ -32,11 +32,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        // test get file path and write file
-        val path = FileWorker.getStoragePath(Constant.STORAGE_SD, "05fanNotes")
-        val store = FileWorker.writeToSD("05fanNotes", "test.txt", "testing content")
-        val list = FileWorker.readFileToArrayList("05fanNotes", "test.txt", Constant.STORAGE_SD)
-        val end = 0
     }
 
     override fun onBackPressed() {
