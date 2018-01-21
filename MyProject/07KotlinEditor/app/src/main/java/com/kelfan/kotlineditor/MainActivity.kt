@@ -1,5 +1,6 @@
 package com.kelfan.kotlineditor
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -10,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.kelfan.kotlineditor.util.Constant
 import com.kelfan.kotlineditor.util.FileWorker
+import com.kelfan.kotlineditor.util.TimeWorker
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
