@@ -14,5 +14,11 @@ class Constant{
 
         const val SUCCESS = 1
         const val FAIL = 0
+
+        const val DEFAULT_FILE_NAME = "2018TditorList.py"
+        const val DEFAULT_FILE_PATH = "05fanNotes"
+
+        const val DAYWEEKFORMAT = "MM-dd EEE" // 01-01 MON
+
     }
 }

@@ -8,12 +8,61 @@ import java.util.ArrayList
 
 /**
  * Created by Administrator on 20/01/2018.
+ * @notice: require permission to manipulate files
+ * @result: 1 means success, 0 means fail
  */
 
 
 
 class FileWorker{
     companion object {
+        /**
+         * read file into string
+         * @param sPath path of file
+         * @param sFileName filename
+         * @param iLocation 0 for data, 1 for external SD storage, 2 for secondary SD storage
+         * @return String or "fail" if read file fail
+         */
+        private fun readFileToString(sPath: String, sFileName: String, iLocation: Int): String {
+            try {
+                val root = getStoragePath(iLocation, sPath)
+                if (!root.exists()) {
+                    throw IOException()
+                }
+                val file = File(root, sFileName)
+                if (!file.exists()) {
+                    throw IOException()
+                }
+                val text = StringBuilder()
+                val br = BufferedReader(FileReader(file))
+                var line: String?
+                line = br.readLine()
+                while (line != null) {
+                    text.append(line)
+                    text.append('\n')
+                    line = br.readLine()
+                }
+                br.close()
+                return text.toString()
+            } catch (e: IOException) {
+                e.printStackTrace()
+                return ""
+            }
+        }
+
+        fun readStringFromData(sPath: String, sFileName: String): String {
+            return readFileToString(sPath, sFileName, 0)
+        }
+
+        fun readStringFromSD(sPath: String, sFileName: String): String {
+            return readFileToString(sPath, sFileName, 1)
+        }
+
+        fun readStringFromSecondSD(sPath: String, sFileName: String): String {
+            return readFileToString(sPath, sFileName, 2)
+        }
+
+
         /**
          * read file into arraylist
          * @param sPath path of file
@@ -45,6 +94,18 @@ class FileWorker{
                 e.printStackTrace()
                 return null
             }
+        }
+
+        fun readListFromData(sPath: String, sFileName: String): ArrayList<*>? {
+            return readFileToArrayList(sPath, sFileName, 0)
+        }
+
+        fun readListFromSD(sPath: String, sFileName: String): ArrayList<*>? {
+            return readFileToArrayList(sPath, sFileName, 1)
+        }
+
+        fun readListFromSecondSD(sPath: String, sFileName: String): ArrayList<*>? {
+            return readFileToArrayList(sPath, sFileName, 2)
         }
 
 
@@ -125,6 +186,46 @@ class FileWorker{
                     File(Environment.getExternalStorageDirectory(), sPath)
                 }
             }
+        }
+
+        @Throws(IOException::class)
+        fun readAllText(filePath: String): String {
+            var br: BufferedReader? = null
+            try {
+                br = BufferedReader(FileReader(filePath))
+                val sb = StringBuilder()
+                var line: String? = br.readLine()
+
+                while (line != null) {
+                    sb.append(line)
+                    sb.append("\n")
+                    line = br.readLine()
+                }
+                br.close()
+                return sb.toString()
+            } catch (e: Exception) {
+                if (br != null) {
+                    br.close()
+                }
+                throw e
+            }
+        }
+
+
+        @Throws(IOException::class)
+        fun writeAllText(filePath: String, contents: String): Boolean {
+            val out = BufferedWriter(OutputStreamWriter(
+                    FileOutputStream(filePath), "UTF-8"))
+            out.write(contents)
+            out.close()
+            return true
+        }
+
+        fun getFileExtension(fileName: String): String {
+            val dotIndex = fileName.lastIndexOf(".")
+            if (dotIndex == -1)
+                return ""
+            return fileName.substring(dotIndex + 1, fileName.length)
         }
     }
 }
