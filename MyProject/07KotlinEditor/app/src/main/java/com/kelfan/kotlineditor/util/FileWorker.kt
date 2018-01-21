@@ -5,6 +5,8 @@ import android.os.Environment
 import android.util.Log
 import java.io.*
 import java.util.ArrayList
+import java.nio.file.Files.exists
+
 
 /**
  * Created by Administrator on 20/01/2018.
@@ -13,9 +15,39 @@ import java.util.ArrayList
  */
 
 
-
-class FileWorker{
+class FileWorker {
     companion object {
+        /**
+         * check whether Path exist or not, return true if exist
+         * @path:
+         */
+        private fun checkPath(path: File): Boolean {
+            return try {
+                if (!path.exists()) {
+                    throw IOException()
+                }
+                true
+            } catch (e: IOException) {
+                e.printStackTrace()
+                false
+            }
+        }
+
+        /**
+         * check whether File exist or not, return true if exist
+         */
+        private fun checkFile(file: File): Boolean {
+            return try {
+                if (!file.exists()) {
+                    throw IOException()
+                }
+                true
+            } catch (e: IOException) {
+                e.printStackTrace()
+                false
+            }
+        }
+
         /**
          * read file into string
          * @param sPath path of file
@@ -24,17 +56,18 @@ class FileWorker{
          * @return String or "fail" if read file fail
          */
         private fun readFileToString(sPath: String, sFileName: String, iLocation: Int): String {
+
+            val root = getStoragePath(iLocation, sPath)
+            if (!checkPath(root)) {
+                return ""
+            }
+            val file = File(root, sFileName)
+            if (!checkFile(file)) {
+                return ""
+            }
+            val text = StringBuilder()
+            val br = BufferedReader(FileReader(file))
             try {
-                val root = getStoragePath(iLocation, sPath)
-                if (!root.exists()) {
-                    throw IOException()
-                }
-                val file = File(root, sFileName)
-                if (!file.exists()) {
-                    throw IOException()
-                }
-                val text = StringBuilder()
-                val br = BufferedReader(FileReader(file))
                 var line: String?
                 line = br.readLine()
                 while (line != null) {
@@ -45,6 +78,7 @@ class FileWorker{
                 br.close()
                 return text.toString()
             } catch (e: IOException) {
+                br.close()
                 e.printStackTrace()
                 return ""
             }
@@ -71,14 +105,14 @@ class FileWorker{
          * @return String or "fail" if read file fail
          */
         fun readFileToArrayList(sPath: String, sFileName: String, iLocation: Int): ArrayList<*>? {
+            val root = getStoragePath(iLocation, sPath)
+            if (!checkPath(root)) {
+                return null
+            }
+            val file = File(root, sFileName)
+            val aList = ArrayList<String>()
+            val input = BufferedReader(FileReader(file))
             try {
-                val root = getStoragePath(iLocation, sPath)
-                if (!root.exists()) {
-                    throw IOException()
-                }
-                val file = File(root, sFileName)
-                val aList = ArrayList<String>()
-                val input = BufferedReader(FileReader(file))
                 var line: String? // 问号? 定义变量时，可在类型后面加一个问号?，表示该变量是Nullable，不加表示该变量不可为null
                 if (!input.ready()) {
                     throw IOException()
@@ -91,6 +125,7 @@ class FileWorker{
                 input.close()
                 return aList
             } catch (e: IOException) {
+                input.close()
                 e.printStackTrace()
                 return null
             }
@@ -165,7 +200,7 @@ class FileWorker{
         }
 
         fun appendToSD(sPath: String, sFileName: String, sBody: String): Int {
-            return saveFile(sPath, sFileName, sBody,  Constant.STORAGE_SD, Constant.FILE_APPEND)
+            return saveFile(sPath, sFileName, sBody, Constant.STORAGE_SD, Constant.FILE_APPEND)
         }
 
         fun appendToSecondSD(sPath: String, sFileName: String, sBody: String): Int {
@@ -177,7 +212,7 @@ class FileWorker{
          * @param iLocation 0 for data, 1 for external SD storage, 2 for secondary SD storage
          * @return File
          */
-        fun getStoragePath(iLocation: Int, sPath: String):  File{
+        fun getStoragePath(iLocation: Int, sPath: String): File {
             return when (iLocation) {
                 Constant.STORAGE_DATA -> File(Environment.getDataDirectory(), sPath)
                 Constant.STORAGE_SD -> File(Environment.getExternalStorageDirectory(), sPath)
@@ -186,6 +221,30 @@ class FileWorker{
                     File(Environment.getExternalStorageDirectory(), sPath)
                 }
             }
+        }
+
+        fun getAppPath(context: Context, location: String): String? {
+            var file: File? = null
+
+            // SD Card Mounted
+            file = if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
+                File(Environment.getExternalStorageDirectory().absolutePath +
+                        "/Android/data/" + context.packageName + "/" + location + "/")
+            } else {
+                when (location) {
+                    Constant.DIRECTORY_DATA -> context.filesDir // Use data storage
+                    else -> {
+                        context.cacheDir  // Use internal storage
+                    }
+                }
+            }
+
+            // Create the cache directory if it doesn't exist
+            if (!file!!.exists()) {
+                file.mkdirs()
+            }
+
+            return file.absolutePath
         }
 
         @Throws(IOException::class)

@@ -8,6 +8,10 @@ class Constant{
         const val STORAGE_DATA = 0
         const val STORAGE_SD = 1
         const val STORAGE_SECOND_SD = 2
+        const val STORAGE_INTERNAL = 3
+        const val STORAGE_CACHE = 4
+        const val DIRECTORY_CACHE = "cache"
+        const val DIRECTORY_DATA = "data"
 
         const val FILE_APPEND = 0
         const val FILE_WRITE = 1
