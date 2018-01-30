@@ -2589,6 +2589,26 @@ m.invoke(null,123); //first argument is the object to invoke on, ignored if stat
         System.out.println(pos2);
 ```
 
+# set Cursor position 
+You can get the Cursor position using the getSelectionStart() and getSelectionEnd() methods. If no text is highlighted, both getSelectionStart() and getSelectionEnd() return the position of the cursor. So something like this should do the trick:
+```java 
+myEditText.getSelectionStart();
+// or
+myEditText.getSelectionEnd();
+// Then if you want to select all the text after the cursor you could use this:
+int cursorPosition = myEditText.getSelectionStart();
+CharSequence enteredText = myEditText.getText().toString();
+CharSequence cursorToEnd = enteredText.subSequence(cursorPosition, enteredText.length());
+```
+[Get Cursor Position in Android in Edit Text?](https://stackoverflow.com/questions/6900408/get-cursor-position-in-android-in-edit-text)
+
+# Fileexplorer
+[A categorized directory of libraries and tools for Android | Android-Arsenal.com](https://android-arsenal.com/tag/35)
+[Simple File Dialog For Android Applications](http://www.scorchworks.com/Blog/simple-file-dialog-for-android-applications/)
+[Android-FileBrowser-FilePicker | Android-Arsenal.com](https://android-arsenal.com/details/1/5636)
+[Create a simple File Explorer in Android](http://custom-android-dn.blogspot.com.au/2013/01/create-simple-file-explore-in-android.html)
+[FileListerDialog | Android-Arsenal.com](https://android-arsenal.com/details/1/6002)
+
 # Resources
 Drawer
 - [Creating Tabs in Android Studio with Tabbed Activity](https://www.youtube.com/watch?v=00LLd7qr9sA)
