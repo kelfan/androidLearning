@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">myCalendar</string>
+    <string name="button_query">Query</string>
+    <string name="button_add">add</string>
+    <string name="button_update">update</string>
+    <string name="button_delete">delete</string>
+    <string name="button_new">new</string>
+
+    <string name="event_content">Content</string>
+    <string name="event_detail">Detail</string>
+    <string name="event_genre">Genre</string>
+    <string name="event_location">Location</string>
+    <string name="event_status">Status</string>
+    <string name="event_repeat">Repeat</string>
+    <string name="event_level">Level: input a number </string>
+    <string name="event_start">Start</string>
+    <string name="event_start_date">event date</string>
+    <string name="event_start_time">event time</string>
+    <string name="event_end">End</string>
+    <string name="event_end_date">event end date</string>
+    <string name="event_end_time">event end time</string> <string name="event_created">Create</string>
+    <string name="event_completed">Complete</string>
+    <string name="event_date">Date</string>
+    <string name="event_time">Time</string>
+
+    <string name="event_status_working">Working</string>
+    <string name="event_status_waiting">Waiting</string>
+    <string name="event_status_schedule">Schedule</string>
+    <string name="event_status_important">Important</string>
+    <string name="event_status_others">Others</string>
+    <string name="add_update">add/update</string>
+
+
+</resources>
