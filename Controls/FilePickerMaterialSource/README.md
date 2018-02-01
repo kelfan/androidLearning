@@ -1,3 +1,8 @@
+# Structure 
+MaterialFilePicker <- FilePickerActivity <- DirectoryFragment <- CompositeFilter
+
+
+
 # Material File Picker [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialFilePicker-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2690) 
 Material file picker library for Android
 
