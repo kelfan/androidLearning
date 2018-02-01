@@ -1,0 +1,4 @@
+#Sat Nov 25 22:16:46 AEDT 2017
+base.0=E\:\\workspace\\androidLearning\\MarqueeTextViewDemo\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\1
+path.0=classes.dex
+renamed.0=classes.dex
