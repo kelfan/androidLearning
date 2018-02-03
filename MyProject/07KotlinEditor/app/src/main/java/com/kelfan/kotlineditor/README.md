@@ -3,7 +3,7 @@ filterComposite -> directoryFragment
 filterHidden
 filterPattern
 comparatorFile -> FileWorker
-bg_clickable -> filepicker_item.xml -> directoryAdapter -> directoryFragment
+bg_clickable -> filepicker_item.xml -> directoryAdapter -> directoryFragment -> FilePickerActivity
 FileTypeUtils -> directoryAdapter
 fileworker -> directoryFragment
 RecyclerViewEmpty -> directoryFragment
@@ -12,3 +12,4 @@ FilterComposite -> FilePickerActivity
 filepicker_fragment_directory -> FilePickerActivity
 FilterPattern -> FilePickerActivity
 FilterComposite -> FilePickerActivity
+Filterpicker_menu -> FilePickerActivity

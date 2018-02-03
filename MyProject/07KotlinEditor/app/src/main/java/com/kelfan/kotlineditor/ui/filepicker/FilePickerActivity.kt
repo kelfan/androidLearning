@@ -14,6 +14,7 @@ import android.widget.TextView
 import com.kelfan.kotlineditor.R
 import com.kelfan.kotlineditor.filter.FilterComposite
 import com.kelfan.kotlineditor.filter.FilterPattern
+import com.kelfan.kotlineditor.util.FileWorker
 import java.io.File
 import java.io.FileFilter
 import java.lang.reflect.Field
@@ -116,13 +117,13 @@ class FilePickerActivity : AppCompatActivity(), DirectoryFragment.FileClickListe
     }
 
     private fun initViews() {
-        mToolbar = findViewById(R.id.toolbar) as Toolbar
+        mToolbar = findViewById<Toolbar>(R.id.toolbar)
     }
 
     private fun initFragment() {
         fragmentManager.beginTransaction()
                 .replace(R.id.container, DirectoryFragment.getInstance(
-                        mCurrentPath, mFilter))
+                        this!!.mCurrentPath!!, this!!.mFilter!!))
                 .addToBackStack(null)
                 .commit()
     }
@@ -132,7 +133,7 @@ class FilePickerActivity : AppCompatActivity(), DirectoryFragment.FileClickListe
         val separatedPaths = ArrayList<String>()
 
         while (pathToAdd != mStartPath) {
-            pathToAdd = FileUtils.cutLastSegmentOfPath(pathToAdd)
+            pathToAdd = FileWorker.cutLastSegmentOfPath(pathToAdd!!)
             separatedPaths.add(pathToAdd)
         }
 
@@ -157,21 +158,21 @@ class FilePickerActivity : AppCompatActivity(), DirectoryFragment.FileClickListe
     private fun addFragmentToBackStack(path: String) {
         fragmentManager.beginTransaction()
                 .replace(R.id.container, DirectoryFragment.getInstance(
-                        path, mFilter))
+                        path, this!!.mFilter!!))
                 .addToBackStack(null)
                 .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        menu.findItem(R.id.action_close).isVisible = mCloseable!!
+        menuInflater.inflate(R.menu.filepicker_menu, menu)
+        menu.findItem(R.id.filepicker_action_close).isVisible = mCloseable!!
         return true
     }
 
     override fun onOptionsItemSelected(menuItem: MenuItem): Boolean {
         if (menuItem.itemId == android.R.id.home) {
             onBackPressed()
-        } else if (menuItem.itemId == R.id.action_close) {
+        } else if (menuItem.itemId == R.id.filepicker_action_close) {
             finish()
         }
         return super.onOptionsItemSelected(menuItem)
@@ -182,7 +183,7 @@ class FilePickerActivity : AppCompatActivity(), DirectoryFragment.FileClickListe
 
         if (mCurrentPath != mStartPath) {
             fm.popBackStack()
-            mCurrentPath = FileUtils.cutLastSegmentOfPath(mCurrentPath)
+            mCurrentPath = FileWorker.cutLastSegmentOfPath(this!!.mCurrentPath!!)
             updateTitle()
         } else {
             setResult(Activity.RESULT_CANCELED)
@@ -196,13 +197,13 @@ class FilePickerActivity : AppCompatActivity(), DirectoryFragment.FileClickListe
         outState.putString(STATE_START_PATH, mStartPath)
     }
 
-    fun onFileClicked(clickedFile: File) {
+    override fun onFileClicked(clickedFile: File) {
         Handler().postDelayed({ handleFileClicked(clickedFile) }, HANDLE_CLICK_DELAY.toLong())
     }
 
     private fun handleFileClicked(clickedFile: File) {
         if (clickedFile.isDirectory) {
-            mCurrentPath = clickedFile.path
+            var mCurrentPath = clickedFile.path
             // If the user wanna go to the emulated directory, he will be taken to the
             // corresponding user emulated folder.
             if (mCurrentPath == "/storage/emulated")
