@@ -19,4 +19,5 @@
     <string name="filetype_word">Document</string>
     <string name="filetype_zip">Archive</string>
     <string name="filetype_apk">APK</string>
+    <string name="empty_directory">Empty Directory</string>
 </resources>
