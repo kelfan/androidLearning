@@ -24,5 +24,8 @@ class Constant{
 
         const val DAYWEEKFORMAT = "MM-dd EEE" // 01-01 MON
 
+        const val PERMISSIONS_REQUEST_CODE = 0
+        const val FILE_PICKER_REQUEST_CODE = 1
+
     }
 }

@@ -13,3 +13,4 @@ filepicker_fragment_directory -> FilePickerActivity
 FilterPattern -> FilePickerActivity
 FilterComposite -> FilePickerActivity
 Filterpicker_menu -> FilePickerActivity
+filepicker_fragment_sample.xml -> FragmentSample -> content_main.xml
