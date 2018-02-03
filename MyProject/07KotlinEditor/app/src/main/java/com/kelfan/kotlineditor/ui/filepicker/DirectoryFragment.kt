@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.kelfan.kotlineditor.R
-import com.kelfan.kotlineditor.filter.FilterComposite
 import com.kelfan.kotlineditor.util.FileWorker
 import java.io.File
 

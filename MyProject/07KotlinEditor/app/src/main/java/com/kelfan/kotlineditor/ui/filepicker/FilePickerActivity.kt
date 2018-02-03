@@ -12,8 +12,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import com.kelfan.kotlineditor.R
-import com.kelfan.kotlineditor.filter.FilterComposite
-import com.kelfan.kotlineditor.filter.FilterPattern
 import com.kelfan.kotlineditor.util.FileWorker
 import java.io.File
 import java.io.FileFilter

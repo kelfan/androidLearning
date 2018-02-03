@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Environment
 import android.util.Log
 import android.webkit.MimeTypeMap
-import com.kelfan.kotlineditor.filer.ComparatorFile
+import com.kelfan.kotlineditor.ui.filepicker.ComparatorFile
 import java.io.*
 import java.net.URLEncoder
 import java.text.DecimalFormat

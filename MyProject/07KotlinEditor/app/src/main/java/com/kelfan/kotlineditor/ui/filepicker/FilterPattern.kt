@@ -1,4 +1,4 @@
-package com.kelfan.kotlineditor.filter
+package com.kelfan.kotlineditor.ui.filepicker
 
 import java.io.File
 import java.io.FileFilter
