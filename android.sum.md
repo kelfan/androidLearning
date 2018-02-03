@@ -2572,6 +2572,23 @@ public void callClassByName(Class cls, String funcName) throws Exception {
 }
 ```
 
+# Not enough information to infer parameter T” with Kotlin and Android
+1/ Change
+
+val listView = findViewById(R.id.list) as ListView to
+
+val listView = findViewById<ListView>(R.id.list)
+
+2/ Change
+
+this.label = row?.findViewById(R.id.label) as TextView to
+
+this.label = row?.findViewById<TextView>(R.id.label) as TextView
+
+Note that in 2/ the cast is only required because row is nullable. If label was nullable too, or if you made row not nullable, it wouldn't be required.
+[&quot;Not enough information to infer parameter T&quot; with Kotlin and Android](https://stackoverflow.com/questions/45267041/not-enough-information-to-infer-parameter-t-with-kotlin-and-android)
+
+
 # reflection
 https://stackoverflow.com/questions/4896315/android-java-calling-a-method-using-reflection
 ```java 

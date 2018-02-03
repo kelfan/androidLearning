@@ -3,9 +3,12 @@ package com.kelfan.kotlineditor.util
 import android.content.Context
 import android.os.Environment
 import android.util.Log
+import android.webkit.MimeTypeMap
+import com.kelfan.kotlineditor.filer.ComparatorFile
 import java.io.*
-import java.util.ArrayList
-import java.nio.file.Files.exists
+import java.net.URLEncoder
+import java.text.DecimalFormat
+import java.util.*
 
 
 /**
@@ -285,6 +288,43 @@ class FileWorker {
             if (dotIndex == -1)
                 return ""
             return fileName.substring(dotIndex + 1, fileName.length)
+        }
+
+        fun getFileListByDirPath(path: String, filter: FileFilter): List<File> {
+            val directory = File(path)
+            val files = directory.listFiles(filter) ?: return ArrayList()
+
+            val result = Arrays.asList(*files)
+            Collections.sort(result, ComparatorFile()) //may need improve
+            return result
+        }
+
+        fun cutLastSegmentOfPath(path: String): String {
+            if (path.length - path.replace("/", "").length <= 1)
+                return "/"
+            var newPath = path.substring(0, path.lastIndexOf("/"))
+            // We don't need to list the content of /storage/emulated
+            if (newPath == "/storage/emulated")
+                newPath = "/storage"
+            return newPath
+        }
+
+        fun getReadableFileSize(size: Long): String {
+            if (size <= 0) return "0"
+            val units = arrayOf("B", "KB", "MB", "GB", "TB")
+            val digitGroups = (Math.log10(size.toDouble()) / Math.log10(1024.0)).toInt()
+            return DecimalFormat("#").format(size / Math.pow(1024.0, digitGroups.toDouble())) + " " + units[digitGroups]
+        }
+
+        fun getExtension(fileName: String): String {
+            var encoded: String
+            try {
+                encoded = URLEncoder.encode(fileName, "UTF-8").replace("+", "%20")
+            } catch (e: UnsupportedEncodingException) {
+                encoded = fileName
+            }
+
+            return MimeTypeMap.getFileExtensionFromUrl(encoded).toLowerCase()
         }
     }
 }
