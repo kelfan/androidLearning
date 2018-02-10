@@ -61,6 +61,7 @@ public class editHandler {
             s = s.replace(".mt", TimeWorker.getNextDay(1)); //明天
             s = s.replace(".ht", TimeWorker.getNextDay(2)); //后天
             s = s.replace(".dht", TimeWorker.getNextDay(3)); //大后天
+            s = s.replace(".nsz", TimeWorker.getNextDay(28)); // 下四周
 
             // quick actions to symbols
             if (s.contains("，，")) { s = "，   ,"+TimeWorker.getDatetime()+"," + s.replace("，，", ""); }
@@ -178,7 +179,10 @@ public class editHandler {
         String[] txtList = txt.split("，     ");
         String edTxt = txtList[0]+ "，     ";
         int result = FileHandler.write_app_file(path, edTxt);
-        int log = FileHandler.append_app_file(Constant.DEFAULT_LOG_NAME, txtList[1]);
+        int log = Constant.RESULT_SUCCESS;
+        if (!txtList[1].equals("\n")) {
+            log = FileHandler.append_app_file(Constant.DEFAULT_LOG_NAME, txtList[1]);
+        }
         CharSequence cs = todoHandle(edTxt);
         int cursorPosition = editText.getSelectionStart();
         editText.setText(cs);

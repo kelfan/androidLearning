@@ -41,4 +41,5 @@ public class TimeWorker {
         String format = new SimpleDateFormat(UtilConstant.DAYWEEKFORMAT).format(date);
         return format;
     }
+
 }
