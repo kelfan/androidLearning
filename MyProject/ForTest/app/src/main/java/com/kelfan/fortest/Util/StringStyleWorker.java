@@ -1,13 +1,11 @@
-package Util;
+package com.kelfan.fortest.Util;
 
-import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.TextAppearanceSpan;
 
 /**
  * Created by Administrator on 14/01/2018.
@@ -16,8 +14,7 @@ import android.text.style.TextAppearanceSpan;
 public class StringStyleWorker {
 
 
-    public static SpannableString setTextColor(CharSequence pCs, int color, String s2) {
-        String inStr = pCs.toString();
+    public static SpannableString setTextColor(String inStr, int color, String s2) {
         SpannableString s = new SpannableString(inStr);
         s.setSpan(new ForegroundColorSpan(color),
                 0, inStr.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
@@ -25,8 +22,7 @@ public class StringStyleWorker {
         return s;
     }
 
-    public static SpannableString setBackground(CharSequence pCs, int color, String range) {
-        String inStr = pCs.toString();
+    public static SpannableString setBackground(String inStr, int color, String range) {
         SpannableString s = new SpannableString(inStr);
         int pos1 = inStr.toLowerCase().indexOf(range.toLowerCase().charAt(0));
         int pos2 = inStr.toLowerCase().indexOf(range.toLowerCase().charAt(1)) + 1;
@@ -36,8 +32,7 @@ public class StringStyleWorker {
         return s;
     }
 
-    public static CharSequence setLevel(CharSequence pCs, int color, final String delimiter) {
-        String inStr = pCs.toString();
+    public static CharSequence setLevel(String inStr, int color, final String delimiter) {
         String[] sList = inStr.split(delimiter);
         CharSequence result = new SpannableString("");
         for (int i = 0; i < sList.length - 1; i++) {
@@ -54,10 +49,10 @@ public class StringStyleWorker {
 
     public static CharSequence addLevel(CharSequence pCs, int color, final String delimiter) {
         String fStr = pCs.toString();
-        int last = fStr.lastIndexOf(delimiter);
+        int last = fStr.lastIndexOf(delimiter) + 1;
         SpannableString fss = SpannableString.valueOf(pCs);
-        if (last > 0 && fStr.length() > 1) {
-            fss.setSpan(new BackgroundColorSpan(color), 1, last, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if (last > 0) {
+            fss.setSpan(new BackgroundColorSpan(color), 0, last, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return fss;
     }

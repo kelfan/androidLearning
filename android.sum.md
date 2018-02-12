@@ -584,8 +584,67 @@ android工程师的第二门课(第1季)
     生命周期 
     跟Activity传递数据
 
+# fragment/流程 
+1. Content xml 放置 fragment layout 
+```xml
+    <FrameLayout
+        android:id="@+id/screen_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+    </FrameLayout>
+```
+2. 构建Fragment的模板xml
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click me"/>
+
+</LinearLayout>
+```
+
+3. 构建 Fragment 类 extends v4.Fragment 
+```java 
+public class ImportFragment extends Fragment {
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_import, null);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "show some text", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+}
+```
+4. 需要的地方使用 
+```java 
+Fragment fragment = null;
+...
+fragment = new ImportFragment();
+...
+if (fragment != null) {
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    FragmentTransaction ft = fragmentManager.beginTransaction();
+    ft.replace(R.id.screen_area, fragment);
+    ft.commit();
+}
+```
 
 
 

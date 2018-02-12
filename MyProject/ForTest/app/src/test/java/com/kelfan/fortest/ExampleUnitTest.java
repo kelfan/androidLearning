@@ -1,12 +1,6 @@
-package com.kelfan.tditor;
-
-import android.graphics.Color;
+package com.kelfan.fortest;
 
 import org.junit.Test;
-
-import Util.ColorWorker;
-import Util.StringStyleWorker;
-import Util.StringWorker;
 
 import static org.junit.Assert.*;
 
@@ -20,5 +14,4 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
-
 }

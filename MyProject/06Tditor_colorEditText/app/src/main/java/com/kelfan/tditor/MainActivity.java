@@ -78,9 +78,10 @@ public class MainActivity extends AppCompatActivity
                             char lastChar = s.charAt(lastN + 1);
                             if (lastChar != '\n') {
                                 s.insert(i + 1, lastChar);
+                                s.insert(i + 2, " ");
                                 CharSequence displayStr = editHandler.todoHandle(s.toString());
                                 editText.setText(displayStr);
-                                editText.setSelection(i + 2);
+                                editText.setSelection(i + 3);
                             }
                         }
                     }

@@ -30,6 +30,9 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    val PERMISSIONS_REQUEST_CODE = 0
+    val FILE_PICKER_REQUEST_CODE = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,6 +49,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        val pickButton = findViewById<Button>(R.id.filepicker_open_button)
+        pickButton.setOnClickListener { checkPermissionsAndOpenFilePicker() }
 
 //        val openButton = findViewById<Button>(R.id.filepicker_open_button)
 //        openButton.setOnClickListener(View.OnClickListener { FilePickerHandler.checkPermissionsAndOpenFilePicker(this) })
@@ -88,7 +94,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .withTitle("Sample title")
                 .start()
     }
-    fun checkPermissionsAndOpenFilePicker() {
+
+    private fun checkPermissionsAndOpenFilePicker() {
         val permission = Manifest.permission.READ_EXTERNAL_STORAGE
 
         if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {

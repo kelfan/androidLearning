@@ -65,18 +65,18 @@ public class editHandler {
 
             // quick actions to symbols
             if (s.contains("，，")) { s = "，   ,"+TimeWorker.getDatetime()+"," + s.replace("，，", ""); }
-            if (s.contains("。。")) { s = "  " + s.replace("。。", ""); }
+            if (s.contains("。。")) { s = "0" + s.replace("。。", "").substring(1); }
             if (s.contains("？？")) { s = "？ ,"+TimeWorker.getDatetime()+"," + s.replace("？？", ""); }
             if (s.contains("！！")) { s = "！ " + s.replace("！！", ""); }
-            if (s.contains("//1")) { s = "1 " + s.replace("//1", ""); }
-            if (s.contains("//2")) { s = "2 " + s.replace("//2", ""); }
-            if (s.contains("//3")) { s = "3 " + s.replace("//3", ""); }
-            if (s.contains("//4")) { s = "4 " + s.replace("//4", ""); }
-            if (s.contains("//5")) { s = "5 " + s.replace("//5", ""); }
-            if (s.contains("//6")) { s = "6 " + s.replace("//6", ""); }
-            if (s.contains("//7")) { s = "7 " + s.replace("//7", ""); }
-            if (s.contains("//8")) { s = "8 " + s.replace("//8", ""); }
-            if (s.contains("//9")) { s = "9 " + s.replace("//9", ""); }
+//            if (s.contains("//1")) { s = "1 " + s.replace("//1", ""); }
+//            if (s.contains("//2")) { s = "2 " + s.replace("//2", ""); }
+//            if (s.contains("//3")) { s = "3 " + s.replace("//3", ""); }
+//            if (s.contains("//4")) { s = "4 " + s.replace("//4", ""); }
+//            if (s.contains("//5")) { s = "5 " + s.replace("//5", ""); }
+//            if (s.contains("//6")) { s = "6 " + s.replace("//6", ""); }
+//            if (s.contains("//7")) { s = "7 " + s.replace("//7", ""); }
+//            if (s.contains("//8")) { s = "8 " + s.replace("//8", ""); }
+//            if (s.contains("//9")) { s = "9 " + s.replace("//9", ""); }
 
 
             CharSequence ss = new SpannableString(s);
@@ -93,7 +93,7 @@ public class editHandler {
             ss = addStyle(ss, "7", ColorWorker.BLUE_DEEP);
             ss = addStyle(ss, "8", ColorWorker.PURPLE_LIGHT);
             ss = addStyle(ss, "9", ColorWorker.PURPLE_DEEP);
-            ss = addStyle(ss, " ", ColorWorker.ORANGE);
+            ss = addStyle(ss, "0", ColorWorker.ORANGE);
 //            ss = addLevel(ss, ",", ColorWorker.GREEN_GRASS);
 
             // add backgrounds to lines
@@ -117,7 +117,7 @@ public class editHandler {
 
     public static CharSequence addLevel(CharSequence cha, String s1, int color) {
         String regularCondition = String.format(".*\\%s.*", s1);
-        return addCondition(cha, regularCondition, "setLevel", color, s1);
+        return addCondition(cha, regularCondition, "addLevel", color, s1);
     }
 
     public static CharSequence addBackground(CharSequence cha, String range, int color) {
@@ -130,8 +130,8 @@ public class editHandler {
             try {
                 Method m = StringStyleWorker.class.getMethod(
                         methodName,
-                        String.class, int.class, String.class);
-                CharSequence s = (CharSequence) m.invoke(null, cha.toString(), color, condition);
+                        CharSequence.class, int.class, String.class);
+                CharSequence s = (CharSequence) m.invoke(null, cha, color, condition);
                 cha = s;
             } catch (Exception e) {
                 e.printStackTrace();
