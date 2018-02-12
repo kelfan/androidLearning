@@ -121,15 +121,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (data != null) {
+            if (requestCode == Constant.FILE_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+                val path = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH)
 
-        if (requestCode == Constant.FILE_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val path = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH)
-
-            if (path != null) {
-                Log.d("Path: ", path)
-                Toast.makeText(this, "Picked file: " + path, Toast.LENGTH_LONG).show()
+                if (path != null) {
+                    Log.d("Path: ", path)
+                    Toast.makeText(this, "Picked file: " + path, Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
