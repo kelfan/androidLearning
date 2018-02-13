@@ -1,14 +1,9 @@
 package com.kelfan.tditor;
 
-import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,8 +17,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import Util.FileHandler;
-import Util.FileWorker;
-import Util.StringStyleWorker;
 import Util.StringWorker;
 
 public class MainActivity extends AppCompatActivity
@@ -79,7 +72,7 @@ public class MainActivity extends AppCompatActivity
                             if (lastChar != '\n') {
                                 s.insert(i + 1, lastChar);
                                 s.insert(i + 2, " ");
-                                CharSequence displayStr = editHandler.todoHandle(s.toString());
+                                CharSequence displayStr = editHandler.addTextStyle(s.toString());
                                 editText.setText(displayStr);
                                 editText.setSelection(i + 3);
                             }
@@ -95,7 +88,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
         String fileStr = FileHandler.read_app_file(Constant.DEFAULT_FILE_NAME);
-        CharSequence displayStr = editHandler.todoHandle(fileStr);
+        CharSequence displayStr = editHandler.addTextStyle(fileStr);
         editText.setText(displayStr);
         // fix the problem for line numbers in start up
         editText.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
@@ -165,8 +158,9 @@ public class MainActivity extends AppCompatActivity
 
     public void sort(MenuItem item) {
         String text = editText.getText().toString();
+        text = editHandler.replaceActions(text);
         text = StringWorker.stringSortByLine(text, false);
-        CharSequence ts = editHandler.todoHandle(text);
+        CharSequence ts = editHandler.addTextStyle(text);
         int cursorPosition = editText.getSelectionStart();
         editText.setText(ts);
         editText.setSelection(cursorPosition);

@@ -4,14 +4,11 @@ import android.support.design.widget.Snackbar;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.lang.reflect.Method;
-import java.nio.charset.Charset;
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -26,48 +23,45 @@ import Util.TimeWorker;
  */
 
 public class editHandler {
-    public static CharSequence todoHandle(String instr) {
-        ArrayList<String> strList = StringWorker.stringToList(instr, "\n");
-        CharSequence result = new SpannableString("");
-        for (String s : strList) {
-            // all string command codes can change to Constant files for change or setting
-            s = s.replace(".rq", TimeWorker.getDate()); // get Current time
-            s = s.replace(".dt", TimeWorker.getDatetime()); // get Current datetime
-            s = s.replace(".mon", TimeWorker.getNextWeekday(Calendar.MONDAY));
-            s = s.replace(".tue", TimeWorker.getNextWeekday(Calendar.TUESDAY));
-            s = s.replace(".wed", TimeWorker.getNextWeekday(Calendar.WEDNESDAY));
-            s = s.replace(".thu", TimeWorker.getNextWeekday(Calendar.THURSDAY));
-            s = s.replace(".fri", TimeWorker.getNextWeekday(Calendar.FRIDAY));
-            s = s.replace(".sat", TimeWorker.getNextWeekday(Calendar.SATURDAY));
-            s = s.replace(".sun", TimeWorker.getNextWeekday(Calendar.SUNDAY));
-            s = s.replace(".nmon", TimeWorker.getNextWeekday(7 + Calendar.MONDAY ));
-            s = s.replace(".ntue", TimeWorker.getNextWeekday(7 + Calendar.TUESDAY));
-            s = s.replace(".nwed", TimeWorker.getNextWeekday(7 + Calendar.WEDNESDAY));
-            s = s.replace(".nthu", TimeWorker.getNextWeekday(7 + Calendar.THURSDAY));
-            s = s.replace(".nfri", TimeWorker.getNextWeekday(7 + Calendar.FRIDAY));
-            s = s.replace(".nsat", TimeWorker.getNextWeekday(7 + Calendar.SATURDAY));
-            s = s.replace(".nsun", TimeWorker.getNextWeekday(7 + Calendar.SUNDAY));
-            s = s.replace(".nnmon", TimeWorker.getNextWeekday(14 + Calendar.MONDAY ));
-            s = s.replace(".nntue", TimeWorker.getNextWeekday(14 + Calendar.TUESDAY));
-            s = s.replace(".nnwed", TimeWorker.getNextWeekday(14 + Calendar.WEDNESDAY));
-            s = s.replace(".nnthu", TimeWorker.getNextWeekday(14 + Calendar.THURSDAY));
-            s = s.replace(".nnfri", TimeWorker.getNextWeekday(14 + Calendar.FRIDAY));
-            s = s.replace(".nnsat", TimeWorker.getNextWeekday(14 + Calendar.SATURDAY));
-            s = s.replace(".nnsun", TimeWorker.getNextWeekday(14 + Calendar.SUNDAY));
-            s = s.replace(".dqt", TimeWorker.getNextDay(-3)); //大前天
-            s = s.replace(".qt", TimeWorker.getNextDay(-2)); //前天
-            s = s.replace(".zt", TimeWorker.getNextDay(-1)); // 昨天
-            s = s.replace(".jt", TimeWorker.getNextDay(0)); // 今天
-            s = s.replace(".mt", TimeWorker.getNextDay(1)); //明天
-            s = s.replace(".ht", TimeWorker.getNextDay(2)); //后天
-            s = s.replace(".dht", TimeWorker.getNextDay(3)); //大后天
-            s = s.replace(".nsz", TimeWorker.getNextDay(28)); // 下四周
+    public static String replaceActions(String s) {
+        // all string command codes can change to Constant files for change or setting
+        s = s.replace(".rq", TimeWorker.getDate()); // get Current time
+        s = s.replace(".dt", TimeWorker.getDatetime()); // get Current datetime
+        s = s.replace(".mon", TimeWorker.getNextWeekday(Calendar.MONDAY));
+        s = s.replace(".tue", TimeWorker.getNextWeekday(Calendar.TUESDAY));
+        s = s.replace(".wed", TimeWorker.getNextWeekday(Calendar.WEDNESDAY));
+        s = s.replace(".thu", TimeWorker.getNextWeekday(Calendar.THURSDAY));
+        s = s.replace(".fri", TimeWorker.getNextWeekday(Calendar.FRIDAY));
+        s = s.replace(".sat", TimeWorker.getNextWeekday(Calendar.SATURDAY));
+        s = s.replace(".sun", TimeWorker.getNextWeekday(Calendar.SUNDAY));
+        s = s.replace(".nmon", TimeWorker.getNextWeekday(7 + Calendar.MONDAY ));
+        s = s.replace(".ntue", TimeWorker.getNextWeekday(7 + Calendar.TUESDAY));
+        s = s.replace(".nwed", TimeWorker.getNextWeekday(7 + Calendar.WEDNESDAY));
+        s = s.replace(".nthu", TimeWorker.getNextWeekday(7 + Calendar.THURSDAY));
+        s = s.replace(".nfri", TimeWorker.getNextWeekday(7 + Calendar.FRIDAY));
+        s = s.replace(".nsat", TimeWorker.getNextWeekday(7 + Calendar.SATURDAY));
+        s = s.replace(".nsun", TimeWorker.getNextWeekday(7 + Calendar.SUNDAY));
+        s = s.replace(".nnmon", TimeWorker.getNextWeekday(14 + Calendar.MONDAY ));
+        s = s.replace(".nntue", TimeWorker.getNextWeekday(14 + Calendar.TUESDAY));
+        s = s.replace(".nnwed", TimeWorker.getNextWeekday(14 + Calendar.WEDNESDAY));
+        s = s.replace(".nnthu", TimeWorker.getNextWeekday(14 + Calendar.THURSDAY));
+        s = s.replace(".nnfri", TimeWorker.getNextWeekday(14 + Calendar.FRIDAY));
+        s = s.replace(".nnsat", TimeWorker.getNextWeekday(14 + Calendar.SATURDAY));
+        s = s.replace(".nnsun", TimeWorker.getNextWeekday(14 + Calendar.SUNDAY));
+        s = s.replace(".dqt", TimeWorker.getNextDay(-3)); //大前天
+        s = s.replace(".qt", TimeWorker.getNextDay(-2)); //前天
+        s = s.replace(".zt", TimeWorker.getNextDay(-1)); // 昨天
+        s = s.replace(".jt", TimeWorker.getNextDay(0)); // 今天
+        s = s.replace(".mt", TimeWorker.getNextDay(1)); //明天
+        s = s.replace(".ht", TimeWorker.getNextDay(2)); //后天
+        s = s.replace(".dht", TimeWorker.getNextDay(3)); //大后天
+        s = s.replace(".nsz", TimeWorker.getNextDay(28)); // 下四周
 
-            // quick actions to symbols
-            if (s.contains("，，")) { s = "，   ,"+TimeWorker.getDatetime()+"," + s.replace("，，", ""); }
-            if (s.contains("。。")) { s = "0" + s.replace("。。", "").substring(1); }
-            if (s.contains("？？")) { s = "？ ,"+TimeWorker.getDatetime()+"," + s.replace("？？", ""); }
-            if (s.contains("！！")) { s = "！ " + s.replace("！！", ""); }
+        // quick actions to symbols
+        if (s.contains("，，")) { s = "，   ,"+TimeWorker.getDatetime()+"," + s.replace("，，", ""); }
+        if (s.contains("。。")) { s = "0" + s.replace("。。", "").substring(1); }
+        if (s.contains("？？")) { s = "？ ,"+TimeWorker.getDatetime()+"," + s.replace("？？", ""); }
+        if (s.contains("！！")) { s = "！ " + s.replace("！！", ""); }
 //            if (s.contains("//1")) { s = "1 " + s.replace("//1", ""); }
 //            if (s.contains("//2")) { s = "2 " + s.replace("//2", ""); }
 //            if (s.contains("//3")) { s = "3 " + s.replace("//3", ""); }
@@ -77,8 +71,14 @@ public class editHandler {
 //            if (s.contains("//7")) { s = "7 " + s.replace("//7", ""); }
 //            if (s.contains("//8")) { s = "8 " + s.replace("//8", ""); }
 //            if (s.contains("//9")) { s = "9 " + s.replace("//9", ""); }
+        return s;
+    }
 
 
+    public static CharSequence addTextStyle(String instr) {
+        ArrayList<String> strList = StringWorker.stringToList(instr, "\n");
+        CharSequence result = new SpannableString("");
+        for (String s : strList) {
             CharSequence ss = new SpannableString(s);
 
             // change color based on start symbol
@@ -122,7 +122,7 @@ public class editHandler {
 
     public static CharSequence addBackground(CharSequence cha, String range, int color) {
         String regularCondition = String.format(".*\\%s.*\\%s.*", range.charAt(0), range.charAt(1));//.*\{.*\}.*
-        return addCondition(cha, regularCondition, "setBackground", color, range);
+        return addCondition(cha, regularCondition, "addBackground", color, range);
     }
 
     public static CharSequence addCondition(CharSequence cha, String regularCondition, String methodName, int color, String condition) {
@@ -183,7 +183,7 @@ public class editHandler {
         if (!txtList[1].equals("\n")) {
             log = FileHandler.append_app_file(Constant.DEFAULT_LOG_NAME, txtList[1]);
         }
-        CharSequence cs = todoHandle(edTxt);
+        CharSequence cs = addTextStyle(edTxt);
         int cursorPosition = editText.getSelectionStart();
         editText.setText(cs);
         int len = cs.length();

@@ -62,6 +62,17 @@ public class StringStyleWorker {
         return fss;
     }
 
+    public static SpannableString addBackground(CharSequence pCs, int color, String range) {
+        String inStr = pCs.toString();
+        SpannableString s = SpannableString.valueOf(pCs);
+        int pos1 = inStr.toLowerCase().indexOf(range.toLowerCase().charAt(0));
+        int pos2 = inStr.toLowerCase().indexOf(range.toLowerCase().charAt(1)) + 1;
+        s.setSpan(new ForegroundColorSpan(ColorWorker.getComplimentColor(color)),
+                pos1, pos2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        s.setSpan(new BackgroundColorSpan(color), pos1, pos2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return s;
+    }
+
     public static SpannableString backgroundYellow(String inStr) {
         SpannableString s = new SpannableString(inStr);
         s.setSpan(new BackgroundColorSpan(ColorWorker.YELLOW_DEEP), 0, inStr.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
