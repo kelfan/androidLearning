@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/07KotlinEditor.iml" filepath="$PROJECT_DIR$/07KotlinEditor.iml" />
+      <module fileurl="file://C:\Users\jzheng4\Desktop\git\androidLearning\MyProject\07KotlinEditor\07KotlinEditor.iml" filepath="C:\Users\jzheng4\Desktop\git\androidLearning\MyProject\07KotlinEditor\07KotlinEditor.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\jzheng4\Desktop\git\androidLearning\MyProject\07KotlinEditor\app\app.iml" filepath="C:\Users\jzheng4\Desktop\git\androidLearning\MyProject\07KotlinEditor\app\app.iml" />
     </modules>
   </component>
 </project>
