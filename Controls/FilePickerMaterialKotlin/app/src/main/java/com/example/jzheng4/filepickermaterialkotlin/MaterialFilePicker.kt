@@ -1,4 +1,4 @@
-package com.kelfan.filepickerkotlin.filepicker
+package com.example.jzheng4.filepickermaterialkotlin
 
 import android.app.Activity
 import android.app.Fragment
@@ -8,13 +8,10 @@ import java.util.ArrayList
 import java.util.regex.Pattern
 
 /**
- * Created by jzheng4 on 13/02/2018.
+ * Created by jzheng4 on 20/02/2018.
  */
 
 
-/**
- * Material File Picker builder
- */
 class MaterialFilePicker {
     private var mActivity: Activity? = null
     private var mFragment: Fragment? = null
@@ -40,7 +37,7 @@ class MaterialFilePicker {
             }
 
             if (mFileFilter != null) {
-                filters.add(PatternFilter(mFileFilter, mDirectoriesFilter!!))
+                filters.add(PatternFilter(mFileFilter, mDirectoriesFilter))
             }
 
             return CompositeFilter(filters)
