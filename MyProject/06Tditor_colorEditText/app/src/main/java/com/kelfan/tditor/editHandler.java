@@ -57,11 +57,14 @@ public class editHandler {
         s = s.replace(".dht", TimeWorker.getNextDay(3)); //大后天
         s = s.replace(".nsz", TimeWorker.getNextDay(28)); // 下四周
 
-        // quick actions to symbols
-        if (s.contains("，，")) { s = "，   ,"+TimeWorker.getDatetime()+"," + s.replace("，，", ""); }
-        if (s.contains("。。")) { s = "0" + s.replace("。。", "").substring(1); }
-        if (s.contains("？？")) { s = "？ ,"+TimeWorker.getDatetime()+"," + s.replace("？？", ""); }
-        if (s.contains("！！")) { s = "！ " + s.replace("！！", ""); }
+        ArrayList<String> strList = StringWorker.stringToList(s, "\n");
+        String result = "";
+        for (String subs : strList) {
+            // quick actions to symbols
+            if (subs.contains("，，")) { subs = "，   ,"+TimeWorker.getDatetime()+"," + subs.replace("，，", ""); }
+            if (subs.contains("。。")) { subs = "0" + subs.replace("。。", "").substring(1); }
+            if (subs.contains("？？")) { subs = "？ ,"+TimeWorker.getDatetime()+"," + subs.replace("？？", ""); }
+            if (subs.contains("！！")) { subs = "！ " + subs.replace("！！", ""); }
 //            if (s.contains("//1")) { s = "1 " + s.replace("//1", ""); }
 //            if (s.contains("//2")) { s = "2 " + s.replace("//2", ""); }
 //            if (s.contains("//3")) { s = "3 " + s.replace("//3", ""); }
@@ -71,7 +74,9 @@ public class editHandler {
 //            if (s.contains("//7")) { s = "7 " + s.replace("//7", ""); }
 //            if (s.contains("//8")) { s = "8 " + s.replace("//8", ""); }
 //            if (s.contains("//9")) { s = "9 " + s.replace("//9", ""); }
-        return s;
+            result += subs + "\n";
+        }
+        return result;
     }
 
 
