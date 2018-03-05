@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_static"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="静态Fragment" />
+
+    <item
+        android:id="@+id/navigation_dynamic"
+        android:icon="@drawable/ic_widgets_black_24dp"
+        android:title="动态Fragment" />
+
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/title_notifications" />
+
+</menu>
