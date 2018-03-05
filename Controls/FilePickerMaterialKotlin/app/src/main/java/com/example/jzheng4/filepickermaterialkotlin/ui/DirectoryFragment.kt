@@ -43,7 +43,7 @@ class DirectoryFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View? {
         val view = inflater.inflate(R.layout.fragment_directory, container, false)
-        mDirectoryRecyclerView = view.findViewById(R.id.directory_recycler_view) as EmptyRecyclerView
+        mDirectoryRecyclerView = view.findViewById<EmptyRecyclerView>(R.id.directory_recycler_view) as EmptyRecyclerView
         mEmptyView = view.findViewById(R.id.directory_empty_view)
         return view
     }
@@ -56,17 +56,17 @@ class DirectoryFragment : Fragment() {
 
     private fun initFilesList() {
         mDirectoryAdapter = DirectoryAdapter(activity,
-                FileUtils.getFileListByDirPath(mPath, mFilter))
+                FileUtils.getFileListByDirPath(this.mPath!!, this.mFilter!!))
 
-        mDirectoryAdapter!!.setOnItemClickListener(object : DirectoryAdapter.OnItemClickListener() {
-            fun onItemClick(view: View, position: Int) {
+        mDirectoryAdapter!!.setOnItemClickListener(object : DirectoryAdapter.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
                 if (mFileClickListener != null) {
                     mFileClickListener!!.onFileClicked(mDirectoryAdapter!!.getModel(position))
                 }
             }
         })
 
-        mDirectoryRecyclerView!!.setLayoutManager(LinearLayoutManager(activity))
+        mDirectoryRecyclerView!!.layoutManager = LinearLayoutManager(activity)
         mDirectoryRecyclerView!!.setAdapter(mDirectoryAdapter)
         mDirectoryRecyclerView!!.setEmptyView(mEmptyView)
     }

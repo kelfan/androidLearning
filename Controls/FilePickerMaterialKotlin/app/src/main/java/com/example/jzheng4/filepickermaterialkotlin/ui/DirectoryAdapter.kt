@@ -22,17 +22,17 @@ class DirectoryAdapter(private val mContext: Context, private val mFiles: List<F
     }
 
     inner class DirectoryViewHolder(itemView: View, clickListener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
-        private val mFileImage: ImageView
-        private val mFileTitle: TextView
-        private val mFileSubtitle: TextView
+        internal val mFileImage: ImageView
+        internal val mFileTitle: TextView
+        internal val mFileSubtitle: TextView
 
         init {
 
             itemView.setOnClickListener { v -> clickListener.onItemClick(v, adapterPosition) }
 
-            mFileImage = itemView.findViewById(R.id.item_file_image) as ImageView
-            mFileTitle = itemView.findViewById(R.id.item_file_title) as TextView
-            mFileSubtitle = itemView.findViewById(R.id.item_file_subtitle) as TextView
+            mFileImage = itemView.findViewById<ImageView>(R.id.item_file_image) as ImageView
+            mFileTitle = itemView.findViewById<TextView>(R.id.item_file_title) as TextView
+            mFileSubtitle = itemView.findViewById<TextView>(R.id.item_file_subtitle) as TextView
         }
     }
 
@@ -45,15 +45,15 @@ class DirectoryAdapter(private val mContext: Context, private val mFiles: List<F
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_file, parent, false)
 
-        return DirectoryViewHolder(view, mOnItemClickListener)
+        return DirectoryViewHolder(view, this.mOnItemClickListener!!)
     }
 
     override fun onBindViewHolder(holder: DirectoryViewHolder, position: Int) {
         val currentFile = mFiles[position]
 
         val fileType = FileTypeUtils.getFileType(currentFile)
-        holder.mFileImage.setImageResource(fileType.getIcon())
-        holder.mFileSubtitle.setText(fileType.getDescription())
+        holder.mFileImage.setImageResource(fileType.icon)
+        holder.mFileSubtitle.setText(fileType.description)
         holder.mFileTitle.text = currentFile.name
     }
 

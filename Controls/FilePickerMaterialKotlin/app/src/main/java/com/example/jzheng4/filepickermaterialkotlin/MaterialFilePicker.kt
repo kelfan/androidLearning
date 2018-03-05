@@ -3,12 +3,16 @@ package com.example.jzheng4.filepickermaterialkotlin
 import android.app.Activity
 import android.app.Fragment
 import android.content.Intent
+import com.example.jzheng4.filepickermaterialkotlin.filter.CompositeFilter
+import com.example.jzheng4.filepickermaterialkotlin.filter.HiddenFilter
+import com.example.jzheng4.filepickermaterialkotlin.filter.PatternFilter
+import com.example.jzheng4.filepickermaterialkotlin.ui.FilePickerActivity
 import java.io.FileFilter
 import java.util.ArrayList
 import java.util.regex.Pattern
 
 /**
- * Created by jzheng4 on 20/02/2018.
+ * Created by jzheng4 on 5/03/2018.
  */
 
 
@@ -32,12 +36,12 @@ class MaterialFilePicker {
         get() {
             val filters = ArrayList<FileFilter>()
 
-            if ((!mShowHidden)!!) {
+            if ((!mShowHidden!!)) {
                 filters.add(HiddenFilter())
             }
 
             if (mFileFilter != null) {
-                filters.add(PatternFilter(mFileFilter, mDirectoriesFilter))
+                filters.add(PatternFilter(mFileFilter!!, this.mDirectoriesFilter!!))
             }
 
             return CompositeFilter(filters)
