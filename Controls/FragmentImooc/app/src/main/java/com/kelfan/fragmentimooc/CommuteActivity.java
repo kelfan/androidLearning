@@ -14,7 +14,7 @@ import android.widget.Toast;
  * Created by jzheng4 on 6/03/2018.
  */
 
-public class CommuteActivity extends Activity {
+public class CommuteActivity extends Activity implements CommuteFragment.MyListener{
 
     private EditText editText;
     private Button send;
@@ -41,5 +41,10 @@ public class CommuteActivity extends Activity {
                 Toast.makeText(CommuteActivity.this, "向Fragment发送数据" + text, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void thank(String code) {
+        Toast.makeText(CommuteActivity.this, "已成功接收到" + code + ",客气了!", Toast.LENGTH_SHORT).show();
     }
 }
