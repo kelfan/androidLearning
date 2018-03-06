@@ -37,8 +37,15 @@ public class MainActivity extends AppCompatActivity {
                     // 添加完后就是提交
                     fragmentTransaction.commit();
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                case R.id.navigation_lifecycle:
+                    mTextMessage.setText("LifeCycle");
+                    intent = new Intent(MainActivity.this, LifecycleActivity.class);
+                    startActivity(intent);
+                    return true;
+                case R.id.navigation_communicate:
+                    mTextMessage.setText("通信");
+                    intent = new Intent(MainActivity.this, CommuteActivity.class);
+                    startActivity(intent);
                     return true;
             }
             return false;

@@ -53,7 +53,7 @@ public class MyFragment extends Fragment {
         android:id="@+id/fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:name="com.kelfan.fragmentimooc.MyFragment" />
+        android:name="com.kelfan.fragmentimooc.StaticFragment" />
 
 </LinearLayout>
 ```
@@ -105,5 +105,5 @@ public class MainActivity2 extends Activity {
 ```
 
 # error/ must specify unique android Id 
- - Caused by: java.lang.IllegalArgumentException: Binary XML file line #0: Must specify unique android:id, android:tag, or have a parent with an id for com.kelfan.fragmentimooc.MyFragment
+ - Caused by: java.lang.IllegalArgumentException: Binary XML file line #0: Must specify unique android:id, android:tag, or have a parent with an id for com.kelfan.fragmentimooc.StaticFragment
     - 给对应element给与唯一的Id 

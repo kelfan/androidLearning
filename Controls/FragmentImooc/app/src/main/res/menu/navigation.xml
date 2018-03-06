@@ -12,8 +12,12 @@
         android:title="动态Fragment" />
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:id="@+id/navigation_lifecycle"
+        android:icon="@drawable/ic_sync_black_24dp"
+        android:title="周期Fragment" />
 
+    <item
+        android:id="@+id/navigation_communicate"
+        android:icon="@drawable/ic_wifi_tethering_black_24dp"
+        android:title="通信Fragment" />
 </menu>
