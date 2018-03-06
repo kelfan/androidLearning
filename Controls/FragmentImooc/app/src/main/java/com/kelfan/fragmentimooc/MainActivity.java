@@ -47,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
                     intent = new Intent(MainActivity.this, CommuteActivity.class);
                     startActivity(intent);
                     return true;
+                case R.id.navigation_static_commute:
+                    mTextMessage.setText("静态通信");
+                    intent = new Intent(MainActivity.this, CommuteActivityStatic.class);
+                    startActivity(intent);
+                    return true;
             }
             return false;
         }

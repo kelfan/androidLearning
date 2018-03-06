@@ -20,4 +20,9 @@
         android:id="@+id/navigation_communicate"
         android:icon="@drawable/ic_wifi_tethering_black_24dp"
         android:title="通信Fragment" />
+
+    <item
+        android:id="@+id/navigation_static_commute"
+        android:icon="@drawable/ic_wifi_tethering_black_24dp"
+        android:title="静态通信" />
 </menu>
