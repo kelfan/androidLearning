@@ -14,7 +14,7 @@ import android.widget.Toast;
  */
 
 public class CommuteFragment extends Fragment {
-    
+
 
     @Nullable
     @Override
