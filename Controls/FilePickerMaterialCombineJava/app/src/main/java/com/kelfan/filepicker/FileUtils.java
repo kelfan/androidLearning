@@ -1,7 +1,11 @@
 package com.kelfan.filepicker;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,5 +47,24 @@ public class FileUtils {
         return new DecimalFormat("#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
     }
 
+    public static void createFile(String filename) {
+        File file = new File(filename);
+        if (!file.exists()) {
+            try {
+                Writer myWriter = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream(filename), "UTF-8"));
+                myWriter.write("");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void createFolder(String filename) {
+        File folder = new File(filename);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+    }
 
 }

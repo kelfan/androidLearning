@@ -192,12 +192,37 @@ public class ActivityFilePicker extends AppCompatActivity implements FragmentDir
             onBackPressed();
         } else if (menuItem.getItemId() == R.id.action_close) {
             finish();
-        }else if (menuItem.getItemId() == R.id.action_up) {
+        } else if (menuItem.getItemId() == R.id.action_up) {
             toParentFolder();
+        } else if (menuItem.getItemId() == R.id.action_add_file) {
+            createFile();
+        }else if (menuItem.getItemId() == R.id.action_add_folder) {
+            createFolder();
         }
         return super.onOptionsItemSelected(menuItem);
     }
 
+    public void createFolder() {
+        FileUtils.createFolder(mCurrentPath + "/test");
+        refreshFragment();
+    }
+
+    public void createFile() {
+        FileUtils.createFile(mCurrentPath + "/test2.txt");
+        refreshFragment();
+    }
+
+    public void refreshFragment() {
+        FragmentManager fm = getFragmentManager();
+
+        if (!mCurrentPath.equals(mStartPath)) {
+            fm.popBackStack();
+            addFragmentToBackStack(mCurrentPath);
+            updateTitle();
+        } else {
+            addFragmentToBackStack(mCurrentPath);
+        }
+    }
 
     public void toParentFolder() {
         FragmentManager fm = getFragmentManager();
