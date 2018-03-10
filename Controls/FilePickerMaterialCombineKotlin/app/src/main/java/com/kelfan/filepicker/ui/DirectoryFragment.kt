@@ -1,4 +1,4 @@
-package com.example.jzheng4.filepickermaterialkotlin.ui
+package com.kelfan.filepicker.ui
 
 import android.app.Activity
 import android.app.Fragment
@@ -7,14 +7,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.jzheng4.filepickermaterialkotlin.R
-import com.example.jzheng4.filepickermaterialkotlin.filter.CompositeFilter
-import com.example.jzheng4.filepickermaterialkotlin.utils.FileUtils
-import com.example.jzheng4.filepickermaterialkotlin.widget.EmptyRecyclerView
+import com.kelfan.filepicker.filter.CompositeFilter
+import com.kelfan.filepicker.utils.FileUtils
+import com.kelfan.filepicker.widget.EmptyRecyclerView
+import com.kelfan.filepickermaterialcombinejava.R
 import java.io.File
 
 /**
- * Created by jzheng4 on 5/03/2018.
+ * Created by Administrator on 7/03/2018.
  */
 class DirectoryFragment : Fragment() {
 
@@ -43,7 +43,7 @@ class DirectoryFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_directory, container, false)
-        mDirectoryRecyclerView = view.findViewById<EmptyRecyclerView>(R.id.directory_recycler_view) as EmptyRecyclerView
+        mDirectoryRecyclerView = view.findViewById<View>(R.id.directory_recycler_view) as EmptyRecyclerView
         mEmptyView = view.findViewById(R.id.directory_empty_view)
         return view
     }
@@ -56,7 +56,7 @@ class DirectoryFragment : Fragment() {
 
     private fun initFilesList() {
         mDirectoryAdapter = DirectoryAdapter(activity,
-                FileUtils.getFileListByDirPath(this.mPath!!, this.mFilter!!))
+                FileUtils.getFileListByDirPath(mPath!!, mFilter!!))
 
         mDirectoryAdapter!!.setOnItemClickListener(object : DirectoryAdapter.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
@@ -67,7 +67,7 @@ class DirectoryFragment : Fragment() {
         })
 
         mDirectoryRecyclerView!!.layoutManager = LinearLayoutManager(activity)
-        mDirectoryRecyclerView!!.setAdapter(mDirectoryAdapter)
+        mDirectoryRecyclerView!!.adapter = mDirectoryAdapter
         mDirectoryRecyclerView!!.setEmptyView(mEmptyView)
     }
 

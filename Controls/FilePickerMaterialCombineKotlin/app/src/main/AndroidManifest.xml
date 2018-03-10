@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.kelfan.filepicker.ActivityFilePicker"
+        <activity android:name="com.kelfan.filepicker.ui.FilePickerActivity"
             android:theme="@style/MFP_BaseTheme">
 
         </activity>

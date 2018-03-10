@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.kelfan.filepicker.MaterialFilePicker;
-import com.kelfan.filepicker.ui.FilePickerActivity;
+import com.kelfan.filepicker.ActivityFilePicker;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         new MaterialFilePicker()
                 .withActivity(this)
                 .withRequestCode(FILE_PICKER_REQUEST_CODE)
-                .withHiddenFiles(true)
+                .withHiddenFiles(false)
                 .withTitle("Sample title")
                 .start();
     }
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
-            String path = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            String path = data.getStringExtra(ActivityFilePicker.RESULT_FILE_PATH);
 
             if (path != null) {
                 Log.d("Path: ", path);

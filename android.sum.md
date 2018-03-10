@@ -584,6 +584,7 @@ android工程师的第二门课(第1季)
     生命周期 
     跟Activity传递数据
 
+
 # fragment/流程 
 1. Content xml 放置 fragment layout 
 ```xml
@@ -2665,6 +2666,20 @@ m.invoke(null,123); //first argument is the object to invoke on, ignored if stat
         System.out.println(pos2);
 ```
 
+# error/ Parameter specified as non-null is null: method 
+[【Kotlin填坑-01】被Kotlin吊打的日常（Java文件强转Kotlin）](https://zhuanlan.zhihu.com/p/28203628)
+Caused by: java.lang.IllegalArgumentException:
+
+Parameter specified as non-null is null: method kotlin.jvm.internal.Intrinsics.checkParameterIsNotNull, parameter savedInstanceState
+解决办法呢：
+
+在Kotlin代码里面把那个Bundle加个问号……
+```java
+override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+}
+```
+
 # set Cursor position 
 You can get the Cursor position using the getSelectionStart() and getSelectionEnd() methods. If no text is highlighted, both getSelectionStart() and getSelectionEnd() return the position of the cursor. So something like this should do the trick:
 ```java 
@@ -2684,6 +2699,9 @@ CharSequence cursorToEnd = enteredText.subSequence(cursorPosition, enteredText.l
 [Android-FileBrowser-FilePicker | Android-Arsenal.com](https://android-arsenal.com/details/1/5636)
 [Create a simple File Explorer in Android](http://custom-android-dn.blogspot.com.au/2013/01/create-simple-file-explore-in-android.html)
 [FileListerDialog | Android-Arsenal.com](https://android-arsenal.com/details/1/6002)
+
+
+
 
 # Resources
 Drawer

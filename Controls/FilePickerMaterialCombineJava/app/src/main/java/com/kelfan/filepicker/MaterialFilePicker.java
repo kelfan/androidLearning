@@ -5,11 +5,6 @@ import android.app.Fragment;
 import android.content.Intent;
 
 
-import com.kelfan.filepicker.filter.CompositeFilter;
-import com.kelfan.filepicker.filter.HiddenFilter;
-import com.kelfan.filepicker.filter.PatternFilter;
-import com.kelfan.filepicker.ui.FilePickerActivity;
-
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -23,7 +18,7 @@ public class MaterialFilePicker {
     private Fragment mFragment;
     private android.support.v4.app.Fragment mSupportFragment;
 
-    private Class<? extends FilePickerActivity> mFilePickerClass = FilePickerActivity.class;
+    private Class<? extends ActivityFilePicker> mFilePickerClass = ActivityFilePicker.class;
 
     private Integer mRequestCode;
     private Pattern mFileFilter;
@@ -136,7 +131,7 @@ public class MaterialFilePicker {
     }
 
     /**
-     * Show or hide close menu in picker
+     * Show or hide close filepicker_menu in picker
      */
     public MaterialFilePicker withCloseMenu(boolean closeable) {
         mCloseable = closeable;
@@ -151,23 +146,23 @@ public class MaterialFilePicker {
         return this;
     }
 
-    public MaterialFilePicker withCustomActivity(Class<? extends FilePickerActivity> customActivityClass) {
+    public MaterialFilePicker withCustomActivity(Class<? extends ActivityFilePicker> customActivityClass) {
         mFilePickerClass = customActivityClass;
         return this;
     }
 
-    public CompositeFilter getFilter() {
+    public FilterComposite getFilter() {
         ArrayList<FileFilter> filters = new ArrayList<>();
 
         if (!mShowHidden) {
-            filters.add(new HiddenFilter());
+            filters.add(new FilterHidden());
         }
 
         if (mFileFilter != null) {
-            filters.add(new PatternFilter(mFileFilter, mDirectoriesFilter));
+            filters.add(new FilterPattern(mFileFilter, mDirectoriesFilter));
         }
 
-        return new CompositeFilter(filters);
+        return new FilterComposite(filters);
     }
 
 
@@ -175,7 +170,7 @@ public class MaterialFilePicker {
      * @return Intent that can be used to start Material File Picker
      */
     public Intent getIntent() {
-        CompositeFilter filter = getFilter();
+        FilterComposite filter = getFilter();
 
         Activity activity = null;
         if (mActivity != null) {
@@ -187,19 +182,19 @@ public class MaterialFilePicker {
         }
 
         Intent intent = new Intent(activity, mFilePickerClass);
-        intent.putExtra(FilePickerActivity.ARG_FILTER, filter);
-        intent.putExtra(FilePickerActivity.ARG_CLOSEABLE, mCloseable);
+        intent.putExtra(ActivityFilePicker.ARG_FILTER, filter);
+        intent.putExtra(ActivityFilePicker.ARG_CLOSEABLE, mCloseable);
 
         if (mRootPath != null) {
-            intent.putExtra(FilePickerActivity.ARG_START_PATH, mRootPath);
+            intent.putExtra(ActivityFilePicker.ARG_START_PATH, mRootPath);
         }
 
         if (mCurrentPath != null) {
-            intent.putExtra(FilePickerActivity.ARG_CURRENT_PATH, mCurrentPath);
+            intent.putExtra(ActivityFilePicker.ARG_CURRENT_PATH, mCurrentPath);
         }
 
         if (mTitle != null) {
-            intent.putExtra(FilePickerActivity.ARG_TITLE, mTitle);
+            intent.putExtra(ActivityFilePicker.ARG_TITLE, mTitle);
         }
 
         return intent;

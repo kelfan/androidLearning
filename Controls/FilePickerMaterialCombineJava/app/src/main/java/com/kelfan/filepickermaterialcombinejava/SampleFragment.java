@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.kelfan.filepicker.MaterialFilePicker;
-import com.kelfan.filepicker.ui.FilePickerActivity;
+import com.kelfan.filepicker.ActivityFilePicker;
 
 
 public class SampleFragment extends Fragment {
@@ -96,7 +96,7 @@ public class SampleFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            String path = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            String path = data.getStringExtra(ActivityFilePicker.RESULT_FILE_PATH);
 
             if (path != null) {
                 Log.d("Path (fragment): ", path);
