@@ -1,18 +1,23 @@
 package com.kelfan.filepicker;
 
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
+import com.kelfan.filepickermaterialcombinejava.MainActivity;
 import com.kelfan.filepickermaterialcombinejava.R;
 
 import java.io.File;
@@ -195,22 +200,13 @@ public class ActivityFilePicker extends AppCompatActivity implements FragmentDir
         } else if (menuItem.getItemId() == R.id.action_up) {
             toParentFolder();
         } else if (menuItem.getItemId() == R.id.action_add_file) {
-            createFile();
-        }else if (menuItem.getItemId() == R.id.action_add_folder) {
-            createFolder();
+            createFileDialog("Please input new file name:", "file");
+        } else if (menuItem.getItemId() == R.id.action_add_folder) {
+            createFileDialog("Please input new folder name:", "folder");
         }
         return super.onOptionsItemSelected(menuItem);
     }
 
-    public void createFolder() {
-        FileUtils.createFolder(mCurrentPath + "/test");
-        refreshFragment();
-    }
-
-    public void createFile() {
-        FileUtils.createFile(mCurrentPath + "/test2.txt");
-        refreshFragment();
-    }
 
     public void refreshFragment() {
         FragmentManager fm = getFragmentManager();
@@ -222,6 +218,40 @@ public class ActivityFilePicker extends AppCompatActivity implements FragmentDir
         } else {
             addFragmentToBackStack(mCurrentPath);
         }
+    }
+
+    public void createFileDialog(String message, String flag) {
+        final String[] innerFlag = {""};
+        innerFlag[0] = flag;
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+//        alert.setTitle("Title");
+        alert.setMessage(message);
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                // Do something with value!
+                if (innerFlag[0].equals("folder")) {
+                    FileUtils.createFolder(mCurrentPath + "/" + value);
+                } else {
+                    FileUtils.createFile(mCurrentPath + "/" + value);
+                }
+                refreshFragment();
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
     }
 
     public void toParentFolder() {

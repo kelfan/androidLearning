@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 public class FileUtils {
-    public static List<File> getFileListByDirPath(String path, FileFilter filter) {
+    static List<File> getFileListByDirPath(String path, FileFilter filter) {
         File directory = new File(path);
         File[] files = directory.listFiles(filter);
 
@@ -30,7 +30,7 @@ public class FileUtils {
         return result;
     }
 
-    public static String cutLastSegmentOfPath(String path) {
+    static String cutLastSegmentOfPath(String path) {
         if (path.length() - path.replace("/", "").length() <= 1)
             return "/";
         String newPath = path.substring(0, path.lastIndexOf("/"));
@@ -40,14 +40,14 @@ public class FileUtils {
         return newPath;
     }
 
-    public static String getReadableFileSize(long size) {
+    static String getReadableFileSize(long size) {
         if (size <= 0) return "0";
         final String[] units = new String[]{"B", "KB", "MB", "GB", "TB"};
         int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
         return new DecimalFormat("#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
     }
 
-    public static void createFile(String filename) {
+    static void createFile(String filename) {
         File file = new File(filename);
         if (!file.exists()) {
             try {
@@ -60,7 +60,7 @@ public class FileUtils {
         }
     }
 
-    public static void createFolder(String filename) {
+    static void createFolder(String filename) {
         File folder = new File(filename);
         if (!folder.exists()) {
             folder.mkdirs();
