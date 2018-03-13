@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FilePickerMaterialCombineJava.iml" filepath="$PROJECT_DIR$/FilePickerMaterialCombineJava.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EditorA.iml" filepath="$PROJECT_DIR$/EditorA.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/filepicker/filepicker.iml" filepath="$PROJECT_DIR$/filepicker/filepicker.iml" />
     </modules>
