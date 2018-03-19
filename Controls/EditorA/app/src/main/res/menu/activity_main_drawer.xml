@@ -25,13 +25,13 @@
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_internal_storage"
+                android:icon="@drawable/ic_storage_black_24dp"
+                android:title="@string/internal_storage" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_sd_storage"
+                android:icon="@drawable/ic_sd_storage_black_24dp"
+                android:title="@string/sd_storage" />
         </menu>
     </item>
 

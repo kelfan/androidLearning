@@ -250,19 +250,20 @@ public class ActivityFilePicker extends AppCompatActivity implements FragmentDir
     }
 
     public void toParentFolder() {
-        FragmentManager fm = getFragmentManager();
-
-        if (!mCurrentPath.equals(mStartPath)) {
-            fm.popBackStack();
-            mCurrentPath = FileUtils.cutLastSegmentOfPath(mCurrentPath);
-            updateTitle();
-        }
+        mCurrentPath = FileUtils.cutLastSegmentOfPath(mCurrentPath);
+        updateTitle();
+        addFragmentToBackStack(mCurrentPath);
     }
 
 
     @Override
     public void onBackPressed() {
         FragmentManager fm = getFragmentManager();
+
+        if (mCurrentPath.length() < mStartPath.length()) {
+            setResult(RESULT_CANCELED);
+            finish();
+        }
 
         if (!mCurrentPath.equals(mStartPath)) {
             fm.popBackStack();
