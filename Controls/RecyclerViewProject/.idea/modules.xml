@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RecyclerViewProject.iml" filepath="$PROJECT_DIR$/RecyclerViewProject.iml" />
-      <module fileurl="file://E:\workspace\androidLearning\Controls\RecyclerViewProject\RecyclerViewProject.iml" filepath="E:\workspace\androidLearning\Controls\RecyclerViewProject\RecyclerViewProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://E:\workspace\androidLearning\Controls\RecyclerViewProject\app\app.iml" filepath="E:\workspace\androidLearning\Controls\RecyclerViewProject\app\app.iml" />
     </modules>
   </component>
 </project>
