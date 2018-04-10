@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,9 +17,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kelfan.editora.filelist.FilelistAdapter;
 import com.kelfan.editora.util.FileConfiger;
 import com.kelfan.editora.util.FileWorker;
 import com.kelfan.editora.util.StringWorker;
@@ -30,7 +34,7 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     public static final int FILE_PICKER_REQUEST_CODE = 1;
     private ArrayList<String> openFilelist;
@@ -65,6 +69,19 @@ public class MainActivity extends AppCompatActivity
         openFilelist = StringWorker.stringToListByLine(FileConfiger.readConfig());
         textView = findViewById(R.id.mainTV);
         textView.setText(StringWorker.listToStringByLine(openFilelist));
+
+        // set recent open file recyclerView
+        RecyclerView fileRecyclerView = findViewById(R.id.file_list_recycler_view);
+        FilelistAdapter filelistAdapter = new FilelistAdapter(this, openFilelist);
+        fileRecyclerView.setAdapter(filelistAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        fileRecyclerView.setLayoutManager(linearLayoutManager);
+
+        // set navigation buttons
+        Button internalButton = findViewById(R.id.nav_internal_storage);
+        internalButton.setOnClickListener(this);
+        Button externalButton = findViewById(R.id.nav_sd_storage);
+        externalButton.setOnClickListener(this);
     }
 
     @Override
@@ -148,9 +165,19 @@ public class MainActivity extends AppCompatActivity
                     FileConfiger.writeConfig(StringWorker.listToStringByLine(openFilelist));
                     Log.e("open files: ", openFilelist.toString());
                     textView.setText(StringWorker.listToStringByLine(openFilelist));
+                    //TODO Refresh recent file list recyclerView
                 }
             }
         }
     }
 
+    @Override
+    public void onClick(View view) {
+        int cId = view.getId();
+        if (cId == R.id.nav_internal_storage) {
+            openFilePicker(FileWorker.getStoragePath(FileWorker.STORAGE_EXTERNAL, "/").toString());
+        } else if (cId == R.id.nav_sd_storage) {
+            openFilePicker(FileWorker.getStoragePath(FileWorker.STORAGE_EXTERNAL_SECOND, "/").toString());
+        }
+    }
 }
