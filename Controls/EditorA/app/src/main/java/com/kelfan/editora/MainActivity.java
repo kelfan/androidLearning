@@ -76,6 +76,17 @@ public class MainActivity extends AppCompatActivity
         fileRecyclerView.setAdapter(filelistAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         fileRecyclerView.setLayoutManager(linearLayoutManager);
+        filelistAdapter.setOnItemClickListener(new FilelistAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                int cId = view.getId();
+                if (cId == R.id.file_list_tv){
+                    textView.setText(openFilelist.get(cId));
+                } else if (cId == R.id.file_list_icon) {
+                    textView.setText("close");
+                }
+            }
+        });
 
         // set navigation buttons
         Button internalButton = findViewById(R.id.nav_internal_storage);
