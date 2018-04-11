@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity
 
     public static final int FILE_PICKER_REQUEST_CODE = 1;
     private ArrayList<String> openFilelist;
-    TextView textView;
+    private TextView textView;
+    private FilelistAdapter filelistAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,16 +73,17 @@ public class MainActivity extends AppCompatActivity
 
         // set recent open file recyclerView
         RecyclerView fileRecyclerView = findViewById(R.id.file_list_recycler_view);
-        FilelistAdapter filelistAdapter = new FilelistAdapter(this, openFilelist);
+        filelistAdapter = new FilelistAdapter(this, openFilelist);
         fileRecyclerView.setAdapter(filelistAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         fileRecyclerView.setLayoutManager(linearLayoutManager);
         filelistAdapter.setOnItemClickListener(new FilelistAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                textView.setText(openFilelist.get(position));
                 int cId = view.getId();
                 if (cId == R.id.file_list_tv){
-                    textView.setText(openFilelist.get(cId));
+                    textView.setText(openFilelist.get(position));
                 } else if (cId == R.id.file_list_icon) {
                     textView.setText("close");
                 }
@@ -176,7 +178,7 @@ public class MainActivity extends AppCompatActivity
                     FileConfiger.writeConfig(StringWorker.listToStringByLine(openFilelist));
                     Log.e("open files: ", openFilelist.toString());
                     textView.setText(StringWorker.listToStringByLine(openFilelist));
-                    //TODO Refresh recent file list recyclerView
+                    filelistAdapter.notifyDataSetChanged();
                 }
             }
         }

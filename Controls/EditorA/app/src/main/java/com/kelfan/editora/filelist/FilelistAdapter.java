@@ -8,17 +8,24 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.kelfan.editora.MainActivity;
 import com.kelfan.editora.R;
+import com.kelfan.editora.util.FileConfiger;
+import com.kelfan.editora.util.FileWorker;
+import com.kelfan.editora.util.StringWorker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FilelistAdapter extends RecyclerView.Adapter<FilelistViewholder> implements View.OnClickListener{
 
     private LayoutInflater fInflater;
     private Context fContext;
-    private List<String> fData;
+    private ArrayList<String> fData;
     private FilelistAdapter.OnItemClickListener fOnItemClickListener = null;
+    private int fPosition;
 
     //define interface
     public static interface OnItemClickListener {
@@ -27,7 +34,7 @@ public class FilelistAdapter extends RecyclerView.Adapter<FilelistViewholder> im
 
     }
 
-    public FilelistAdapter(Context context, List<String> data) {
+    public FilelistAdapter(Context context, ArrayList<String> data) {
         this.fContext = context;
         this.fData = data;
         fInflater = LayoutInflater.from(context);
@@ -42,9 +49,19 @@ public class FilelistAdapter extends RecyclerView.Adapter<FilelistViewholder> im
     }
 
     @Override
-    public void onBindViewHolder(FilelistViewholder holder, int position) {
+    public void onBindViewHolder(final FilelistViewholder holder, int position) {
         holder.filelistTextView.setText(fData.get(position));
         holder.itemView.setTag(position);
+        holder.filelistImageView.setTag(position);
+        holder.filelistTextView.setTag(position);
+        holder.filelistImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fData.remove((int)view.getTag());
+                notifyDataSetChanged();
+                FileConfiger.writeConfig(StringWorker.listToStringByLine(fData));
+            }
+        });
     }
 
     @Override
