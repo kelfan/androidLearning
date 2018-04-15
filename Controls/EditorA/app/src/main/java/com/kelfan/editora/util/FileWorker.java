@@ -32,6 +32,28 @@ public class FileWorker {
 
     public static final String FILE_LOG = "log";
 
+
+    public static String readFile(String sFilename){
+        try{
+            File file = new File(sFilename);
+            if (!file.exists()) {
+                throw new IOException();
+            }
+            StringBuilder text = new StringBuilder();
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            while((line = br.readLine())!=null){
+                text.append(line);
+                text.append('\n');
+            }
+            br.close();
+            return text.toString();
+        }catch (Exception | OutOfMemoryError e){
+            e.printStackTrace();
+            return "File doesn't exist or cannot be opened correctly";
+        }
+    }
+
     /**
      * read file into string
      * @param sPath path of file

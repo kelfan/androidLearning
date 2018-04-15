@@ -78,12 +78,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(View view, int position) {
                 String filename = openFilelist.get(position);
-                String extend = StringWorker.getLast2end(filename, ".");
-                if(extend.toLowerCase().equals(FileWorker.FILE_LOG)){
-                    LogFilerFragment logFilerFragment = new LogFilerFragment();
-                    logFilerFragment.setFilepath(filename);
-                    setFragment(logFilerFragment);
-                }
+                processFragment(filename);
             }
         });
 
@@ -97,6 +92,19 @@ public class MainActivity extends AppCompatActivity
         LogFilerFragment logFilerFragment = new LogFilerFragment();
         logFilerFragment.setFilepath("testing2");
         setFragment(logFilerFragment);
+    }
+
+    public void processFragment(String fpath){
+        String extend = StringWorker.getLast2end(fpath, ".");
+        if (extend.toLowerCase().equals(FileWorker.FILE_LOG)) {
+            LogFilerFragment logFilerFragment = new LogFilerFragment();
+            logFilerFragment.setFilepath(fpath);
+            setFragment(logFilerFragment);
+        }else{
+            DefaultFragment defaultFragment = new DefaultFragment();
+            defaultFragment.setFilepath(fpath);
+            setFragment(defaultFragment);
+        }
     }
 
     @Override
@@ -146,9 +154,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_internal_storage) {
-            openFilePicker(FileWorker.getStoragePath(FileWorker.STORAGE_EXTERNAL, "/").toString());
+
         } else if (id == R.id.nav_sd_storage) {
-            openFilePicker(FileWorker.getStoragePath(FileWorker.STORAGE_EXTERNAL_SECOND, "/").toString());
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
