@@ -26,7 +26,7 @@ public class FileWorker {
     public static final int RESULT_SUCCESS = 0;
     public static final int RESULT_ERROR = 0;
 
-    public static final String FILE_LOG = "log";
+    public static final String FILE_LOG = "flog";
 
 
     public static ArrayList<String> readSmallFileToList(String sFilename){
@@ -38,6 +38,10 @@ public class FileWorker {
             ArrayList<String> aList = new ArrayList<String>();
             if (file.length()> 1024*100){
                 aList.add("file is too big");
+                return aList;
+            }
+            if (file.length()==0){
+                aList.add("");
                 return aList;
             }
             BufferedReader input = new BufferedReader(new FileReader(file));
