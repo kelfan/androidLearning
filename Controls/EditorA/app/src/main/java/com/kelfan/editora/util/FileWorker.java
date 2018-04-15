@@ -1,10 +1,6 @@
 package com.kelfan.editora.util;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Environment;
-
-import com.kelfan.editora.MainActivity;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,6 +29,36 @@ public class FileWorker {
     public static final String FILE_LOG = "log";
 
 
+    public static ArrayList<String> readSmallFileToList(String sFilename){
+        try{
+            File file = new File(sFilename);
+            if (!file.exists()) {
+                throw new IOException();
+            }
+            ArrayList<String> aList = new ArrayList<String>();
+            if (file.length()> 1024*100){
+                aList.add("file is too big");
+                return aList;
+            }
+            BufferedReader input = new BufferedReader(new FileReader(file));
+            String line;
+            if (!input.ready()){
+                throw new IOException();
+            }
+            while ((line = input.readLine()) != null) {
+                aList.add(line);
+            }
+            input.close();
+            return aList;
+        }catch (Exception | OutOfMemoryError e){
+            e.printStackTrace();
+            ArrayList<String> aList = new ArrayList<String>();
+            aList.add("File doesn't exist or cannot be opened correctly");
+            return aList;
+        }
+    }
+
+
     public static String readSmallTxtFile(String sFilename){
         try{
             File file = new File(sFilename);
@@ -40,7 +66,7 @@ public class FileWorker {
                 throw new IOException();
             }
             if (file.length()> 1024*100){
-                return "File is not supported.";
+                return "File is too big.";
             }
             StringBuilder text = new StringBuilder();
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -106,14 +132,14 @@ public class FileWorker {
      * @param iLocation 0 for data, 1 for external SD storage, 2 for secondary SD storage
      * @return String or "fail" if read file fail
      */
-    public static ArrayList readFileToArrayList(String sPath, String sFileName, int iLocation){
+    public static ArrayList<String> readFileToArrayList(String sPath, String sFileName, int iLocation){
         try{
             File root = getStoragePath(iLocation, sPath);
             if(!root.exists()){
                 throw new IOException();
             }
             File file = new File(root, sFileName);
-            ArrayList aList = new ArrayList();
+            ArrayList<String> aList = new ArrayList<String>();
             BufferedReader input = new BufferedReader(new FileReader(file));
             String line;
             if (!input.ready()){
@@ -130,13 +156,13 @@ public class FileWorker {
         }
     }
 
-    public static ArrayList readListFromData(String sPath, String sFileName) {
+    public static ArrayList<String> readListFromData(String sPath, String sFileName) {
         return readFileToArrayList(sPath, sFileName, 0);
     }
-    public static ArrayList readListFromSD(String sPath, String sFileName) {
+    public static ArrayList<String> readListFromSD(String sPath, String sFileName) {
         return readFileToArrayList( sPath, sFileName, 1);
     }
-    public static ArrayList readListFromSecondSD(String sPath, String sFileName) {
+    public static ArrayList<String> readListFromSecondSD(String sPath, String sFileName) {
         return readFileToArrayList( sPath, sFileName, 2);
     }
 

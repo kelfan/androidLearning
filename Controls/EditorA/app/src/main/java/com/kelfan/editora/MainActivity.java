@@ -98,8 +98,9 @@ public class MainActivity extends AppCompatActivity
     public void processFragment(String fpath){
         String extend = StringWorker.getLast2end(fpath, ".");
         if (extend.toLowerCase().equals(FileWorker.FILE_LOG)) {
-            LogFilerFragment logFilerFragment = new LogFilerFragment();
-            logFilerFragment.setFilepath(fpath);
+            String filectxt = FileWorker.readSmallTxtFile(fpath);
+            ArrayList<String> mData = FileWorker.readSmallFileToList(fpath);
+            LogFilerFragment logFilerFragment = new LogFilerFragment().setFilepath(fpath).setData(mData);
             setFragment(logFilerFragment);
         }else{
             DefaultFragment defaultFragment = new DefaultFragment();
