@@ -58,4 +58,13 @@ public class StringWorker {
     public static long countLetter(String inStr, String letter) {
         return (inStr.length() - inStr.replace(letter, "").length()) / letter.length();
     }
+
+    public static String getLast2end(String inStr, String delimiter) {
+        if (inStr.contains(delimiter)) {
+            String[] txtList = inStr.split(delimiter);
+            String result = txtList[txtList.length-1];
+            return result;
+        }
+        return inStr;
+    }
 }

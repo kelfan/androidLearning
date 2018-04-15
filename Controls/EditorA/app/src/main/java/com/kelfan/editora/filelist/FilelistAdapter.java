@@ -50,7 +50,8 @@ public class FilelistAdapter extends RecyclerView.Adapter<FilelistViewholder> im
 
     @Override
     public void onBindViewHolder(final FilelistViewholder holder, int position) {
-        holder.filelistTextView.setText(fData.get(position));
+        String filename = StringWorker.getLast2end(fData.get(position), "/");
+        holder.filelistTextView.setText(filename);
         holder.itemView.setTag(position);
         holder.filelistImageView.setTag(position);
         holder.filelistTextView.setTag(position);
