@@ -61,6 +61,9 @@ public class StringWorker {
 
     public static String getLast2end(String inStr, String delimiter) {
         if (inStr.contains(delimiter)) {
+            if (delimiter.equals(".")){
+                delimiter = "[.]";
+            }
             String[] txtList = inStr.split(delimiter);
             String result = txtList[txtList.length-1];
             return result;

@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity
 
     public static final int FILE_PICKER_REQUEST_CODE = 1;
     private ArrayList<String> openFilelist;
-    private TextView textView;
     private FilelistAdapter filelistAdapter;
 
     @Override
@@ -68,8 +67,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         openFilelist = StringWorker.stringToListByLine(FileConfiger.readConfig());
-        textView = findViewById(R.id.mainTV);
-        textView.setText(StringWorker.listToStringByLine(openFilelist));
 
         // set recent open file recyclerView
         RecyclerView fileRecyclerView = findViewById(R.id.file_list_recycler_view);
@@ -80,12 +77,12 @@ public class MainActivity extends AppCompatActivity
         filelistAdapter.setOnItemClickListener(new FilelistAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                textView.setText(openFilelist.get(position));
-                int cId = view.getId();
-                if (cId == R.id.file_list_tv){
-                    textView.setText(openFilelist.get(position));
-                } else if (cId == R.id.file_list_icon) {
-                    textView.setText("close");
+                String filename = openFilelist.get(position);
+                String extend = StringWorker.getLast2end(filename, ".");
+                if(extend.toLowerCase().equals(FileWorker.FILE_LOG)){
+                    LogFilerFragment logFilerFragment = new LogFilerFragment();
+                    logFilerFragment.setFilepath(filename);
+                    setFragment(logFilerFragment);
                 }
             }
         });
@@ -98,6 +95,7 @@ public class MainActivity extends AppCompatActivity
 
         // set new Fragment
         LogFilerFragment logFilerFragment = new LogFilerFragment();
+        logFilerFragment.setFilepath("testing2");
         setFragment(logFilerFragment);
     }
 
@@ -181,7 +179,6 @@ public class MainActivity extends AppCompatActivity
                     openFilelist.add(path);
                     FileConfiger.writeConfig(StringWorker.listToStringByLine(openFilelist));
                     Log.e("open files: ", openFilelist.toString());
-                    textView.setText(StringWorker.listToStringByLine(openFilelist));
                     filelistAdapter.notifyDataSetChanged();
                 }
             }
@@ -202,7 +199,7 @@ public class MainActivity extends AppCompatActivity
     private void setFragment(Fragment inFragment) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.content_frame, inFragment);
+        fragmentTransaction.replace(R.id.content_frame, inFragment);
         fragmentTransaction.commit();
     }
 }

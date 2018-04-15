@@ -30,6 +30,8 @@ public class FileWorker {
     public static final int RESULT_SUCCESS = 0;
     public static final int RESULT_ERROR = 0;
 
+    public static final String FILE_LOG = "log";
+
     /**
      * read file into string
      * @param sPath path of file
