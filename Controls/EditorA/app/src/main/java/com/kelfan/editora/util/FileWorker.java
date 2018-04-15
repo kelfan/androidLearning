@@ -39,6 +39,9 @@ public class FileWorker {
             if (!file.exists()) {
                 throw new IOException();
             }
+            if (file.length()> 1024*10){
+                return "File is not supported.";
+            }
             StringBuilder text = new StringBuilder();
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
