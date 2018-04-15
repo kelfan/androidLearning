@@ -1,8 +1,10 @@
 package com.kelfan.editora;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,11 +29,9 @@ import com.kelfan.editora.util.FileWorker;
 import com.kelfan.editora.util.StringWorker;
 import com.kelfan.filepicker.ActivityFilePicker;
 import com.kelfan.filepicker.MaterialFilePicker;
+import com.kelfan.logfiler.LogFilerFragment;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -95,6 +95,10 @@ public class MainActivity extends AppCompatActivity
         internalButton.setOnClickListener(this);
         Button externalButton = findViewById(R.id.nav_sd_storage);
         externalButton.setOnClickListener(this);
+
+        // set new Fragment
+        LogFilerFragment logFilerFragment = new LogFilerFragment();
+        setFragment(logFilerFragment);
     }
 
     @Override
@@ -192,5 +196,13 @@ public class MainActivity extends AppCompatActivity
         } else if (cId == R.id.nav_sd_storage) {
             openFilePicker(FileWorker.getStoragePath(FileWorker.STORAGE_EXTERNAL_SECOND, "/").toString());
         }
+    }
+
+    // set new Fragment into content
+    private void setFragment(Fragment inFragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.content_frame, inFragment);
+        fragmentTransaction.commit();
     }
 }
