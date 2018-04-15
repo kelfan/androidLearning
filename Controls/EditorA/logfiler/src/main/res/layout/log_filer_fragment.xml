@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:hint="@string/please_input_a_content"
         android:id="@+id/log_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
