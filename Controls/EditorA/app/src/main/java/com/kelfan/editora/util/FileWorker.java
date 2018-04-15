@@ -33,13 +33,13 @@ public class FileWorker {
     public static final String FILE_LOG = "log";
 
 
-    public static String readFile(String sFilename){
+    public static String readSmallTxtFile(String sFilename){
         try{
             File file = new File(sFilename);
             if (!file.exists()) {
                 throw new IOException();
             }
-            if (file.length()> 1024*10){
+            if (file.length()> 1024*100){
                 return "File is not supported.";
             }
             StringBuilder text = new StringBuilder();

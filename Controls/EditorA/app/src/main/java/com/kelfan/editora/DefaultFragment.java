@@ -3,7 +3,6 @@ package com.kelfan.editora;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ public class DefaultFragment extends Fragment {
         if (filepath.equals("")) {
             textView.setText("");
         }else {
-            String fileContent = FileWorker.readFile(filepath);
+            String fileContent = FileWorker.readSmallTxtFile(filepath);
             textView.setText(fileContent);
         }
 
