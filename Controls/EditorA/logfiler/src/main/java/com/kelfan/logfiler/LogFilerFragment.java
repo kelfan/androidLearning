@@ -24,14 +24,30 @@ public class LogFilerFragment extends Fragment {
         return this;
     }
 
-    public LogFilerFragment setData(ArrayList<String> data){
+    public LogFilerFragment setData(ArrayList<String> data) {
         this.lData = data;
         return this;
     }
 
-    public String getNewItem(){
+    public String getNewItem() {
         EditText editText = this.getView().findViewById(R.id.log_edit_text);
         return editText.getText().toString();
+    }
+
+    public LogFilerFragment saveNewItem() {
+        String newItem = getNewItem();
+        if (!newItem.equals("")) {
+            newItem += "\n" + TimeWorker.getDatetime() + "," + getNewItem();
+            FileWorker.appendToFile(filepath, newItem);
+            refresh();
+        }
+        return this;
+    }
+
+    public LogFilerFragment refresh() {
+        ArrayList<String> mData = FileWorker.readSmallFileToList(filepath);
+        logFilerRecyclerViewAdapter.setData(mData);
+        return this;
     }
 
     @Nullable
@@ -39,8 +55,8 @@ public class LogFilerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.log_filer_fragment, container, false);
 
-        RecyclerView fileRecyclerView =view.findViewById(R.id.log_recycler_view);
-        logFilerRecyclerViewAdapter = new LogFilerRecyclerViewAdapter(this.getActivity(),lData);
+        RecyclerView fileRecyclerView = view.findViewById(R.id.log_recycler_view);
+        logFilerRecyclerViewAdapter = new LogFilerRecyclerViewAdapter(this.getActivity(), lData);
         fileRecyclerView.setAdapter(logFilerRecyclerViewAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager.VERTICAL, false);
         fileRecyclerView.setLayoutManager(linearLayoutManager);

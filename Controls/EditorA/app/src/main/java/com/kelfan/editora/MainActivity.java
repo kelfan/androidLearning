@@ -27,6 +27,7 @@ import com.kelfan.editora.filelist.FilelistAdapter;
 import com.kelfan.editora.util.FileConfiger;
 import com.kelfan.editora.util.FileWorker;
 import com.kelfan.editora.util.StringWorker;
+import com.kelfan.editora.util.TimeWorker;
 import com.kelfan.filepicker.ActivityFilePicker;
 import com.kelfan.filepicker.MaterialFilePicker;
 import com.kelfan.logfiler.LogFilerFragment;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<String> openFilelist;
     private FilelistAdapter filelistAdapter;
     private LogFilerFragment logFilerFragment = null;
+    private String currentFilePath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 int actResult = 0;
                 if (logFilerFragment != null){
-                    String log_edit_text = logFilerFragment.getNewItem();
-                    Log.e("k", log_edit_text);
+                    logFilerFragment.saveNewItem();
                     actResult = 1;
                 }
                 String out = "Update File Fail.";
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(View view, int position) {
                 String filename = openFilelist.get(position);
+                currentFilePath = filename;
                 processFragment(filename);
                 drawer.closeDrawers();
             }
@@ -101,9 +103,9 @@ public class MainActivity extends AppCompatActivity
         externalButton.setOnClickListener(this);
 
         // set new Fragment
-        LogFilerFragment logFilerFragment = new LogFilerFragment();
-        logFilerFragment.setFilepath("testing2");
-        setFragment(logFilerFragment);
+        DefaultFragment defaultFragment = new DefaultFragment();
+        defaultFragment.setFilepath("");
+        setFragment(defaultFragment);
     }
 
     public void processFragment(String fpath) {

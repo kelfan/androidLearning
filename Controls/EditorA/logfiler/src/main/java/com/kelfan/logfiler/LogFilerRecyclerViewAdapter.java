@@ -26,6 +26,11 @@ public class LogFilerRecyclerViewAdapter extends RecyclerView.Adapter<LogFilerIt
         return holder.editText.getText().toString();
     }
 
+    public void setData(ArrayList<String> data){
+        this.fData = data;
+        notifyDataSetChanged();
+    }
+
     @Override
     public LogFilerItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = fInflater.inflate(R.layout.log_item_view, parent, false);
