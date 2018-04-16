@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ public class LogFilerRecyclerViewAdapter extends RecyclerView.Adapter<LogFilerIt
     private LayoutInflater fInflater;
     private Context fContext;
     private ArrayList<String> fData;
+    private EditText editText;
 
     public LogFilerRecyclerViewAdapter(Context context, ArrayList<String> data) {
         this.fContext = context;
@@ -20,11 +22,15 @@ public class LogFilerRecyclerViewAdapter extends RecyclerView.Adapter<LogFilerIt
         fInflater = LayoutInflater.from(context);
     }
 
+    public String getNewItem(LogFilerItemViewHolder holder) {
+        return holder.editText.getText().toString();
+    }
+
     @Override
     public LogFilerItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = fInflater.inflate(R.layout.log_item_view, parent, false);
-        LogFilerItemViewHolder filelistViewholder = new LogFilerItemViewHolder(view);
-        return filelistViewholder;
+        LogFilerItemViewHolder logFilerItemViewHolder = new LogFilerItemViewHolder(view);
+        return logFilerItemViewHolder;
     }
 
     @Override

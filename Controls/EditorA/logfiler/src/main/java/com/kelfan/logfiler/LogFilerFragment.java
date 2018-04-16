@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,6 +27,11 @@ public class LogFilerFragment extends Fragment {
     public LogFilerFragment setData(ArrayList<String> data){
         this.lData = data;
         return this;
+    }
+
+    public String getNewItem(){
+        EditText editText = this.getView().findViewById(R.id.log_edit_text);
+        return editText.getText().toString();
     }
 
     @Nullable

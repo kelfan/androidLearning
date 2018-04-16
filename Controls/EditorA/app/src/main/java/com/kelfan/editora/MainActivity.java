@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     public static final int FILE_PICKER_REQUEST_CODE = 1;
     private ArrayList<String> openFilelist;
     private FilelistAdapter filelistAdapter;
+    private LogFilerFragment logFilerFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,17 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                int actResult = 0;
+                if (logFilerFragment != null){
+                    String log_edit_text = logFilerFragment.getNewItem();
+                    Log.e("k", log_edit_text);
+                    actResult = 1;
+                }
+                String out = "Update File Fail.";
+                if (actResult == 1) {
+                    out = "Update File Success";
+                }
+                Snackbar.make(view, out, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -95,14 +106,14 @@ public class MainActivity extends AppCompatActivity
         setFragment(logFilerFragment);
     }
 
-    public void processFragment(String fpath){
+    public void processFragment(String fpath) {
         String extend = StringWorker.getLast2end(fpath, ".");
         if (extend.toLowerCase().equals(FileWorker.FILE_LOG)) {
             String filectxt = FileWorker.readSmallTxtFile(fpath);
             ArrayList<String> mData = FileWorker.readSmallFileToList(fpath);
-            LogFilerFragment logFilerFragment = new LogFilerFragment().setFilepath(fpath).setData(mData);
+            logFilerFragment = new LogFilerFragment().setFilepath(fpath).setData(mData);
             setFragment(logFilerFragment);
-        }else{
+        } else {
             DefaultFragment defaultFragment = new DefaultFragment();
             defaultFragment.setFilepath(fpath);
             setFragment(defaultFragment);
