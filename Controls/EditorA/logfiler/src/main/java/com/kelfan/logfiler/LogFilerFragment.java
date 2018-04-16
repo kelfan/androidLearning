@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class LogFilerFragment extends Fragment {
     public LogFilerFragment saveNewItem() {
         String newItem = getNewItem();
         if (!newItem.equals("")) {
-            newItem += "\n" + TimeWorker.getDatetime() + "," + getNewItem();
+            newItem = "\n" + TimeWorker.getDatetime() + "," + newItem;
             FileWorker.appendToFile(filepath, newItem);
             refresh();
         }
@@ -46,6 +47,7 @@ public class LogFilerFragment extends Fragment {
 
     public LogFilerFragment refresh() {
         ArrayList<String> mData = FileWorker.readSmallFileToList(filepath);
+        Log.w("edit", mData.toString());
         logFilerRecyclerViewAdapter.setData(mData);
         return this;
     }
@@ -56,6 +58,7 @@ public class LogFilerFragment extends Fragment {
         View view = inflater.inflate(R.layout.log_filer_fragment, container, false);
 
         RecyclerView fileRecyclerView = view.findViewById(R.id.log_recycler_view);
+        this.lData = FileWorker.readSmallFileToList(this.filepath);
         logFilerRecyclerViewAdapter = new LogFilerRecyclerViewAdapter(this.getActivity(), lData);
         fileRecyclerView.setAdapter(logFilerRecyclerViewAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager.VERTICAL, false);
