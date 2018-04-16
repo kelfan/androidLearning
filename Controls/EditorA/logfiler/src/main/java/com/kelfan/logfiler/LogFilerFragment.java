@@ -38,7 +38,7 @@ public class LogFilerFragment extends Fragment {
     public LogFilerFragment saveNewItem() {
         String newItem = getNewItem();
         if (!newItem.equals("")) {
-            newItem = "\n" + TimeWorker.getDatetime() + "," + newItem;
+            newItem = TimeWorker.getDatetime() + "," + newItem + "\n";
             FileWorker.appendToFile(filepath, newItem);
             refresh();
         }

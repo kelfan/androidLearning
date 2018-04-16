@@ -42,7 +42,6 @@ public class FileWorker {
                 return aList;
             }
             if (file.length() == 0) {
-                aList.add("");
                 return aList;
             }
             BufferedReader input = new BufferedReader(new FileReader(file));

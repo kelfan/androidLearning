@@ -26,7 +26,7 @@ public class FileWorker {
     public static final int RESULT_SUCCESS = 0;
     public static final int RESULT_ERROR = 0;
 
-    public static final String FILE_LOG = "flog";
+    public static final String FILE_LOG = "log";
 
 
     public static ArrayList<String> readSmallFileToList(String sFilename){
@@ -41,7 +41,6 @@ public class FileWorker {
                 return aList;
             }
             if (file.length()==0){
-                aList.add("");
                 return aList;
             }
             BufferedReader input = new BufferedReader(new FileReader(file));
