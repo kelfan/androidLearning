@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        Log.w("kelvin", FileConfiger.readConfig());
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -78,7 +77,12 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        openFilelist = StringWorker.stringToListByLine(FileConfiger.readConfig());
+        String config = FileConfiger.getConfigStr(FileConfiger.OPEN_FILE_LIST);
+        if (!config.equals("")){
+            openFilelist = StringWorker.stringToListByLine(config);
+        }else{
+            openFilelist = new ArrayList<String>();
+        }
 
         // set recent open file recyclerView
         RecyclerView fileRecyclerView = findViewById(R.id.file_list_recycler_view);
@@ -91,6 +95,7 @@ public class MainActivity extends AppCompatActivity
             public void onItemClick(View view, int position) {
                 String filename = openFilelist.get(position);
                 currentFilePath = filename;
+                FileConfiger.writeConfig(FileConfiger.RECENT_OPEN_FILE, currentFilePath);
                 processFragment(filename);
                 drawer.closeDrawers();
             }
@@ -103,9 +108,8 @@ public class MainActivity extends AppCompatActivity
         externalButton.setOnClickListener(this);
 
         // set new Fragment
-        DefaultFragment defaultFragment = new DefaultFragment();
-        defaultFragment.setFilepath("");
-        setFragment(defaultFragment);
+        String recentFile = FileConfiger.getConfigStr(FileConfiger.RECENT_OPEN_FILE);
+        processFragment(recentFile);
     }
 
     public void processFragment(String fpath) {
@@ -198,7 +202,7 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(this, "Picked file: " + path, Toast.LENGTH_LONG).show();
                 if (!openFilelist.contains(path)) {
                     openFilelist.add(path);
-                    FileConfiger.writeConfig(StringWorker.listToStringByLine(openFilelist));
+                    FileConfiger.writeConfig(FileConfiger.OPEN_FILE_LIST, StringWorker.listToStringByLine(openFilelist));
                     Log.e("open files: ", openFilelist.toString());
                     filelistAdapter.notifyDataSetChanged();
                 }

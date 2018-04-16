@@ -60,7 +60,7 @@ public class FilelistAdapter extends RecyclerView.Adapter<FilelistViewholder> im
             public void onClick(View view) {
                 fData.remove((int)view.getTag());
                 notifyDataSetChanged();
-                FileConfiger.writeConfig(StringWorker.listToStringByLine(fData));
+                FileConfiger.writeConfig(FileConfiger.OPEN_FILE_LIST, StringWorker.listToStringByLine(fData));
             }
         });
     }
