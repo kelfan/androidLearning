@@ -62,8 +62,9 @@ public class LogFilerRecyclerViewAdapter extends RecyclerView.Adapter<LogFilerIt
             }
             String title = mainContent.substring(0, pos);
             mainContent = mainContent.substring(pos + 1);
+
             holder.titleView.setText(title);
-            holder.titleView.setBackgroundColor(Color.MAGENTA);
+            holder.titleView.setBackgroundColor(ColorWorker.strToColor(title));
         }
         holder.textView.setText(mainContent);
     }

@@ -1,4 +1,4 @@
-package com.kelfan.editora.util;
+package com.kelfan.logfiler;
 
 import android.graphics.Color;
 
