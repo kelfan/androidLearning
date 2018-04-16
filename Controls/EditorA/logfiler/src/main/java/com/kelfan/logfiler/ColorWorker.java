@@ -63,7 +63,7 @@ public class ColorWorker {
     }
 
     public static int strToColor(String txt){
-        int th = txt.hashCode()%7;
+        int th = txt.hashCode()%8;
         switch (th) {
             case 0: return YELLOW_DEEP;
             case 1: return SALMON;
@@ -72,6 +72,9 @@ public class ColorWorker {
             case 4: return GREEN_COPPER;
             case 5: return ORANGE_LIGHT;
             case 6: return PURPLE_LIGHT;
+            case 7: return YELLOW_LIGHT;
+            case 8: return GOLD;
+            case 9: return BROWN_WOOD;
             default: return GREEN_SEA;
         }
     }
