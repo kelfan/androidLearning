@@ -20,17 +20,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kelfan.editora.filelist.FilelistAdapter;
-import com.kelfan.editora.util.FileConfiger;
-import com.kelfan.editora.util.FileWorker;
-import com.kelfan.editora.util.StringWorker;
-import com.kelfan.editora.util.TimeWorker;
 import com.kelfan.filepicker.ActivityFilePicker;
 import com.kelfan.filepicker.MaterialFilePicker;
 import com.kelfan.logfiler.LogFilerFragment;
+import com.kelfan.utillibrary.FileConfiger;
+import com.kelfan.utillibrary.FileWorker;
+import com.kelfan.utillibrary.StringWorker;
 
 import java.util.ArrayList;
 

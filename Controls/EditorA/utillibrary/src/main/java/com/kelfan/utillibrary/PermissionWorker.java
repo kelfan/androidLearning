@@ -1,4 +1,4 @@
-package com.kelfan.editora;
+package com.kelfan.utillibrary;
 
 import android.Manifest;
 import android.app.Activity;

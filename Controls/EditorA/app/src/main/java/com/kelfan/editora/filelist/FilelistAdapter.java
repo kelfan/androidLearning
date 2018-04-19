@@ -5,19 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.kelfan.editora.MainActivity;
 import com.kelfan.editora.R;
-import com.kelfan.editora.util.FileConfiger;
-import com.kelfan.editora.util.FileWorker;
-import com.kelfan.editora.util.StringWorker;
+import com.kelfan.utillibrary.FileConfiger;
+import com.kelfan.utillibrary.StringWorker;
+
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FilelistAdapter extends RecyclerView.Adapter<FilelistViewholder> implements View.OnClickListener{
 

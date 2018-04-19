@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.kelfan.utillibrary.FileWorker;
+import com.kelfan.utillibrary.TimeWorker;
+
 import java.util.ArrayList;
 
 public class LogFilerFragment extends Fragment {
