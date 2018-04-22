@@ -4,18 +4,18 @@ import com.kelfan.utillibrary.StringWorker;
 
 public class Configer {
 
-    public static String indicator_config = "config";
-    public static String indicator_delimiter = "delimiter";
-    public static String indicator_level = "level";
-    public static String split_config = " ";
+    static String indicator_config = "config";
+    static String indicator_delimiter = "delimiter";
+    static String indicator_level = "level";
+    static String split_config = " ";
 
     private String[] delimiter = {"\n"};
     private String[] levels = {};
 
-    public Configer() {
+    Configer() {
     }
 
-    public Configer(String delimiter) {
+    Configer(String delimiter) {
         this.delimiter = delimiter.split(split_config);
     }
 
