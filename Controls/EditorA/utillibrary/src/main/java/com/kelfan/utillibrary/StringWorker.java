@@ -74,6 +74,7 @@ public class StringWorker {
 
     /**
      * get String between to sign like get 345 from 12345678 between 2 and 6
+     *
      * @param inStr
      * @param preSign
      * @param posSign
@@ -84,8 +85,23 @@ public class StringWorker {
         int posInt = inStr.indexOf(posSign, preInt);
         if (preInt <= posInt) {
             return inStr.substring(preInt, posInt);
-        }else{
+        } else {
             return inStr.substring(preInt);
         }
     }
+
+    public static String list2str(String[] inVar, String delimiter) {
+        StringBuilder result = new StringBuilder();
+        if (inVar.length > 0) {
+            if ((inVar.length == 1 & inVar[0].equals(""))){
+                return result.toString();
+            }
+            for (String s : inVar) {
+                result.append(s).append(delimiter);
+            }
+        }
+        return result.toString();
+    }
+
+
 }
