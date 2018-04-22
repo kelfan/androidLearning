@@ -26,6 +26,7 @@ import com.kelfan.editora.filelist.FilelistAdapter;
 import com.kelfan.filepicker.ActivityFilePicker;
 import com.kelfan.filepicker.MaterialFilePicker;
 import com.kelfan.logfiler.LogFilerFragment;
+import com.kelfan.textfiler.TextFilerFragment;
 import com.kelfan.utillibrary.FileConfiger;
 import com.kelfan.utillibrary.FileWorker;
 import com.kelfan.utillibrary.StringWorker;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<String> openFilelist;
     private FilelistAdapter filelistAdapter;
     private LogFilerFragment logFilerFragment = null;
+    private TextFilerFragment textFilerFragment = null;
     private String currentFilePath = "";
 
     @Override
@@ -115,7 +117,10 @@ public class MainActivity extends AppCompatActivity
         if (extend.toLowerCase().equals(FileWorker.FILE_LOG)) {
             logFilerFragment = new LogFilerFragment().setFilepath(fpath);
             setFragment(logFilerFragment);
-        } else {
+        } else if (extend.toLowerCase().equals("txt")){
+            textFilerFragment = new TextFilerFragment().setFilepath(fpath);
+            setFragment(textFilerFragment);
+        } else{
             DefaultFragment defaultFragment = new DefaultFragment();
             defaultFragment.setFilepath(fpath);
             setFragment(defaultFragment);

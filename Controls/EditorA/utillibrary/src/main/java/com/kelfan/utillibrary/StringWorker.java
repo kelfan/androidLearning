@@ -11,7 +11,8 @@ import java.util.Collections;
 public class StringWorker {
     /**
      * transform a String into a list based on
-     * @param inString A String
+     *
+     * @param inString  A String
      * @param delimiter The delimiter for splitting text
      * @return a list
      */
@@ -35,13 +36,13 @@ public class StringWorker {
 
     /**
      * transform List of String into a single String
+     *
      * @param inList list of String
      * @return a single String
      */
-    public static String listToString(ArrayList<String> inList,String delimiter) {
+    public static String listToString(ArrayList<String> inList, String delimiter) {
         String listString = "";
-        for (String s : inList)
-        {
+        for (String s : inList) {
             listString += s + delimiter;
         }
         return listString;
@@ -61,13 +62,30 @@ public class StringWorker {
 
     public static String getLast2end(String inStr, String delimiter) {
         if (inStr.contains(delimiter)) {
-            if (delimiter.equals(".")){
+            if (delimiter.equals(".")) {
                 delimiter = "[.]";
             }
             String[] txtList = inStr.split(delimiter);
-            String result = txtList[txtList.length-1];
+            String result = txtList[txtList.length - 1];
             return result;
         }
         return inStr;
+    }
+
+    /**
+     * get String between to sign like get 345 from 12345678 between 2 and 6
+     * @param inStr
+     * @param preSign
+     * @param posSign
+     * @return
+     */
+    public static String getBetween(String inStr, String preSign, String posSign) {
+        int preInt = inStr.indexOf(preSign) + preSign.length();
+        int posInt = inStr.indexOf(posSign, preInt);
+        if (preInt <= posInt) {
+            return inStr.substring(preInt, posInt);
+        }else{
+            return inStr.substring(preInt);
+        }
     }
 }
