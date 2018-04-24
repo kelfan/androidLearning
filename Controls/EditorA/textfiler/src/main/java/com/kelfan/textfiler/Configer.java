@@ -11,10 +11,26 @@ public class Configer {
     private String configSplit = "configSplit";
     private HashMap<String, String[]> attributes = new HashMap<String, String[]>();
 
+
+    public String replaceStr(String inStr) {
+        for (Map.Entry<String, String[]> entry : attributes.entrySet()) {
+            if (entry.getValue().length > 0) {
+                String keySign = getPreFormat(entry.getKey());
+                if (inStr.contains(keySign)) {
+                    String posSign = getPosFormat(entry.getKey());
+                    String content = ListWorker.list2str(entry.getValue(), this.attributes.get(configSplit)[0]);
+                    content = content.replaceAll("\n", "\\\\\\\\n");
+                    inStr = StringWorker.replaceBetween(inStr, content, keySign, posSign);
+                }
+            }
+        }
+        return inStr;
+    }
+
     @Override
     public String toString() {
         String out = "";
-        for (Map.Entry<String,String[]> entry: attributes.entrySet()){
+        for (Map.Entry<String, String[]> entry : attributes.entrySet()) {
             if (entry.getValue().length > 0) {
                 String txt = setXmlContent(ListWorker.list2str(entry.getValue(), this.attributes.get(configSplit)[0]), entry.getKey());
                 out += txt;
@@ -32,19 +48,19 @@ public class Configer {
         attributes.put("signOnLeft", new String[]{"True"});
     }
 
-    public Configer(String inStr){
+    public Configer(String inStr) {
         this();
         this.withText(inStr);
     }
 
-    public Configer withText(String inStr){
-        for(Map.Entry<String, String[]> entry: attributes.entrySet()){
+    public Configer withText(String inStr) {
+        for (Map.Entry<String, String[]> entry : attributes.entrySet()) {
             String sign = getPreFormat(entry.getKey());
-            if (inStr.contains(sign)){
+            if (inStr.contains(sign)) {
                 String content = getXmlContent(inStr, entry.getKey());
-                if (entry.getKey().equals(configSplit)){
+                if (entry.getKey().equals(configSplit)) {
                     entry.setValue(new String[]{content});
-                }else{
+                } else {
                     entry.setValue(content.split(attributes.get(configSplit)[0]));
                 }
             }
@@ -81,8 +97,6 @@ public class Configer {
     public Configer(HashMap<String, String[]> attributes) {
         this.attributes = attributes;
     }
-
-
 
 
 }

@@ -48,8 +48,15 @@ public class TextParserUnitTest {
                 "<delimiters>\\n ;; >></delimiters>\n" +
                 "<configSplit> </configSplit>\n", c);
         configer.withText(c);
+        // toString
         String d = configer.toString();
         assertEquals(c, d);
+
+        //replace
+        String f = "<delimiters># @ $</delimiters>\nt1: a1 - xxxxxxx;\n t2: a2 - xxxxxxxxxxxx;\n\n\nt3: a3 - xxxxxxxxxxx\n";
+        String e = configer.replaceStr(b);
+        boolean ch = e.equals(b);
+        assertEquals(b, e);
         int i = 0;
     }
 

@@ -96,7 +96,7 @@ public class StringWorker {
     public static String list2str(String[] inVar, String delimiter) {
         StringBuilder result = new StringBuilder();
         if (inVar.length > 0) {
-            if ((inVar.length == 1 & inVar[0].equals(""))){
+            if ((inVar.length == 1 & inVar[0].equals(""))) {
                 return result.toString();
             }
             for (String s : inVar) {
@@ -106,17 +106,23 @@ public class StringWorker {
         return result.toString();
     }
 
-    public static List<String> getPatternList(String inStr, String patternIn){
+    public static List<String> getPatternList(String inStr, String patternIn) {
         List<String> allMatches = new ArrayList<String>();
         Matcher m = Pattern.compile(patternIn).matcher(inStr);
-        while(m.find()){
+        while (m.find()) {
             allMatches.add(m.group());
         }
         return allMatches;
     }
 
-    public static List<String> getTokenList(String inStr){
-        return  getPatternList(inStr, "[^(a-zA-Z0-9\\\\u4e00-\\\\u9fa5)]*[(a-zA-Z0-9\\\\u4e00-\\\\u9fa5)]+[^(a-zA-Z0-9\\\\u4e00-\\\\u9fa5)]*");
+    public static List<String> getTokenList(String inStr) {
+        return getPatternList(inStr, "[^(a-zA-Z0-9\\\\u4e00-\\\\u9fa5)]*[(a-zA-Z0-9\\\\u4e00-\\\\u9fa5)]+[^(a-zA-Z0-9\\\\u4e00-\\\\u9fa5)]*");
     }
 
+    public static String replaceBetween(String inStr, String replace, String preSign, String posSign) {
+        String regex = preSign + ".*" + posSign;
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(inStr);
+        return matcher.replaceAll(preSign + replace + posSign);
+    }
 }
