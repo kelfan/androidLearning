@@ -1,56 +1,88 @@
 package com.kelfan.textfiler;
 
+import com.kelfan.utillibrary.ListWorker;
 import com.kelfan.utillibrary.StringWorker;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Configer {
 
-    static String indicator_config = "config";
-    static String indicator_delimiter = "delimiter";
-    static String indicator_level = "level";
-    static String split_config = " ";
-
-    private String[] delimiter = {"\n"};
-    private String[] levels = {};
-
-    Configer() {
-    }
-
-    Configer(String delimiter) {
-        this.delimiter = delimiter.split(split_config);
-    }
-
-    public Configer(String[] delimiter) {
-        this.delimiter = delimiter;
-    }
-
-    public Configer(String[] delimiter, String[] levels) {
-        this.delimiter = delimiter;
-        this.levels = levels;
-    }
-
-    public String[] getDelimiter() {
-
-        return delimiter;
-    }
-
-    public Configer setDelimiter(String[] delimiter) {
-        this.delimiter = delimiter;
-        return this;
-    }
-
-    public String[] getLevels() {
-        return levels;
-    }
-
-    public Configer setLevels(String[] levels) {
-        this.levels = levels;
-        return this;
-    }
+    private String configSplit = "configSplit";
+    private HashMap<String, String[]> attributes = new HashMap<String, String[]>();
 
     @Override
     public String toString() {
-        String delimiterStr = TextParser.setXmlContent(StringWorker.list2str(delimiter, split_config), indicator_delimiter);
-        String levelStr = TextParser.setXmlContent(StringWorker.list2str(levels, split_config), indicator_level);
-        return String.format("%s%s", delimiterStr, levelStr);
+        String out = "";
+        for (Map.Entry<String,String[]> entry: attributes.entrySet()){
+            if (entry.getValue().length > 0) {
+                String txt = setXmlContent(ListWorker.list2str(entry.getValue(), this.attributes.get(configSplit)[0]), entry.getKey());
+                out += txt;
+            }
+        }
+
+        return out;
     }
+
+    public Configer() {
+        attributes.put(configSplit, new String[]{" "});
+        attributes.put("delimiters", new String[]{"\n"});
+        attributes.put("levels", new String[]{});
+        attributes.put("records", new String[]{"True"});
+        attributes.put("signOnLeft", new String[]{"True"});
+    }
+
+    public Configer(String inStr){
+        this();
+        this.withText(inStr);
+    }
+
+    public Configer withText(String inStr){
+        for(Map.Entry<String, String[]> entry: attributes.entrySet()){
+            String sign = getPreFormat(entry.getKey());
+            if (inStr.contains(sign)){
+                String content = getXmlContent(inStr, entry.getKey());
+                if (entry.getKey().equals(configSplit)){
+                    entry.setValue(new String[]{content});
+                }else{
+                    entry.setValue(content.split(attributes.get(configSplit)[0]));
+                }
+            }
+        }
+        return this;
+    }
+
+
+    public static String getPreFormat(String indicator) {
+        return String.format("<%s>", indicator);
+    }
+
+    public static String getPosFormat(String indicator) {
+        return String.format("</%s>\n", indicator);
+    }
+
+    public static String getXmlContent(String textIn, String indicator) {
+        String pre = getPreFormat(indicator);
+        String pos = getPosFormat(indicator);
+        if (textIn.contains(pre)) {
+            return StringWorker.getBetween(textIn, pre, pos).replaceAll("\\\\n", "\n");
+        }
+        return "";
+    }
+
+    public static String setXmlContent(String textIn, String indicator) {
+        String pre = getPreFormat(indicator);
+        String pos = getPosFormat(indicator);
+        textIn = textIn.replaceAll("\n", "\\\\n");
+        return pre.concat(textIn).concat(pos);
+    }
+
+
+    public Configer(HashMap<String, String[]> attributes) {
+        this.attributes = attributes;
+    }
+
+
+
+
 }

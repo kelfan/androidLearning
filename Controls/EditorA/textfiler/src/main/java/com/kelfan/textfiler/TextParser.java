@@ -3,11 +3,6 @@ package com.kelfan.textfiler;
 import com.kelfan.utillibrary.FileWorker;
 import com.kelfan.utillibrary.StringWorker;
 
-import static com.kelfan.textfiler.Configer.indicator_config;
-import static com.kelfan.textfiler.Configer.indicator_delimiter;
-import static com.kelfan.textfiler.Configer.indicator_level;
-import static com.kelfan.textfiler.Configer.split_config;
-
 public class TextParser {
 
 
@@ -39,19 +34,9 @@ public class TextParser {
         return pre.concat(textIn).concat(pos);
     }
 
-    public static Configer getConfig(String textIn) {
-        String config = getPreFormat(indicator_config);
-        Configer configer = new Configer();
-        if (textIn.contains(indicator_delimiter)) {
-            String delimiterStr = getXmlContent(textIn, indicator_delimiter);
-            configer.setDelimiter(delimiterStr.split(split_config));
-        }
-        if (textIn.contains(indicator_level)){
-            configer.setLevels(getXmlContent(textIn, indicator_level).split(split_config));
-        }
-        return configer;
+    public static String[] processText(String textIn) {
+        return null;
     }
-
 
 
 }

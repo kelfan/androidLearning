@@ -3,6 +3,9 @@ package com.kelfan.utillibrary;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Administrator on 1/01/2018.
@@ -103,5 +106,17 @@ public class StringWorker {
         return result.toString();
     }
 
+    public static List<String> getPatternList(String inStr, String patternIn){
+        List<String> allMatches = new ArrayList<String>();
+        Matcher m = Pattern.compile(patternIn).matcher(inStr);
+        while(m.find()){
+            allMatches.add(m.group());
+        }
+        return allMatches;
+    }
+
+    public static List<String> getTokenList(String inStr){
+        return  getPatternList(inStr, "[^(a-zA-Z0-9\\\\u4e00-\\\\u9fa5)]*[(a-zA-Z0-9\\\\u4e00-\\\\u9fa5)]+[^(a-zA-Z0-9\\\\u4e00-\\\\u9fa5)]*");
+    }
 
 }

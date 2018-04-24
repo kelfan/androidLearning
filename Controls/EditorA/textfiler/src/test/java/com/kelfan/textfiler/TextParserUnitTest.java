@@ -1,6 +1,11 @@
 package com.kelfan.textfiler;
 
+import com.kelfan.textfiler.depreciate.Configer_Depreciate;
+import com.kelfan.utillibrary.StringWorker;
+
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,15 +23,34 @@ public class TextParserUnitTest {
         assertEquals("<Delimiter>test</Delimiter>\n", b);
         assertEquals("test", c);
     }
+
+//    @Test
+//    public void getConfig() {
+//        Configer_Depreciate configer = new Configer_Depreciate("\n , .");
+//        String b = configer.toString();
+//        assertEquals("<delimiter>\\n </delimiter>\n" +
+//                "<level></level>\n", b);
+//        configer = new Configer_Depreciate(b);
+//        String c = configer.toString();
+//        assertEquals(b, c);
+//    }
+
     @Test
     public void getConfig() {
-        Configer configer = new Configer("\n , .");
-        String b = configer.toString();
-        assertEquals("<delimiter>\\n , . </delimiter>\n" +
-                "<level></level>\n", b);
-        configer = TextParser.getConfig(b);
+
+        String b = "<delimiters>\\n ;; >></delimiters>\nt1: a1 - xxxxxxx;\n t2: a2 - xxxxxxxxxxxx;\n\n\nt3: a3 - xxxxxxxxxxx\n";
+        Configer configer = new Configer(b);
+        List<String> list = StringWorker.getTokenList(b);
+        configer.withText(b);
         String c = configer.toString();
-        assertEquals(b, c);
+        assertEquals("<records>True</records>\n" +
+                "<signOnLeft>True</signOnLeft>\n" +
+                "<delimiters>\\n ;; >></delimiters>\n" +
+                "<configSplit> </configSplit>\n", c);
+        configer.withText(c);
+        String d = configer.toString();
+        assertEquals(c, d);
+        int i = 0;
     }
 
 }
