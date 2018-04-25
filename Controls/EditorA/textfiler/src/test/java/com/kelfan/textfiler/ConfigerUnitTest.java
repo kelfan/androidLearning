@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class TextParserUnitTest {
+public class ConfigerUnitTest {
     @Test
     public void setXmlContent() {
         String a = "test";
@@ -44,7 +44,7 @@ public class TextParserUnitTest {
         configer.withText(b);
         String c = configer.toString();
         assertEquals("<records>True</records>\n" +
-                "<signOnLeft>True</signOnLeft>\n" +
+                "<parseMode>True</parseMode>\n" +
                 "<delimiters>\\n ;; >></delimiters>\n" +
                 "<configSplit> </configSplit>\n", c);
         configer.withText(c);

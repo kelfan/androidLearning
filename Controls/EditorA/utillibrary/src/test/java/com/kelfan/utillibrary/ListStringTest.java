@@ -2,8 +2,6 @@ package com.kelfan.utillibrary;
 
 import org.junit.Test;
 
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -11,16 +9,12 @@ import static org.junit.Assert.assertEquals;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ListHandlerTest {
+public class ListStringTest {
     @Test
-    public void addition_isCorExampleUnitTestrect() {
-        String[] a = "1,2,3,4".split(",");
-        String b= ListWorker.list2str(a, ";");
-
-        assertEquals(b, "1;2;3;4");
-
-        String  c = "1_2, 3_4, 5, 6";
-
-
+    public void list2str() {
+        String a = "1_2,3,4";
+        ListString listString = new ListString(a);
+        String b = listString.toString();
+        assertEquals(a, b);
     }
 }

@@ -8,7 +8,12 @@ import java.util.Map;
 
 public class Configer {
 
-    private String configSplit = "configSplit";
+    public static String configSplit = "configSplit";
+    public static String delimiters = "delimiters";
+    public static String levels = "levels";
+    public static String records = "records";
+    public static String parseMode = "parseMode";
+
     private HashMap<String, String[]> attributes = new HashMap<String, String[]>();
 
 
@@ -42,10 +47,10 @@ public class Configer {
 
     public Configer() {
         attributes.put(configSplit, new String[]{" "});
-        attributes.put("delimiters", new String[]{"\n"});
-        attributes.put("levels", new String[]{});
-        attributes.put("records", new String[]{"True"});
-        attributes.put("signOnLeft", new String[]{"True"});
+        attributes.put(delimiters, new String[]{"\n"});
+        attributes.put(levels, new String[]{});
+        attributes.put(records, new String[]{"True"});
+        attributes.put(parseMode, new String[]{"python"});
     }
 
     public Configer(String inStr) {
@@ -66,6 +71,18 @@ public class Configer {
             }
         }
         return this;
+    }
+
+    public String[] getLevels(){
+        return attributes.get(levels);
+    }
+
+    public String[] getDelimiters(){
+        return attributes.get(delimiters);
+    }
+
+    public String getConfigSplit(){
+        return attributes.get(configSplit)[0];
     }
 
 
@@ -98,5 +115,11 @@ public class Configer {
         this.attributes = attributes;
     }
 
+    public HashMap<String, String[]> getAttributes() {
+        return attributes;
+    }
 
+    public void setAttributes(HashMap<String, String[]> attributes) {
+        this.attributes = attributes;
+    }
 }
