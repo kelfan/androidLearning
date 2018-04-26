@@ -2,6 +2,8 @@ package com.kelfan.utillibrary;
 
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -11,10 +13,36 @@ import static org.junit.Assert.assertEquals;
  */
 public class ListStringTest {
     @Test
-    public void list2str() {
+    public void Constructor() {
+        // listString.set(list)
         String a = "1_2,3,4";
-        ListString listString = new ListString(a);
-        String b = listString.toString();
+        String[] alist = a.split(",");
+        ListString la = ListString.set(alist);
+        String b = la.toString();
+        assertEquals("1_234", b);
+
+        //set(str)
+        la = ListString.set(a);
+        b = la.toString();
+        assertEquals(a , b );
+        assertEquals(1, la.size());
+
+        a = "1,2,3\n4,5,6\n\n";
+        la = ListString.set(a);
+        b = la.toString();
         assertEquals(a, b);
+        assertEquals(2, la.size());
+
+        for (String i: la){
+            b=i;
+        }
+
+        int z = 0 ;
+    }
+
+    @Test
+    public void getLines() {
+
+
     }
 }

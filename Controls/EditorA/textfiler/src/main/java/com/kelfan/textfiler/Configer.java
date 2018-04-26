@@ -58,6 +58,10 @@ public class Configer {
         this.withText(inStr);
     }
 
+    public static Configer set(String inStr){
+        return new Configer(inStr);
+    }
+
     public Configer withText(String inStr) {
         for (Map.Entry<String, String[]> entry : attributes.entrySet()) {
             String sign = getPreFormat(entry.getKey());

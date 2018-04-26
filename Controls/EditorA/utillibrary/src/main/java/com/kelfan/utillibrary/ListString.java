@@ -2,6 +2,7 @@ package com.kelfan.utillibrary;
 
 import android.support.annotation.NonNull;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,45 +14,111 @@ import java.util.regex.Pattern;
 
 public class ListString implements List<String> {
 
+    private String text;
     private List<String> strList;
+    private String pattern = "([^\n\r]+[\n\r]*)";
+    private String delimiter = "";
 
     public ListString(String inStr) {
-        this.strList = getTokenList(inStr);
+        this.text = inStr;
+        getLineList(inStr);
     }
 
-    public static ListString set(String inStr){
+    public ListString(String inStr, String inPattern) {
+        this.text = inStr;
+        getPatternList(inPattern);
+    }
+
+    public ListString setDelimiter(String delimiter){
+        this.pattern = String.format("([^%s]+[%s]*)", delimiter, delimiter);
+        this.delimiter = delimiter;
+        return this;
+    }
+
+    public ListString setPattern(String pattern) {
+        getPatternList(pattern);
+        return this;
+    }
+
+    public List<String> getStrList() {
+        return strList;
+    }
+
+    public ListString(List<String> strList) {
+        this.text = strList.toString();
+        this.strList = strList;
+        this.pattern = "";
+    }
+
+    public ListString(String[] strList) {
+        this.text = strList.toString();
+        this.strList = Arrays.asList(strList);
+        this.pattern = "";
+    }
+
+    public static ListString set(String inStr) {
         return new ListString(inStr);
+    }
+
+    public static ListString set(List<String> inList) {
+        return new ListString(inList);
+    }
+
+    public static ListString set(String[] inList){
+        return new ListString(inList);
+    }
+
+    public static ListString set(String inStr, String inPattern) {
+        return new ListString(inStr, inPattern);
     }
 
     Boolean contain(String[] list, String item) {
         return Arrays.asList(list).contains(item);
     }
 
-    public static String list2str(List<String> list, String delimiter){
-        String out = "";
-        for (String item: list){
-            out += item + delimiter;
+    public String toString(String delimiter) {
+        StringBuilder out = new StringBuilder();
+        for (String item : this.strList) {
+            out.append(item).append(delimiter);
         }
-        out = out.substring(0, out.length()-delimiter.length());
-        return out;
+        out = new StringBuilder(out.substring(0, out.length() - delimiter.length()));
+        return out.toString();
     }
 
-    public static List<String> getPatternList(String inStr, String patternIn) {
+    public ListString getPatternList() {
         List<String> allMatches = new ArrayList<String>();
-        Matcher m = Pattern.compile(patternIn).matcher(inStr);
+        Matcher m = Pattern.compile(this.pattern).matcher(this.text);
         while (m.find()) {
             allMatches.add(m.group());
         }
-        return allMatches;
+        this.strList = allMatches;
+        return this;
     }
 
-    public static List<String> getTokenList(String inStr) {
-        return getPatternList(inStr, "[^(a-zA-Z0-9\\\\u4e00-\\\\u9fa5)]*[(a-zA-Z0-9\\\\u4e00-\\\\u9fa5_)]+[^(a-zA-Z0-9\\\\u4e00-\\\\u9fa5)]*");
+    public ListString getPatternList(String patternIn) {
+        this.pattern = patternIn;
+        List<String> allMatches = new ArrayList<String>();
+        Matcher m = Pattern.compile(this.pattern).matcher(this.text);
+        while (m.find()) {
+            allMatches.add(m.group());
+        }
+        this.strList = allMatches;
+        return this;
+    }
+
+    public List<String> getTokenList(String inStr) {
+        getPatternList("[^(a-zA-Z0-9\\\\u4e00-\\\\u9fa5)]*[(a-zA-Z0-9\\\\u4e00-\\\\u9fa5_)]+[^(a-zA-Z0-9\\\\u4e00-\\\\u9fa5)]*");
+        return this;
+    }
+
+    public List<String> getLineList(String inStr) {
+        getPatternList("([^\n\r]+[\n\r]*)");
+        return this;
     }
 
     @Override
     public String toString() {
-        return list2str(strList, "");
+        return toString(this.delimiter);
     }
 
     @Override
