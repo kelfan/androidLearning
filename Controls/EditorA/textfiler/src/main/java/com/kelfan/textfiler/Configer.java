@@ -50,7 +50,7 @@ public class Configer {
         attributes.put(delimiters, new String[]{"\n"});
         attributes.put(levels, new String[]{});
         attributes.put(records, new String[]{"True"});
-        attributes.put(parseMode, new String[]{"python"});
+        attributes.put(parseMode, new String[]{"txt"});
     }
 
     public Configer(String inStr) {
@@ -83,6 +83,10 @@ public class Configer {
 
     public String[] getDelimiters(){
         return attributes.get(delimiters);
+    }
+
+    public String getDelimiters(int n){
+        return attributes.get(delimiters)[n-1];
     }
 
     public String getConfigSplit(){

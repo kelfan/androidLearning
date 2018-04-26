@@ -14,7 +14,7 @@ public class TextDataList {
     public TextDataList(String text) {
         this.text = text;
         this.configer = Configer.set(text);
-        this.strList = ListString.set(text);
+        this.strList = ListString.set(text).getPatternList(configer.getDelimiters(1));
     }
 
     public static TextDataList set(String inStr) {
